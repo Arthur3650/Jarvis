@@ -16,17 +16,13 @@ body{background:#000;color:#00d4ff;font-family:'Rajdhani',sans-serif;height:100v
 .cx.bl{bottom:5px;left:5px;border-bottom:1.5px solid #ff6b00;border-left:1.5px solid #ff6b00;}
 .cx.br{bottom:5px;right:5px;border-bottom:1.5px solid #ff6b00;border-right:1.5px solid #ff6b00;}
 .wrap{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;height:100vh;padding:6px 8px;gap:3px;}
-
 .hline{width:100%;height:1px;background:linear-gradient(90deg,transparent,#00d4ff,#ff6b00,#00d4ff,transparent);animation:hl 3s ease-in-out infinite;}
 @keyframes hl{0%,100%{opacity:.35;}50%{opacity:1;}}
 .title{font-family:'Orbitron',monospace;font-size:16px;font-weight:900;letter-spacing:8px;color:#00d4ff;padding:2px 0;animation:tb 3s ease-in-out infinite;}
 @keyframes tb{0%,100%{text-shadow:0 0 8px rgba(0,212,255,.7);}50%{text-shadow:0 0 22px #00d4ff,0 0 44px rgba(0,212,255,.5);}}
-
 .srow{display:flex;justify-content:space-between;width:100%;font-size:8px;letter-spacing:1px;color:rgba(0,212,255,.5);}
 .sd{display:inline-block;width:5px;height:5px;border-radius:50%;background:#00ff88;box-shadow:0 0 5px #00ff88;animation:bk 1.5s infinite;margin-right:3px;}
 @keyframes bk{0%,100%{opacity:1;}50%{opacity:.2;}}
-
-/* 4 STATS — senza ora accanto a ON */
 .stats{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:4px;width:100%;}
 .sb{background:rgba(0,12,25,.85);border:1px solid rgba(0,212,255,.18);padding:3px 5px;position:relative;}
 .sb::before{content:'';position:absolute;top:0;left:0;width:5px;height:5px;border-top:1px solid #00d4ff;border-left:1px solid #00d4ff;}
@@ -36,14 +32,8 @@ body{background:#000;color:#00d4ff;font-family:'Rajdhani',sans-serif;height:100v
 .sv.g{color:#00ff88;}.sv.o{color:#ff6b00;}
 .sbar{height:2px;background:rgba(0,212,255,.08);margin-top:2px;}
 .sfill{height:100%;background:linear-gradient(90deg,#00d4ff,#00ff88);transition:width 1s;}
-
-/* MAIN */
 .main{display:flex;gap:8px;width:100%;flex:1;min-height:0;}
-
-/* SINISTRA */
 .left-col{display:flex;flex-direction:column;align-items:center;gap:0px;flex-shrink:0;width:166px;}
-
-/* ARC REACTOR */
 .arc{position:relative;width:158px;height:158px;flex-shrink:0;}
 .aglow{position:absolute;inset:-12px;border-radius:50%;background:radial-gradient(circle,transparent 45%,rgba(0,180,255,.07) 70%,transparent 100%);animation:gp 2s ease-in-out infinite;}
 @keyframes gp{0%,100%{opacity:.5;}50%{opacity:1;}}
@@ -60,8 +50,6 @@ body{background:#000;color:#00d4ff;font-family:'Rajdhani',sans-serif;height:100v
 @keyframes rot2{from{transform:translate(-50%,-50%) rotate(0deg);}to{transform:translate(-50%,-50%) rotate(-360deg);}}
 .core-canvas{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:42px;height:42px;}
 .tsvg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:156px;height:156px;pointer-events:none;}
-
-/* GLOBE — più grande, separato dal reattore */
 .globe-section{display:flex;flex-direction:column;align-items:center;gap:2px;margin-top:8px;}
 .globe-wrap{position:relative;width:110px;height:110px;flex-shrink:0;}
 canvas.globe{border-radius:50%;border:1px solid rgba(0,212,255,.3);box-shadow:0 0 12px rgba(0,212,255,.2);display:block;}
@@ -71,43 +59,34 @@ canvas.globe{border-radius:50%;border:1px solid rgba(0,212,255,.3);box-shadow:0 
 .globe-tag.here{width:10px;height:10px;background:#00ff88;box-shadow:0 0 7px #00ff88;}
 @keyframes pmove{0%,100%{opacity:1;transform:translate(-50%,-50%) scale(1);}50%{opacity:.3;transform:translate(-50%,-50%) scale(1.5);}}
 .globe-label{font-size:7px;letter-spacing:2px;color:rgba(0,212,255,.4);text-align:center;}
-
-/* TAG LIST — pallini allineati verticalmente */
 .tags{display:flex;flex-direction:column;gap:5px;width:100%;margin-top:4px;padding-left:4px;}
 .tag-item{display:flex;align-items:center;gap:7px;font-size:8.5px;letter-spacing:1px;color:rgba(0,212,255,.85);}
 .tdot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
 .tdot.stop{background:#ff2200;box-shadow:0 0 5px #ff2200;}
 .tdot.move{background:#00ccff;box-shadow:0 0 5px #00ccff;animation:pmove 1s infinite;}
 .tdot.here{background:#00ff88;box-shadow:0 0 5px #00ff88;}
-
-/* DESTRA */
 .right-col{display:flex;flex-direction:column;gap:5px;flex:1;min-width:0;}
 .panel-box{background:rgba(0,12,25,.85);border:1px solid rgba(0,212,255,.18);padding:5px 8px;position:relative;flex-shrink:0;}
 .panel-title{font-size:7px;letter-spacing:2px;color:#ff6b00;margin-bottom:4px;}
-
 .meteo-row{display:flex;align-items:center;justify-content:space-between;}
 .meteo-temp{font-family:'Orbitron',monospace;font-size:15px;color:#00d4ff;text-shadow:0 0 8px rgba(0,212,255,.6);}
 .meteo-desc{font-size:8px;color:rgba(0,212,255,.6);letter-spacing:1px;margin-top:1px;}
 .meteo-city{font-size:7px;color:#ff6b00;margin-top:1px;}
 .meteo-detail{font-size:8px;color:rgba(0,212,255,.4);margin-top:1px;}
-
 .proto-list{display:flex;flex-direction:column;gap:3px;max-height:76px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(0,212,255,.2) transparent;}
 .proto-item{display:flex;align-items:center;gap:5px;font-size:8.5px;letter-spacing:1px;color:rgba(0,212,255,.85);}
 .pdot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
 .pdot.on{background:#00ff88;box-shadow:0 0 4px #00ff88;}
 .pdot.off{background:#ff6b00;box-shadow:0 0 3px rgba(255,107,0,.4);}
-
 .dev-list{display:flex;flex-direction:column;gap:3px;}
 .dev-item{display:flex;align-items:center;gap:5px;font-size:8.5px;letter-spacing:1px;color:rgba(0,212,255,.85);}
 .ddot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
 .ddot.on{background:#00ff88;box-shadow:0 0 5px #00ff88;animation:bk 2s infinite;}
 .ddot.off{background:#ff2200;box-shadow:0 0 4px #ff2200;}
-
 .ctrl-btn{width:100%;background:transparent;border:1px solid rgba(0,212,255,.35);color:#00d4ff;font-family:'Orbitron',monospace;font-size:10px;font-weight:700;padding:9px;cursor:pointer;letter-spacing:3px;position:relative;text-align:center;flex-shrink:0;}
 .ctrl-btn::before{content:'';position:absolute;top:0;left:0;width:8px;height:8px;border-top:1px solid #00d4ff;border-left:1px solid #00d4ff;}
 .ctrl-btn::after{content:'';position:absolute;bottom:0;right:0;width:8px;height:8px;border-bottom:1px solid #ff6b00;border-right:1px solid #ff6b00;}
 .ctrl-btn:active{background:rgba(0,212,255,.08);}
-
 .chat{width:100%;display:flex;flex-direction:column;background:rgba(0,6,16,.88);border:1px solid rgba(0,212,255,.15);position:relative;height:135px;flex-shrink:0;}
 .chat::before{content:'▶ JARVIS';position:absolute;top:-1px;left:8px;font-size:7px;letter-spacing:3px;color:#ff6b00;background:#000;padding:0 4px;z-index:1;}
 .msgs{flex:1;overflow-y:auto;padding:10px 8px 4px;scrollbar-width:thin;scrollbar-color:rgba(0,212,255,.15) transparent;}
@@ -132,43 +111,22 @@ canvas.globe{border-radius:50%;border:1px solid rgba(0,212,255,.3);box-shadow:0 
 <body>
 <div class="bg"></div><div class="grid"></div><div class="scan"></div>
 <div class="cx tl"></div><div class="cx tr"></div><div class="cx bl"></div><div class="cx br"></div>
-
 <div class="wrap">
   <div class="hline"></div>
   <div class="title">J.A.R.V.I.S</div>
   <div class="hline"></div>
-
   <div class="srow">
     <span><span class="sd"></span>ONLINE</span>
     <span id="clk">--:--:--</span>
     <span>STARK INDUSTRIES</span>
   </div>
-
   <div class="stats">
-    <div class="sb">
-      <div class="sl">STATO AI</div>
-      <div class="sv g">ON</div>
-      <div class="sbar"><div class="sfill" style="width:100%"></div></div>
-    </div>
-    <div class="sb">
-      <div class="sl">PROTOCOLLO</div>
-      <div class="sv o" style="font-size:8px;">ATTIVO</div>
-      <div class="sbar"><div class="sfill" style="width:80%;background:linear-gradient(90deg,#ff6b00,#ffaa00)"></div></div>
-    </div>
-    <div class="sb">
-      <div class="sl">DATI MOBILE</div>
-      <div class="sv" style="font-size:8px;">4G+</div>
-      <div class="sbar"><div class="sfill" style="width:90%"></div></div>
-    </div>
-    <div class="sb">
-      <div class="sl">LATENZA</div>
-      <div class="sv" id="lat">---ms</div>
-      <div class="sbar"><div class="sfill" id="latb" style="width:40%"></div></div>
-    </div>
+    <div class="sb"><div class="sl">STATO AI</div><div class="sv g">ON</div><div class="sbar"><div class="sfill" style="width:100%"></div></div></div>
+    <div class="sb"><div class="sl">PROTOCOLLO</div><div class="sv o" style="font-size:8px;">ATTIVO</div><div class="sbar"><div class="sfill" style="width:80%;background:linear-gradient(90deg,#ff6b00,#ffaa00)"></div></div></div>
+    <div class="sb"><div class="sl">DATI MOBILE</div><div class="sv" style="font-size:8px;">4G+</div><div class="sbar"><div class="sfill" style="width:90%"></div></div></div>
+    <div class="sb"><div class="sl">LATENZA</div><div class="sv" id="lat">---ms</div><div class="sbar"><div class="sfill" id="latb" style="width:40%"></div></div></div>
   </div>
-
   <div class="main">
-    <!-- SINISTRA -->
     <div class="left-col">
       <div class="arc">
         <div class="aglow"></div>
@@ -178,7 +136,6 @@ canvas.globe{border-radius:50%;border:1px solid rgba(0,212,255,.3);box-shadow:0 
         <svg class="tsvg" id="tsvg" viewBox="0 0 156 156"></svg>
         <canvas class="core-canvas" id="arc-core" width="42" height="42"></canvas>
       </div>
-
       <div class="globe-section">
         <div class="globe-wrap">
           <canvas id="globe" class="globe" width="110" height="110"></canvas>
@@ -194,8 +151,6 @@ canvas.globe{border-radius:50%;border:1px solid rgba(0,212,255,.3);box-shadow:0 
         </div>
       </div>
     </div>
-
-    <!-- DESTRA -->
     <div class="right-col">
       <div class="panel-box">
         <div class="panel-title">▶ METEO</div>
@@ -211,7 +166,6 @@ canvas.globe{border-radius:50%;border:1px solid rgba(0,212,255,.3);box-shadow:0 
           </div>
         </div>
       </div>
-
       <div class="panel-box">
         <div class="panel-title">▶ PROTOCOLLI</div>
         <div class="proto-list">
@@ -222,7 +176,6 @@ canvas.globe{border-radius:50%;border:1px solid rgba(0,212,255,.3);box-shadow:0 
           <div class="proto-item"><div class="pdot off"></div>MOD. CASA</div>
         </div>
       </div>
-
       <div class="panel-box" style="flex:1;">
         <div class="panel-title">▶ DISPOSITIVI</div>
         <div class="dev-list">
@@ -236,11 +189,9 @@ canvas.globe{border-radius:50%;border:1px solid rgba(0,212,255,.3);box-shadow:0 
           <div class="dev-item"><div class="ddot off"></div>RedmIlenia</div>
         </div>
       </div>
-
       <button class="ctrl-btn" onclick="openControllo()">📷 CONTROLLO</button>
     </div>
   </div>
-
   <div class="chat">
     <div class="msgs" id="chat"></div>
     <div class="typ" id="typ"><div class="td"></div><div class="td"></div><div class="td"></div></div>
@@ -249,14 +200,11 @@ canvas.globe{border-radius:50%;border:1px solid rgba(0,212,255,.3);box-shadow:0 
       <button class="hbtn" onclick="send()">INVIA ►</button>
     </div>
   </div>
-
   <div class="ftr">
     <span>JARVIS v2.0</span><span id="upt">UPTIME: 0m</span><span>LLAMA 3.3 70B</span>
   </div>
 </div>
-
 <script>
-// TICK MARKS
 const tsvg=document.getElementById('tsvg');
 for(let i=0;i<72;i++){
   const a=(i/72)*Math.PI*2,r=74,len=i%6===0?9:i%2===0?5:3;
@@ -267,8 +215,6 @@ for(let i=0;i<72;i++){
   l.setAttribute('stroke-width',i%6===0?'1.8':'0.8');
   tsvg.appendChild(l);
 }
-
-// ARC CORE
 const arcCanvas=document.getElementById('arc-core');
 const arcCtx=arcCanvas.getContext('2d');
 let arcPulse=0;
@@ -301,17 +247,14 @@ function drawArcCore(){
   requestAnimationFrame(drawArcCore);
 }
 drawArcCore();
-
-// GLOBE — 110px, tutti tag a Torino ma posizioni leggermente diverse per vederli
 const gc=document.getElementById('globe');
 const gctx=gc.getContext('2d');
 const GS=110,GR=52,GCX=55,GCY=55;
 let rot=0;const tilt=15*Math.PI/180;
-// Torino con leggere variazioni per distinguerli sul globo
 const tagPositions=[
-  {lat:45.07,lon:7.68},  // TAG1 chiavi Ilenia
-  {lat:45.12,lon:7.58},  // TAG2
-  {lat:45.02,lon:7.78}   // TAG3
+  {lat:45.07,lon:7.68},
+  {lat:45.12,lon:7.58},
+  {lat:45.02,lon:7.78}
 ];
 const continents=[
   [[0,50],[10,50],[20,45],[20,35],[15,25],[10,10],[5,0],[0,-10],[5,-20],[15,-30],[20,-35],[10,-35],[0,-30],[-5,-20],[-10,-10],[-5,0],[0,10]],
@@ -354,16 +297,12 @@ function drawGlobe(){
   rot+=0.3;requestAnimationFrame(drawGlobe);
 }
 drawGlobe();
-
-// CLOCK
 const start=Date.now();
 function tick(){
   document.getElementById('clk').textContent=new Date().toLocaleTimeString('it-IT');
   document.getElementById('upt').textContent='UPTIME: '+Math.floor((Date.now()-start)/60000)+'m';
 }
 setInterval(tick,1000);tick();
-
-// METEO Torino
 fetch('https://api.open-meteo.com/v1/forecast?latitude=45.07&longitude=7.68&current=temperature_2m,weathercode,windspeed_10m,relativehumidity_2m')
   .then(function(r){return r.json();})
   .then(function(d){
@@ -375,16 +314,12 @@ fetch('https://api.open-meteo.com/v1/forecast?latitude=45.07&longitude=7.68&curr
     const desc=wc===0?'SERENO':wc<=2?'POCO NUVOLOSO':wc<=3?'NUVOLOSO':wc<=48?'NEBBIA':wc<=67?'PIOGGIA':wc<=77?'NEVE':wc<=82?'ROVESCI':'TEMPORALE';
     document.getElementById('meteo-desc').textContent=desc;
   }).catch(function(){document.getElementById('meteo-desc').textContent='N/D';});
-
 function openControllo(){
   addMsg('JARVIS','Modulo telecamera non ancora attivo.',true);
 }
-
-// CHAT — chiamata diretta a Groq
 const GROQ_KEY='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';
 const SYSTEM='Sei Jarvis, assistente AI di Iron Man. Rispondi in italiano. Tono: freddo, tecnico, preciso. Zero chiacchiere. Solo risposte utili e dirette. Esperto di: domotica, Android, Kodular, Tasker, MacroDroid, automazioni, IoT, reti, sicurezza. Massimo 3 frasi. Mai frasi di benvenuto o saluti.';
 let history=[];
-
 function addMsg(s,t,j){
   const d=document.createElement('div');
   d.className='msg'+(j?' j':'');
@@ -392,12 +327,10 @@ function addMsg(s,t,j){
   const c=document.getElementById('chat');
   c.appendChild(d);c.scrollTop=c.scrollHeight;
 }
-
 function receiveFromKodular(msg){
   document.getElementById('typ').className='typ';
   addMsg('JARVIS',msg,true);
 }
-
 async function send(){
   const inp=document.getElementById('inp');
   const text=inp.value.trim();
@@ -408,7 +341,7 @@ async function send(){
   document.getElementById('typ').className='typ on';
   const t0=Date.now();
   try{
-    const r=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+    const r=await fetch('https://corsproxy.io/?https://api.groq.com/openai/v1/chat/completions',{
       method:'POST',
       headers:{'Content-Type':'application/json','Authorization':'Bearer '+GROQ_KEY},
       body:JSON.stringify({
@@ -433,7 +366,6 @@ async function send(){
     addMsg('JARVIS','Connessione interrotta.',true);
   }
 }
-
 document.getElementById('inp').addEventListener('keypress',function(e){if(e.key==='Enter')send();});
 </script>
 </body>
