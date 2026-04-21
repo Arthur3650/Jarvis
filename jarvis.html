@@ -15,66 +15,85 @@ body{background:#000;color:#00d4ff;font-family:'Rajdhani',sans-serif;height:100v
 .cx.tr{top:6px;right:6px;border-top:1.5px solid #00d4ff;border-right:1.5px solid #00d4ff;}
 .cx.bl{bottom:6px;left:6px;border-bottom:1.5px solid #ff6b00;border-left:1.5px solid #ff6b00;}
 .cx.br{bottom:6px;right:6px;border-bottom:1.5px solid #ff6b00;border-right:1.5px solid #ff6b00;}
-.wrap{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;height:100vh;padding:7px 10px;gap:4px;}
+.wrap{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;height:100vh;padding:6px 10px;gap:4px;}
 .hline{width:100%;height:1px;background:linear-gradient(90deg,transparent,#00d4ff,#ff6b00,#00d4ff,transparent);animation:hl 3s ease-in-out infinite;}
 @keyframes hl{0%,100%{opacity:.35;}50%{opacity:1;}}
-.title{font-family:'Orbitron',monospace;font-size:18px;font-weight:900;letter-spacing:8px;color:#00d4ff;padding:2px 0;animation:tb 3s ease-in-out infinite;}
+.title{font-family:'Orbitron',monospace;font-size:17px;font-weight:900;letter-spacing:8px;color:#00d4ff;padding:2px 0;animation:tb 3s ease-in-out infinite;}
 @keyframes tb{0%,100%{text-shadow:0 0 8px rgba(0,212,255,.7);}50%{text-shadow:0 0 22px #00d4ff,0 0 44px rgba(0,212,255,.5);}}
 .sub{font-size:7px;letter-spacing:4px;color:#ff6b00;}
 .srow{display:flex;justify-content:space-between;width:100%;font-size:8px;letter-spacing:1px;color:rgba(0,212,255,.4);}
 .sd{display:inline-block;width:5px;height:5px;border-radius:50%;background:#00ff88;box-shadow:0 0 5px #00ff88;animation:bk 1.5s infinite;margin-right:3px;}
 @keyframes bk{0%,100%{opacity:1;}50%{opacity:.2;}}
-.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;width:100%;}
-.sb{background:rgba(0,12,25,.85);border:1px solid rgba(0,212,255,.18);padding:4px 6px;position:relative;}
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;width:100%;}
+.sb{background:rgba(0,12,25,.85);border:1px solid rgba(0,212,255,.18);padding:3px 6px;position:relative;}
 .sb::before{content:'';position:absolute;top:0;left:0;width:5px;height:5px;border-top:1px solid #00d4ff;border-left:1px solid #00d4ff;}
 .sb::after{content:'';position:absolute;bottom:0;right:0;width:5px;height:5px;border-bottom:1px solid #ff6b00;border-right:1px solid #ff6b00;}
 .sl{font-size:7px;letter-spacing:2px;color:rgba(0,212,255,.4);}
-.sv{font-family:'Orbitron',monospace;font-size:11px;color:#00d4ff;}
+.sv{font-family:'Orbitron',monospace;font-size:10px;color:#00d4ff;}
 .sv.g{color:#00ff88;}.sv.o{color:#ff6b00;}
 .sbar{height:2px;background:rgba(0,212,255,.08);margin-top:2px;}
 .sfill{height:100%;background:linear-gradient(90deg,#00d4ff,#00ff88);transition:width 1s;}
-
-/* CENTER ROW */
-.center-row{display:flex;align-items:center;justify-content:center;gap:20px;width:100%;}
-
-/* ARC REACTOR */
-.arc{position:relative;width:180px;height:180px;flex-shrink:0;}
-.aglow{position:absolute;inset:-20px;border-radius:50%;background:radial-gradient(circle,transparent 45%,rgba(0,180,255,.07) 70%,transparent 100%);animation:gp 2s ease-in-out infinite;}
+.center-row{display:flex;align-items:flex-start;justify-content:center;gap:10px;width:100%;}
+.arc{position:relative;width:170px;height:170px;flex-shrink:0;}
+.aglow{position:absolute;inset:-15px;border-radius:50%;background:radial-gradient(circle,transparent 45%,rgba(0,180,255,.07) 70%,transparent 100%);animation:gp 2s ease-in-out infinite;}
 @keyframes gp{0%,100%{opacity:.5;}50%{opacity:1;}}
 .rg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border-radius:50%;}
-.rglow{width:178px;height:178px;border:1.5px solid rgba(0,212,255,.2);box-shadow:0 0 14px rgba(0,212,255,.25),inset 0 0 14px rgba(0,212,255,.08);}
-.r1{width:162px;height:162px;border:2px solid transparent;border-top-color:rgba(0,212,255,.85);border-right-color:rgba(0,212,255,.3);animation:rot1 14s linear infinite;}
-.r2{width:146px;height:146px;border:1.5px solid transparent;border-left-color:#00d4ff;border-bottom-color:rgba(0,212,255,.35);animation:rot2 10s linear infinite;}
-.r3{width:130px;height:130px;border:2px solid transparent;border-top-color:rgba(0,212,255,.65);border-right-color:rgba(255,107,0,.25);animation:rot1 7.5s linear infinite reverse;}
-.r4{width:112px;height:112px;border:1.5px solid transparent;border-right-color:#00d4ff;border-bottom-color:rgba(0,212,255,.3);animation:rot2 5.5s linear infinite;}
-.r5{width:94px;height:94px;border:2px solid transparent;border-top-color:rgba(0,212,255,.75);border-left-color:rgba(0,212,255,.3);animation:rot1 4s linear infinite reverse;}
-.r6{width:74px;height:74px;border:1.5px solid transparent;border-bottom-color:#ff6b00;border-right-color:rgba(255,107,0,.35);animation:rot2 3s linear infinite;}
-.r7{width:56px;height:56px;border:2px solid transparent;border-top-color:#00d4ff;border-right-color:#00d4ff;animation:rot1 2s linear infinite;}
+.rglow{width:168px;height:168px;border:1.5px solid rgba(0,212,255,.2);box-shadow:0 0 14px rgba(0,212,255,.25),inset 0 0 14px rgba(0,212,255,.08);}
+.r1{width:154px;height:154px;border:2px solid transparent;border-top-color:rgba(0,212,255,.85);border-right-color:rgba(0,212,255,.3);animation:rot1 14s linear infinite;}
+.r2{width:138px;height:138px;border:1.5px solid transparent;border-left-color:#00d4ff;border-bottom-color:rgba(0,212,255,.35);animation:rot2 10s linear infinite;}
+.r3{width:122px;height:122px;border:2px solid transparent;border-top-color:rgba(0,212,255,.65);border-right-color:rgba(255,107,0,.25);animation:rot1 7.5s linear infinite reverse;}
+.r4{width:106px;height:106px;border:1.5px solid transparent;border-right-color:#00d4ff;border-bottom-color:rgba(0,212,255,.3);animation:rot2 5.5s linear infinite;}
+.r5{width:88px;height:88px;border:2px solid transparent;border-top-color:rgba(0,212,255,.75);border-left-color:rgba(0,212,255,.3);animation:rot1 4s linear infinite reverse;}
+.r6{width:70px;height:70px;border:1.5px solid transparent;border-bottom-color:#ff6b00;border-right-color:rgba(255,107,0,.35);animation:rot2 3s linear infinite;}
+.r7{width:52px;height:52px;border:2px solid transparent;border-top-color:#00d4ff;border-right-color:#00d4ff;animation:rot1 2s linear infinite;}
 @keyframes rot1{from{transform:translate(-50%,-50%) rotate(0deg);}to{transform:translate(-50%,-50%) rotate(360deg);}}
 @keyframes rot2{from{transform:translate(-50%,-50%) rotate(0deg);}to{transform:translate(-50%,-50%) rotate(-360deg);}}
-.core-canvas{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:50px;height:50px;}
-.tsvg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:178px;height:178px;pointer-events:none;}
-
-/* GLOBE SECTION */
-.globe-section{display:flex;flex-direction:column;align-items:center;gap:5px;flex-shrink:0;}
+.core-canvas{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:46px;height:46px;}
+.tsvg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:168px;height:168px;pointer-events:none;}
+.globe-section{display:flex;flex-direction:column;align-items:center;gap:3px;}
 .globe-label{font-size:7px;letter-spacing:2px;color:rgba(0,212,255,.4);}
-canvas.globe{border-radius:50%;border:1px solid rgba(0,212,255,.3);box-shadow:0 0 14px rgba(0,212,255,.25);}
+canvas.globe{border-radius:50%;border:1px solid rgba(0,212,255,.3);box-shadow:0 0 12px rgba(0,212,255,.2);}
+.tags{display:flex;flex-direction:column;gap:3px;width:100%;margin-top:2px;}
+.tag-item{display:flex;align-items:center;gap:5px;font-size:8px;letter-spacing:1px;color:rgba(0,212,255,.7);}
+.tdot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.tdot.stop{background:#ff2200;box-shadow:0 0 6px #ff2200;}
+.tdot.move{background:#00ccff;box-shadow:0 0 6px #00ccff;animation:pmove 1s infinite;}
+.tdot.here{background:#00ff88;box-shadow:0 0 6px #00ff88;}
+.tdot.off{background:rgba(0,212,255,.15);}
+@keyframes pmove{0%,100%{opacity:1;}50%{opacity:.3;}}
+.right-panel{display:flex;flex-direction:column;gap:5px;flex:1;min-width:0;}
+.panel-box{background:rgba(0,12,25,.85);border:1px solid rgba(0,212,255,.18);padding:5px 8px;position:relative;}
+.panel-box::before{font-size:7px;letter-spacing:2px;color:#ff6b00;background:#000;padding:0 3px;position:absolute;top:-1px;left:6px;}
+.meteo-box::before{content:'▶ METEO';}
+.proto-box::before{content:'▶ PROTOCOLLI';}
+.devices-box::before{content:'▶ DISPOSITIVI';}
+.meteo-row{display:flex;align-items:center;justify-content:space-between;margin-top:4px;}
+.meteo-temp{font-family:'Orbitron',monospace;font-size:15px;color:#00d4ff;text-shadow:0 0 8px rgba(0,212,255,.6);}
+.meteo-desc{font-size:8px;color:rgba(0,212,255,.5);letter-spacing:1px;}
+.meteo-detail{font-size:8px;color:rgba(0,212,255,.4);margin-top:1px;}
+.proto-list{margin-top:6px;display:flex;flex-direction:column;gap:2px;}
+.proto-item{display:flex;align-items:center;gap:5px;font-size:8px;letter-spacing:1px;color:rgba(0,212,255,.7);}
+.pdot{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
+.pdot.on{background:#00ff88;box-shadow:0 0 4px #00ff88;}
+.pdot.off{background:rgba(255,107,0,.4);}
+.dev-list{margin-top:6px;display:flex;flex-direction:column;gap:2px;}
+.dev-item{display:flex;align-items:center;gap:5px;font-size:8px;letter-spacing:1px;color:rgba(0,212,255,.7);}
+.ddot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.ddot.on{background:#00ff88;box-shadow:0 0 5px #00ff88;animation:bk 2s infinite;}
+.ddot.off{background:#ff2200;box-shadow:0 0 4px #ff2200;}
 
-/* TAG TRACKER — predisposto per futuro */
-.tags{display:flex;flex-direction:column;gap:3px;margin-top:2px;}
-.tag-item{display:flex;align-items:center;gap:5px;font-size:8px;letter-spacing:1px;color:rgba(0,212,255,.5);}
-.tag-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
-.tag-dot.red{background:#ff2200;box-shadow:0 0 5px #ff2200;}
-.tag-dot.green{background:#00ff88;box-shadow:0 0 5px #00ff88;}
-.tag-dot.gray{background:rgba(0,212,255,.2);}
+/* PULSANTE CONTROLLO */
+.ctrl-btn{width:100%;margin-top:5px;background:transparent;border:1px solid rgba(0,212,255,.4);color:#00d4ff;font-family:'Orbitron',monospace;font-size:10px;font-weight:700;padding:8px;cursor:pointer;letter-spacing:3px;position:relative;overflow:hidden;transition:all .3s;}
+.ctrl-btn::before{content:'';position:absolute;top:0;left:0;width:8px;height:8px;border-top:1px solid #00d4ff;border-left:1px solid #00d4ff;}
+.ctrl-btn::after{content:'';position:absolute;bottom:0;right:0;width:8px;height:8px;border-bottom:1px solid #ff6b00;border-right:1px solid #ff6b00;}
+.ctrl-btn:active{background:rgba(0,212,255,.1);box-shadow:0 0 10px rgba(0,212,255,.3);}
 
-/* CHAT — più compatta */
-.chat{width:100%;flex:1;display:flex;flex-direction:column;min-height:0;max-height:160px;background:rgba(0,6,16,.88);border:1px solid rgba(0,212,255,.15);position:relative;}
+.chat{width:100%;flex:1;display:flex;flex-direction:column;min-height:0;max-height:150px;background:rgba(0,6,16,.88);border:1px solid rgba(0,212,255,.15);position:relative;}
 .chat::before{content:'▶ JARVIS';position:absolute;top:-1px;left:8px;font-size:7px;letter-spacing:3px;color:#ff6b00;background:#000;padding:0 4px;z-index:1;}
 .msgs{flex:1;overflow-y:auto;padding:10px 8px 4px;scrollbar-width:thin;scrollbar-color:rgba(0,212,255,.15) transparent;}
 .msgs::-webkit-scrollbar{width:2px;}
 .msgs::-webkit-scrollbar-thumb{background:rgba(0,212,255,.2);}
-.msg{margin:2px 0;padding:3px 7px;font-size:11.5px;line-height:1.4;border-left:2px solid rgba(0,212,255,.3);color:rgba(0,212,255,.9);}
+.msg{margin:2px 0;padding:3px 7px;font-size:11px;line-height:1.4;border-left:2px solid rgba(0,212,255,.3);color:rgba(0,212,255,.9);}
 .msg.j{border-left-color:#ff6b00;color:rgba(255,200,100,.95);background:rgba(255,107,0,.03);}
 .ms{font-size:7px;letter-spacing:2px;opacity:.4;margin-bottom:1px;}
 .typ{display:none;gap:3px;padding:3px 8px;align-items:center;}
@@ -85,7 +104,7 @@ canvas.globe{border-radius:50%;border:1px solid rgba(0,212,255,.3);box-shadow:0 
 .inprow{display:flex;gap:5px;padding:5px;}
 .hin{flex:1;background:rgba(0,18,36,.9);border:1px solid rgba(0,212,255,.25);color:#00d4ff;font-family:'Rajdhani',sans-serif;font-size:13px;padding:7px 10px;outline:none;}
 .hin::placeholder{color:rgba(0,212,255,.2);font-size:10px;letter-spacing:3px;}
-.hbtn{background:transparent;border:1px solid #ff6b00;color:#ff6b00;font-family:'Orbitron',monospace;font-size:9px;font-weight:700;padding:7px 10px;cursor:pointer;letter-spacing:1px;}
+.hbtn{background:transparent;border:1px solid #ff6b00;color:#ff6b00;font-family:'Orbitron',monospace;font-size:9px;font-weight:700;padding:7px 10px;cursor:pointer;}
 .hbtn:active{background:rgba(255,107,0,.2);}
 .ftr{display:flex;justify-content:space-between;width:100%;font-size:7px;letter-spacing:1px;color:rgba(0,212,255,.22);border-top:1px solid rgba(0,212,255,.08);padding-top:3px;}
 </style>
@@ -109,31 +128,70 @@ canvas.globe{border-radius:50%;border:1px solid rgba(0,212,255,.3);box-shadow:0 
     <div class="sb"><div class="sl">LATENZA</div><div class="sv" id="lat">---ms</div><div class="sbar"><div class="sfill" id="latb" style="width:40%"></div></div></div>
   </div>
 
-  <!-- CENTER: ARC + GLOBE -->
   <div class="center-row">
-    <div class="arc">
-      <div class="aglow"></div>
-      <div class="rg rglow"></div>
-      <div class="rg r1"></div><div class="rg r2"></div><div class="rg r3"></div>
-      <div class="rg r4"></div><div class="rg r5"></div><div class="rg r6"></div><div class="rg r7"></div>
-      <svg class="tsvg" id="tsvg" viewBox="0 0 178 178"></svg>
-      <canvas class="core-canvas" id="arc-core" width="50" height="50"></canvas>
+    <!-- SINISTRA: ARC + GLOBE + TAGS -->
+    <div style="display:flex;flex-direction:column;align-items:center;gap:5px;">
+      <div class="arc">
+        <div class="aglow"></div>
+        <div class="rg rglow"></div>
+        <div class="rg r1"></div><div class="rg r2"></div><div class="rg r3"></div>
+        <div class="rg r4"></div><div class="rg r5"></div><div class="rg r6"></div><div class="rg r7"></div>
+        <svg class="tsvg" id="tsvg" viewBox="0 0 168 168"></svg>
+        <canvas class="core-canvas" id="arc-core" width="46" height="46"></canvas>
+      </div>
+      <div class="globe-section">
+        <canvas id="globe" class="globe" width="100" height="100"></canvas>
+        <div class="globe-label">▶ TAG TRACKER</div>
+        <div class="tags">
+          <div class="tag-item"><div class="tdot stop" id="t1"></div><span>CHIAVI ILENIA</span></div>
+          <div class="tag-item"><div class="tdot move" id="t2"></div><span>TAG-02 ---</span></div>
+          <div class="tag-item"><div class="tdot here" id="t3"></div><span>TAG-03 ---</span></div>
+        </div>
+      </div>
     </div>
 
-    <!-- GLOBE + TAGS -->
-    <div class="globe-section">
-      <canvas id="globe" class="globe" width="110" height="110"></canvas>
-      <div class="globe-label">▶ TRACKER</div>
-      <!-- TAG PREDISPOSTI — attivazione futura -->
-      <div class="tags">
-        <div class="tag-item"><div class="tag-dot gray"></div><span>TAG-01 ---</span></div>
-        <div class="tag-item"><div class="tag-dot gray"></div><span>TAG-02 ---</span></div>
-        <div class="tag-item"><div class="tag-dot gray"></div><span>TAG-03 ---</span></div>
+    <!-- DESTRA: METEO + PROTOCOLLI + DISPOSITIVI + CONTROLLO -->
+    <div class="right-panel">
+      <div class="panel-box meteo-box">
+        <div class="meteo-row">
+          <div>
+            <div class="meteo-temp" id="meteo-temp">--°C</div>
+            <div class="meteo-desc" id="meteo-desc">CARICAMENTO</div>
+          </div>
+          <div style="text-align:right;">
+            <div class="meteo-detail" id="meteo-wind">VENTO: --</div>
+            <div class="meteo-detail" id="meteo-hum">UMID: --</div>
+            <div class="meteo-detail" style="color:#ff6b00;font-size:7px;">MILANO</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-box proto-box">
+        <div class="proto-list">
+          <div class="proto-item"><div class="pdot on"></div>TABULA RASA</div>
+          <div class="proto-item"><div class="pdot on"></div>CICLO VITALE</div>
+          <div class="proto-item"><div class="pdot off"></div>GHOST MODE</div>
+          <div class="proto-item"><div class="pdot off"></div>SENTINELLA</div>
+          <div class="proto-item"><div class="pdot off"></div>MOD. CASA</div>
+        </div>
+      </div>
+
+      <div class="panel-box devices-box">
+        <div class="dev-list">
+          <div class="dev-item"><div class="ddot on"></div>RouterBruss</div>
+          <div class="dev-item"><div class="ddot on"></div>MotoBruss</div>
+          <div class="dev-item"><div class="ddot on"></div>OppoBruss</div>
+          <div class="dev-item"><div class="ddot off"></div>PcBruss</div>
+          <div class="dev-item"><div class="ddot off"></div>HuaweiBruss</div>
+          <div class="dev-item"><div class="ddot off"></div>ProiettoreBruss</div>
+          <div class="dev-item"><div class="ddot off"></div>ChromecastBruss</div>
+          <div class="dev-item"><div class="ddot off"></div>RedmIlenia</div>
+        </div>
+        <button class="ctrl-btn" onclick="openControllo()">📷 CONTROLLO</button>
       </div>
     </div>
   </div>
 
-  <!-- CHAT COMPATTA -->
   <div class="chat">
     <div class="msgs" id="chat"></div>
     <div class="typ" id="typ"><div class="td"></div><div class="td"></div><div class="td"></div></div>
@@ -147,14 +205,15 @@ canvas.globe{border-radius:50%;border:1px solid rgba(0,212,255,.3);box-shadow:0 
     <span>JARVIS v2.0</span><span id="upt">UPTIME: 0m</span><span>LLAMA 3.3 70B</span>
   </div>
 </div>
+
 <script>
 // TICK MARKS
 const tsvg=document.getElementById('tsvg');
 for(let i=0;i<72;i++){
-  const a=(i/72)*Math.PI*2,r=85,len=i%6===0?10:i%2===0?5:3;
+  const a=(i/72)*Math.PI*2,r=80,len=i%6===0?10:i%2===0?5:3;
   const l=document.createElementNS('http://www.w3.org/2000/svg','line');
-  l.setAttribute('x1',89+Math.sin(a)*r);l.setAttribute('y1',89-Math.cos(a)*r);
-  l.setAttribute('x2',89+Math.sin(a)*(r-len));l.setAttribute('y2',89-Math.cos(a)*(r-len));
+  l.setAttribute('x1',84+Math.sin(a)*r);l.setAttribute('y1',84-Math.cos(a)*r);
+  l.setAttribute('x2',84+Math.sin(a)*(r-len));l.setAttribute('y2',84-Math.cos(a)*(r-len));
   l.setAttribute('stroke',i%6===0?'rgba(0,212,255,0.9)':i%2===0?'rgba(0,212,255,0.4)':'rgba(0,212,255,0.15)');
   l.setAttribute('stroke-width',i%6===0?'1.8':'0.8');
   tsvg.appendChild(l);
@@ -165,39 +224,39 @@ const arcCanvas=document.getElementById('arc-core');
 const arcCtx=arcCanvas.getContext('2d');
 let arcPulse=0;
 function drawArcCore(){
-  arcCtx.clearRect(0,0,50,50);
+  arcCtx.clearRect(0,0,46,46);
   const pulse=0.7+Math.sin(arcPulse)*0.3;
   arcPulse+=0.05;
-  const cx=25,cy=25;
+  const cx=23,cy=23;
   for(let i=0;i<16;i++){
-    const a=(i/16)*Math.PI*2,len=10+Math.sin(arcPulse*2+i)*3;
+    const a=(i/16)*Math.PI*2,len=9+Math.sin(arcPulse*2+i)*3;
     arcCtx.beginPath();
-    arcCtx.moveTo(cx+Math.cos(a)*8,cy+Math.sin(a)*8);
-    arcCtx.lineTo(cx+Math.cos(a)*(8+len),cy+Math.sin(a)*(8+len));
+    arcCtx.moveTo(cx+Math.cos(a)*7,cy+Math.sin(a)*7);
+    arcCtx.lineTo(cx+Math.cos(a)*(7+len),cy+Math.sin(a)*(7+len));
     arcCtx.strokeStyle='rgba(0,212,255,'+(0.15+Math.sin(arcPulse+i)*0.1)+')';
     arcCtx.lineWidth=1;arcCtx.stroke();
   }
-  let g=arcCtx.createRadialGradient(cx,cy,6,cx,cy,24);
+  let g=arcCtx.createRadialGradient(cx,cy,5,cx,cy,22);
   g.addColorStop(0,'rgba(0,212,255,'+(0.15*pulse)+')');g.addColorStop(1,'transparent');
-  arcCtx.beginPath();arcCtx.arc(cx,cy,24,0,Math.PI*2);arcCtx.fillStyle=g;arcCtx.fill();
-  g=arcCtx.createRadialGradient(cx-3,cy-3,1,cx,cy,12);
+  arcCtx.beginPath();arcCtx.arc(cx,cy,22,0,Math.PI*2);arcCtx.fillStyle=g;arcCtx.fill();
+  g=arcCtx.createRadialGradient(cx-3,cy-3,1,cx,cy,11);
   g.addColorStop(0,'rgba(255,255,255,'+(0.95*pulse)+')');
   g.addColorStop(0.2,'rgba(160,240,255,'+(0.9*pulse)+')');
   g.addColorStop(0.5,'rgba(0,200,255,'+(0.8*pulse)+')');
   g.addColorStop(0.8,'rgba(0,100,200,'+(0.6*pulse)+')');
   g.addColorStop(1,'rgba(0,40,120,'+(0.3*pulse)+')');
-  arcCtx.beginPath();arcCtx.arc(cx,cy,12,0,Math.PI*2);arcCtx.fillStyle=g;arcCtx.fill();
-  g=arcCtx.createRadialGradient(cx-2,cy-2,0,cx,cy,5);
+  arcCtx.beginPath();arcCtx.arc(cx,cy,11,0,Math.PI*2);arcCtx.fillStyle=g;arcCtx.fill();
+  g=arcCtx.createRadialGradient(cx-2,cy-2,0,cx,cy,4);
   g.addColorStop(0,'rgba(255,255,255,1)');g.addColorStop(1,'rgba(180,240,255,0)');
-  arcCtx.beginPath();arcCtx.arc(cx,cy,5,0,Math.PI*2);arcCtx.fillStyle=g;arcCtx.fill();
+  arcCtx.beginPath();arcCtx.arc(cx,cy,4,0,Math.PI*2);arcCtx.fillStyle=g;arcCtx.fill();
   requestAnimationFrame(drawArcCore);
 }
 drawArcCore();
 
-// GLOBE 3D — più grande
+// GLOBE 3D
 const gc=document.getElementById('globe');
 const gctx=gc.getContext('2d');
-const GS=110,GR=50,GCX=55,GCY=55;
+const GS=100,GR=46,GCX=50,GCY=50;
 let rot=0;const tilt=15*Math.PI/180;
 const continents=[
   [[0,50],[10,50],[20,45],[20,35],[15,25],[10,10],[5,0],[0,-10],[5,-20],[15,-30],[20,-35],[10,-35],[0,-30],[-5,-20],[-10,-10],[-5,0],[0,10]],
@@ -214,10 +273,10 @@ function proj(lat,lon,r){
 }
 function drawGlobe(){
   gctx.clearRect(0,0,GS,GS);
-  const g=gctx.createRadialGradient(GCX-12,GCY-12,3,GCX,GCY,GR);
+  const g=gctx.createRadialGradient(GCX-10,GCY-10,2,GCX,GCY,GR);
   g.addColorStop(0,'rgba(0,40,80,0.9)');g.addColorStop(0.6,'rgba(0,20,50,0.95)');g.addColorStop(1,'rgba(0,5,20,1)');
   gctx.beginPath();gctx.arc(GCX,GCY,GR,0,Math.PI*2);gctx.fillStyle=g;gctx.fill();
-  gctx.strokeStyle='rgba(0,212,255,0.12)';gctx.lineWidth=0.5;
+  gctx.strokeStyle='rgba(0,212,255,0.1)';gctx.lineWidth=0.5;
   for(let lat=-60;lat<=60;lat+=30){
     gctx.beginPath();let f=true;
     for(let lon=0;lon<=360;lon+=5){const p=proj(lat,lon,rot);if(p.z>0){f?gctx.moveTo(p.x,p.y):gctx.lineTo(p.x,p.y);f=false;}else f=true;}
@@ -228,7 +287,7 @@ function drawGlobe(){
     for(let lat=-90;lat<=90;lat+=5){const p=proj(lat,lon,rot);if(p.z>0){f?gctx.moveTo(p.x,p.y):gctx.lineTo(p.x,p.y);f=false;}else f=true;}
     gctx.stroke();
   }
-  continents.forEach(function(c){c.forEach(function(pt){const p=proj(pt[1],pt[0],rot);if(p.z>0.1){gctx.beginPath();gctx.arc(p.x,p.y,1.5,0,Math.PI*2);gctx.fillStyle='rgba(0,212,255,'+(0.3+p.z*0.5)+')';gctx.fill();}});});
+  continents.forEach(function(c){c.forEach(function(pt){const p=proj(pt[1],pt[0],rot);if(p.z>0.1){gctx.beginPath();gctx.arc(p.x,p.y,1.3,0,Math.PI*2);gctx.fillStyle='rgba(0,212,255,'+(0.3+p.z*0.5)+')';gctx.fill();}});});
   const it=proj(42,12,rot);
   if(it.z>0){
     gctx.beginPath();gctx.arc(it.x,it.y,3,0,Math.PI*2);gctx.fillStyle='#ff6b00';gctx.fill();
@@ -247,6 +306,24 @@ function tick(){
 }
 setInterval(tick,1000);tick();
 
+// METEO
+fetch('https://api.open-meteo.com/v1/forecast?latitude=45.46&longitude=9.19&current=temperature_2m,weathercode,windspeed_10m,relativehumidity_2m')
+  .then(function(r){return r.json();})
+  .then(function(d){
+    const c=d.current;
+    document.getElementById('meteo-temp').textContent=Math.round(c.temperature_2m)+'°C';
+    document.getElementById('meteo-wind').textContent='VENTO: '+Math.round(c.windspeed_10m)+' km/h';
+    document.getElementById('meteo-hum').textContent='UMID: '+c.relativehumidity_2m+'%';
+    const wc=c.weathercode;
+    const desc=wc===0?'SERENO':wc<=2?'POCO NUVOLOSO':wc<=3?'NUVOLOSO':wc<=48?'NEBBIA':wc<=67?'PIOGGIA':wc<=77?'NEVE':wc<=82?'ROVESCI':'TEMPORALE';
+    document.getElementById('meteo-desc').textContent=desc;
+  }).catch(function(){document.getElementById('meteo-desc').textContent='N/D';});
+
+// PULSANTE CONTROLLO
+function openControllo(){
+  addMsg('JARVIS','Modulo telecamera non ancora attivo. In attesa di installazione hardware.',true);
+}
+
 // CHAT
 const GROQ_KEY='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';
 const SYSTEM='Sei Jarvis, assistente AI di Iron Man. Rispondi in italiano. Tono: freddo, tecnico, preciso. Zero chiacchiere. Solo risposte utili e dirette. Esperto di: domotica, Android, Kodular, Tasker, MacroDroid, automazioni, IoT, reti, sicurezza. Massimo 3 frasi. Mai frasi di benvenuto o saluti.';
@@ -261,6 +338,11 @@ function addMsg(s,t,j){
   c.appendChild(d);c.scrollTop=c.scrollHeight;
 }
 
+function receiveFromKodular(msg){
+  document.getElementById('typ').className='typ';
+  addMsg('JARVIS',msg,true);
+}
+
 async function send(){
   const inp=document.getElementById('inp');
   const text=inp.value.trim();
@@ -271,6 +353,12 @@ async function send(){
   addMsg('USER',text,false);
   history.push({role:'user',content:text});
   document.getElementById('typ').className='typ on';
+  try{
+    if(window.AppInventor){
+      window.AppInventor.setWebViewString(JSON.stringify({type:'chat',text:text}));
+      return;
+    }
+  }catch(e){}
   const t0=Date.now();
   try{
     const r=await fetch('https://api.groq.com/openai/v1/chat/completions',{
@@ -279,15 +367,11 @@ async function send(){
       body:JSON.stringify({
         model:'llama-3.3-70b-versatile',
         messages:[{role:'system',content:SYSTEM},...history],
-        stream:false,
-        temperature:0.7,
-        max_tokens:400
+        stream:false,temperature:0.7,max_tokens:400
       })
     });
     const d=await r.json();
-    const lat=Date.now()-t0;
-    document.getElementById('lat').textContent=lat+'ms';
-    document.getElementById('latb').style.width=Math.min(lat/10,100)+'%';
+    document.getElementById('lat').textContent=(Date.now()-t0)+'ms';
     document.getElementById('typ').className='typ';
     const reply=d.choices&&d.choices[0]?d.choices[0].message.content:'Errore.';
     history.push({role:'assistant',content:reply});
