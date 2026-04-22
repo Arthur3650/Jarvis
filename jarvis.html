@@ -433,8 +433,9 @@ function loadState() {
 function getSystemState() {
   var state = "STATO ATTUALE DASHBOARD E HARDWARE:\n";
   state += "Data e Ora Locale: " + new Date().toLocaleString('it-IT') + "\n";
-  var meteo = document.getElementById('meteo') ? document.getElementById('meteo').textContent.replace(/\n/g, ' ') : '--';
-  state += "Meteo Attuale: " + meteo + "\n";
+  var mTemp = document.getElementById('meteo-temp') ? document.getElementById('meteo-temp').textContent : '--';
+  var mDesc = document.getElementById('meteo-desc') ? document.getElementById('meteo-desc').textContent : '--';
+  state += "Meteo Attuale: " + mTemp + " " + mDesc + "\n";
   state += "Batteria Dispositivo: " + battLevel + (isCharging ? " (In Carica)" : " (In Uso)") + "\n";
   state += "Protocolli:\n";
   document.querySelectorAll('.proto-item').forEach(function(el) {
@@ -470,15 +471,17 @@ function processUICommand(cmd) {
 
 // --- SINTESI VOCALE (LA VOCE DI JARVIS) ---
 function speak(text) {
-  if(!window.speechSynthesis) return;
-  // Pulisce il testo dai tag [CMD:...] e [UI:...] per la lettura
   var cleanText = text.replace(/\[.*?\]/g, '').trim();
   if(!cleanText) return;
-  var u = new SpeechSynthesisUtterance(cleanText);
-  u.lang = 'it-IT';
-  u.rate = 1.0;
-  u.pitch = 0.7; // Tono leggermente più freddo e profondo
-  speechSynthesis.speak(u);
+  
+  if(window.speechSynthesis) {
+    var u = new SpeechSynthesisUtterance(cleanText);
+    u.lang = 'it-IT'; u.pitch = 0.7;
+    speechSynthesis.speak(u);
+  }
+  if(window.AppInventor) {
+    window.AppInventor.setWebViewString("[TTS]" + cleanText);
+  }
 }
 
 function send(){
