@@ -391,6 +391,18 @@ var SYSTEM = "Sei Jarvis, assistente IA avanzato (configurato per Salvo/Bruss). 
 
 var chatHistory = [];
 
+// --- SENSORI HARDWARE (PROATTIVITA') ---
+var battLevel = "Sconosciuto";
+var isCharging = false;
+if(navigator.getBattery) {
+  navigator.getBattery().then(function(b) {
+    battLevel = Math.round(b.level * 100) + "%";
+    isCharging = b.charging;
+    b.addEventListener('levelchange', function() { battLevel = Math.round(b.level * 100) + "%"; });
+    b.addEventListener('chargingchange', function() { isCharging = b.charging; });
+  });
+}
+
 // --- THE BRAIN (MEMORIA PERSISTENTE) ---
 // Attualmente configurato in Memoria Locale (il primo step per non fargli dimenticare nulla). 
 // L'architettura è pronta per sostituire "localStorage" con "Firebase" in futuro per sincronizzare PC, Oppo e Motorola.
@@ -419,7 +431,9 @@ function loadState() {
 }
 
 function getSystemState() {
-  var state = "STATO ATTUALE DASHBOARD:\nProtocolli:\n";
+  var state = "STATO ATTUALE DASHBOARD E HARDWARE:\n";
+  state += "Batteria Dispositivo: " + battLevel + (isCharging ? " (In Carica)" : " (In Uso)") + "\n";
+  state += "Protocolli:\n";
   document.querySelectorAll('.proto-item').forEach(function(el) {
     var isOn = el.querySelector('.pdot').classList.contains('on');
     state += "- " + el.textContent.trim() + ": " + (isOn ? "ON" : "OFF") + "\n";
