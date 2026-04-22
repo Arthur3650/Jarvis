@@ -361,7 +361,10 @@ xhrMeteo.onreadystatechange = function() {
 };
 xhrMeteo.send();
 
-function openControllo(){ addMsg('JARVIS','Modulo telecamera non ancora attivo.',true); }
+function openControllo(){ 
+  addMsg('JARVIS','Avvio modulo telecamera in corso...',true);
+  if(window.AppInventor) window.AppInventor.setWebViewString('CAMERA_ON');
+}
 
 function addMsg(s,t,j){
   var d = document.createElement('div');
@@ -378,9 +381,75 @@ function receiveFromKodular(msg){
 }
 
 var GROQ_KEY = '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';
-var SYSTEM = 'Sei Jarvis, assistente AI di Iron Man. Rispondi in italiano. Tono: freddo, tecnico, preciso. Zero chiacchiere. Solo risposte utili e dirette. Massimo 3 frasi.';
+var SYSTEM = "Sei Jarvis, assistente IA avanzato (configurato per Salvo/Bruss). Rispondi in italiano. Tono: freddo, tecnico, sintetico. Zero chiacchiere.\\n" +
+"Il dispositivo principale è il Motorola (MotoBruss). L'OppoBruss è secondario.\\n" +
+"IMPORTANTE: Riceverai sempre lo STATO ATTUALE della dashboard di sistema in background.\\n" +
+"Se l'utente ordina di accendere/spegnere un dispositivo o attivare/disattivare un protocollo, DEVI usare un tag speciale per aggiornare la grafica dello schermo.\\n" +
+"Formato: [UI:TIPO_NOME_STATO] dove TIPO è PROTO o DEV, NOME è il nome con underscore al posto degli spazi, STATO è ON o OFF.\\n" +
+"Esempi: [UI:PROTO_GHOST_MODE_ON], [UI:PROTO_TABULA_RASA_OFF], [UI:DEV_PCBRUSS_ON], [UI:DEV_ROUTERBRUSS_OFF].\\n" +
+"Usa i tag UI per l'interfaccia. Per hardware reale del telefono (torcia, fotocamera), usa i tag [CMD:...] come in precedenza.";
 
 var chatHistory = [];
+
+// --- THE BRAIN (MEMORIA PERSISTENTE) ---
+// Attualmente configurato in Memoria Locale (il primo step per non fargli dimenticare nulla). 
+// L'architettura è pronta per sostituire "localStorage" con "Firebase" in futuro per sincronizzare PC, Oppo e Motorola.
+function saveState() {
+  var pDots = [], dDots = [];
+  document.querySelectorAll('.proto-item').forEach(function(el) { pDots.push(el.querySelector('.pdot').classList.contains('on')); });
+  document.querySelectorAll('.dev-item').forEach(function(el) { dDots.push(el.querySelector('.ddot').classList.contains('on')); });
+  localStorage.setItem('jarvis_memory', JSON.stringify({ chat: chatHistory, protos: pDots, devs: dDots }));
+}
+
+function loadState() {
+  var mem = localStorage.getItem('jarvis_memory');
+  if(mem) {
+    try {
+      var state = JSON.parse(mem);
+      chatHistory = state.chat || [];
+      document.getElementById('chat').innerHTML = '';
+      chatHistory.forEach(function(m){
+         if(m.role==='user') addMsg('USER', m.content, false);
+         else if(m.role==='assistant') addMsg('JARVIS', m.content, true);
+      });
+      if(state.protos) document.querySelectorAll('.proto-item').forEach(function(el, i) { el.querySelector('.pdot').className = state.protos[i] ? 'pdot on' : 'pdot off'; });
+      if(state.devs) document.querySelectorAll('.dev-item').forEach(function(el, i) { el.querySelector('.ddot').className = state.devs[i] ? 'ddot on' : 'ddot off'; });
+    } catch(e) {}
+  }
+}
+
+function getSystemState() {
+  var state = "STATO ATTUALE DASHBOARD:\\nProtocolli:\\n";
+  document.querySelectorAll('.proto-item').forEach(function(el) {
+    var isOn = el.querySelector('.pdot').classList.contains('on');
+    state += "- " + el.textContent.trim() + ": " + (isOn ? "ON" : "OFF") + "\\n";
+  });
+  state += "Dispositivi:\\n";
+  document.querySelectorAll('.dev-item').forEach(function(el) {
+    var isOn = el.querySelector('.ddot').classList.contains('on');
+    state += "- " + el.textContent.trim() + ": " + (isOn ? "ON" : "OFF") + "\\n";
+  });
+  return state;
+}
+
+function processUICommand(cmd) {
+  var parts = cmd.split('_');
+  if(parts.length < 3) return;
+  var type = parts[0];
+  var action = parts[parts.length-1];
+  var name = parts.slice(1, parts.length-1).join('_').toLowerCase();
+  var selector = type === 'PROTO' ? '.proto-item' : '.dev-item';
+  var dotClass = type === 'PROTO' ? '.pdot' : '.ddot';
+  
+  document.querySelectorAll(selector).forEach(function(el){
+    var text = el.textContent.trim().toLowerCase().replace(/\\s+/g, '_').replace(/\\./g,'');
+    if(text === name || text.includes(name)) {
+      var dot = el.querySelector(dotClass);
+      dot.className = dotClass.replace('.','') + (action === 'ON' ? ' on' : ' off');
+    }
+  });
+  saveState();
+}
 
 function send(){
   var inp = document.getElementById('inp');
@@ -408,9 +477,30 @@ function send(){
         try{
           var d = JSON.parse(xhr.responseText);
           var reply = d.choices && d.choices[0] ? d.choices[0].message.content : 'Errore.';
+          
+          var cmdMatch = reply.match(/\\[CMD:([a-zA-Z0-9_]+)\\]/g);
+          if(cmdMatch){
+            cmdMatch.forEach(function(m){
+              var cmd = m.replace('[CMD:','').replace(']','');
+              if(window.AppInventor) window.AppInventor.setWebViewString(cmd);
+              reply = reply.replace(m, '');
+            });
+          }
+
+          var uiMatch = reply.match(/\\[UI:([a-zA-Z0-9_]+)\\]/g);
+          if(uiMatch){
+            uiMatch.forEach(function(m){
+              var cmd = m.replace('[UI:','').replace(']','');
+              processUICommand(cmd);
+              reply = reply.replace(m, '');
+            });
+          }
+          
+          reply = reply.trim();
           chatHistory.push({role:'assistant', content:reply});
           if(chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
           addMsg('JARVIS', reply, true);
+          saveState();
         }catch(e){
           addMsg('JARVIS', 'Errore parsing risposta.', true);
         }
@@ -425,7 +515,10 @@ function send(){
     addMsg('JARVIS','Errore di rete.',true);
   };
   
-  var payloadMessages = [{role:'system', content:SYSTEM}].concat(chatHistory);
+  var payloadMessages = [
+    {role:'system', content:SYSTEM},
+    {role:'system', content:getSystemState()}
+  ].concat(chatHistory);
   
   xhr.send(JSON.stringify({
     model: 'llama-3.3-70b-versatile',
@@ -439,6 +532,9 @@ function send(){
 document.getElementById('inp').addEventListener('keypress', function(e){
   if(e.key === 'Enter') send();
 });
+
+// Avvio del sistema
+loadState();
 </script>
 </body>
 </html>
