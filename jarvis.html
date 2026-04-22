@@ -50,8 +50,8 @@ body{background:#000;color:#00d4ff;font-family:'Rajdhani',sans-serif;height:100v
 @keyframes rot2{from{transform:translate(-50%,-50%) rotate(0deg);}to{transform:translate(-50%,-50%) rotate(-360deg);}}
 .core-canvas{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:42px;height:42px;}
 .tsvg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:156px;height:156px;pointer-events:none;}
-.globe-section{display:flex;flex-direction:column;align-items:center;gap:2px;margin-top:8px;}
-.globe-wrap{position:relative;width:110px;height:110px;flex-shrink:0;}
+.globe-section{display:flex;flex-direction:column;align-items:center;gap:2px;margin-top:25px;}
+.globe-wrap{position:relative;width:130px;height:130px;flex-shrink:0;}
 canvas.globe{border-radius:50%;border:1px solid rgba(0,212,255,.3);box-shadow:0 0 12px rgba(0,212,255,.2);display:block;}
 .globe-tag{position:absolute;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;}
 .globe-tag.stop{width:10px;height:10px;background:#ff2200;box-shadow:0 0 7px #ff2200;}
@@ -83,7 +83,7 @@ canvas.globe{border-radius:50%;border:1px solid rgba(0,212,255,.3);box-shadow:0 
 .ddot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
 .ddot.on{background:#00ff88;box-shadow:0 0 5px #00ff88;animation:bk 2s infinite;}
 .ddot.off{background:#ff2200;box-shadow:0 0 4px #ff2200;}
-.ctrl-btn{width:100%;background:transparent;border:1px solid rgba(0,212,255,.35);color:#00d4ff;font-family:'Orbitron',monospace;font-size:10px;font-weight:700;padding:9px;cursor:pointer;letter-spacing:3px;position:relative;text-align:center;flex-shrink:0;}
+.ctrl-btn{margin-top:auto;width:100%;background:transparent;border:1px solid rgba(0,212,255,.35);color:#00d4ff;font-family:'Orbitron',monospace;font-size:12px;font-weight:700;padding:22px 9px;cursor:pointer;letter-spacing:3px;position:relative;text-align:center;flex-shrink:0;}
 .ctrl-btn::before{content:'';position:absolute;top:0;left:0;width:8px;height:8px;border-top:1px solid #00d4ff;border-left:1px solid #00d4ff;}
 .ctrl-btn::after{content:'';position:absolute;bottom:0;right:0;width:8px;height:8px;border-bottom:1px solid #ff6b00;border-right:1px solid #ff6b00;}
 .ctrl-btn:active{background:rgba(0,212,255,.08);}
@@ -136,10 +136,7 @@ canvas.globe{border-radius:50%;border:1px solid rgba(0,212,255,.3);box-shadow:0 
       </div>
       <div class="globe-section">
         <div class="globe-wrap">
-          <canvas id="globe" class="globe" width="110" height="110"></canvas>
-          <div class="globe-tag stop" id="gtag1"></div>
-          <div class="globe-tag move" id="gtag2"></div>
-          <div class="globe-tag here" id="gtag3"></div>
+          <canvas id="globe" class="globe" width="130" height="130"></canvas>
         </div>
         <div class="globe-label">▶ TAG TRACKER</div>
         <div class="tags">
@@ -174,7 +171,7 @@ canvas.globe{border-radius:50%;border:1px solid rgba(0,212,255,.3);box-shadow:0 
           <div class="proto-item"><div class="pdot off"></div>MOD. CASA</div>
         </div>
       </div>
-      <div class="panel-box" style="flex:1;">
+      <div class="panel-box">
         <div class="panel-title">▶ DISPOSITIVI</div>
         <div class="dev-list">
           <div class="dev-item"><div class="ddot on"></div>RouterBruss</div>
@@ -260,10 +257,10 @@ drawArcCore();
 
 var gc = document.getElementById('globe');
 var gctx = gc.getContext('2d');
-var GS = 110, GR = 52, GCX = 55, GCY = 55;
+var GS = 130, GR = 62, GCX = 65, GCY = 65;
 var rot = 0;
 var tilt = 15*Math.PI/180;
-var tagPositions = [{lat:45.07,lon:7.68}, {lat:45.12,lon:7.58}, {lat:45.02,lon:7.78}];
+var tagPositions = [];
 var continents = [
   [[0,50],[10,50],[20,45],[20,35],[15,25],[10,10],[5,0],[0,-10],[5,-20],[15,-30],[20,-35],[10,-35],[0,-30],[-5,-20],[-10,-10],[-5,0],[0,10]],
   [[-60,50],[-50,55],[-70,60],[-80,50],[-75,40],[-70,30],[-65,20],[-75,10],[-80,-5],[-75,-15],[-65,-20],[-55,-30],[-50,-40],[-55,-50],[-65,-55],[-60,-40],[-55,-30],[-60,-20],[-70,-10],[-75,0],[-80,10],[-85,20],[-90,30],[-85,40],[-80,50]],
@@ -278,7 +275,7 @@ function proj(lat,lon,r){
   var z = Math.sin(la)*Math.sin(tilt) + Math.cos(la)*Math.cos(lo)*Math.cos(tilt);
   return {x: GCX + x*GR, y: GCY - y*GR, z: z};
 }
-var tagEls = [document.getElementById('gtag1'), document.getElementById('gtag2'), document.getElementById('gtag3')];
+var tagEls = [];
 
 function drawGlobe(){
   gctx.clearRect(0,0,GS,GS);
