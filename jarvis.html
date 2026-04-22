@@ -33,7 +33,7 @@ body{background:#000;color:#00d4ff;font-family:'Rajdhani',sans-serif;height:100v
 .sbar{height:2px;background:rgba(0,212,255,.08);margin-top:2px;}
 .sfill{height:100%;background:linear-gradient(90deg,#00d4ff,#00ff88);transition:width 1s;}
 .main{display:flex;gap:8px;width:100%;flex:1;min-height:0;}
-.left-col{display:flex;flex-direction:column;align-items:center;gap:0px;flex-shrink:0;width:166px;}
+.left-col{display:flex;flex-direction:column;align-items:center;gap:0px;flex-shrink:0;width:166px;margin-top:15px;}
 .arc{position:relative;width:158px;height:158px;flex-shrink:0;}
 .aglow{position:absolute;inset:-12px;border-radius:50%;background:radial-gradient(circle,transparent 45%,rgba(0,180,255,.07) 70%,transparent 100%);animation:gp 2s ease-in-out infinite;}
 @keyframes gp{0%,100%{opacity:.5;}50%{opacity:1;}}
@@ -84,7 +84,7 @@ canvas.globe{border-radius:50%;border:1px solid rgba(0,212,255,.3);box-shadow:0 
 .ddot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
 .ddot.on{background:#00ff88;box-shadow:0 0 5px #00ff88;animation:bk 2s infinite;}
 .ddot.off{background:#ff2200;box-shadow:0 0 4px #ff2200;}
-.ctrl-btn{margin-top:auto;width:100%;background:transparent;border:1px solid rgba(0,212,255,.35);color:#00d4ff;font-family:'Orbitron',monospace;font-size:12px;font-weight:700;padding:22px 9px;cursor:pointer;letter-spacing:3px;position:relative;text-align:center;flex-shrink:0;}
+.ctrl-btn{width:100%;background:transparent;border:1px solid rgba(0,212,255,.35);color:#00d4ff;font-family:'Orbitron',monospace;font-size:12px;font-weight:700;padding:22px 9px;cursor:pointer;letter-spacing:3px;position:relative;text-align:center;flex-shrink:0;}
 .ctrl-btn::before{content:'';position:absolute;top:0;left:0;width:8px;height:8px;border-top:1px solid #00d4ff;border-left:1px solid #00d4ff;}
 .ctrl-btn::after{content:'';position:absolute;bottom:0;right:0;width:8px;height:8px;border-bottom:1px solid #ff6b00;border-right:1px solid #ff6b00;}
 .ctrl-btn:active{background:rgba(0,212,255,.08);}
