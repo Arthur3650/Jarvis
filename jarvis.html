@@ -381,12 +381,12 @@ function receiveFromKodular(msg){
 }
 
 var GROQ_KEY = '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';
-var SYSTEM = "Sei Jarvis, assistente IA avanzato (configurato per Salvo/Bruss). Rispondi in italiano. Tono: freddo, tecnico, sintetico. Zero chiacchiere.\\n" +
-"Il dispositivo principale è il Motorola (MotoBruss). L'OppoBruss è secondario.\\n" +
-"IMPORTANTE: Riceverai sempre lo STATO ATTUALE della dashboard di sistema in background.\\n" +
-"Se l'utente ordina di accendere/spegnere un dispositivo o attivare/disattivare un protocollo, DEVI usare un tag speciale per aggiornare la grafica dello schermo.\\n" +
-"Formato: [UI:TIPO_NOME_STATO] dove TIPO è PROTO o DEV, NOME è il nome con underscore al posto degli spazi, STATO è ON o OFF.\\n" +
-"Esempi: [UI:PROTO_GHOST_MODE_ON], [UI:PROTO_TABULA_RASA_OFF], [UI:DEV_PCBRUSS_ON], [UI:DEV_ROUTERBRUSS_OFF].\\n" +
+var SYSTEM = "Sei Jarvis, assistente IA avanzato (configurato per Salvo/Bruss). Rispondi in italiano. Tono: freddo, tecnico, sintetico. Zero chiacchiere.\n" +
+"Il dispositivo principale è il Motorola (MotoBruss). L'OppoBruss è secondario.\n" +
+"IMPORTANTE: Riceverai sempre lo STATO ATTUALE della dashboard di sistema in background.\n" +
+"Se l'utente ordina di accendere/spegnere un dispositivo o attivare/disattivare un protocollo, DEVI usare un tag speciale per aggiornare la grafica dello schermo.\n" +
+"Formato: [UI:TIPO_NOME_STATO] dove TIPO è PROTO o DEV, NOME è il nome con underscore al posto degli spazi, STATO è ON o OFF.\n" +
+"Esempi: [UI:PROTO_GHOST_MODE_ON], [UI:PROTO_TABULA_RASA_OFF], [UI:DEV_PCBRUSS_ON], [UI:DEV_ROUTERBRUSS_OFF].\n" +
 "Usa i tag UI per l'interfaccia. Per hardware reale del telefono (torcia, fotocamera), usa i tag [CMD:...] come in precedenza.";
 
 var chatHistory = [];
@@ -419,15 +419,15 @@ function loadState() {
 }
 
 function getSystemState() {
-  var state = "STATO ATTUALE DASHBOARD:\\nProtocolli:\\n";
+  var state = "STATO ATTUALE DASHBOARD:\nProtocolli:\n";
   document.querySelectorAll('.proto-item').forEach(function(el) {
     var isOn = el.querySelector('.pdot').classList.contains('on');
-    state += "- " + el.textContent.trim() + ": " + (isOn ? "ON" : "OFF") + "\\n";
+    state += "- " + el.textContent.trim() + ": " + (isOn ? "ON" : "OFF") + "\n";
   });
-  state += "Dispositivi:\\n";
+  state += "Dispositivi:\n";
   document.querySelectorAll('.dev-item').forEach(function(el) {
     var isOn = el.querySelector('.ddot').classList.contains('on');
-    state += "- " + el.textContent.trim() + ": " + (isOn ? "ON" : "OFF") + "\\n";
+    state += "- " + el.textContent.trim() + ": " + (isOn ? "ON" : "OFF") + "\n";
   });
   return state;
 }
@@ -442,7 +442,7 @@ function processUICommand(cmd) {
   var dotClass = type === 'PROTO' ? '.pdot' : '.ddot';
   
   document.querySelectorAll(selector).forEach(function(el){
-    var text = el.textContent.trim().toLowerCase().replace(/\\s+/g, '_').replace(/\\./g,'');
+    var text = el.textContent.trim().toLowerCase().replace(/\s+/g, '_').replace(/\./g,'');
     if(text === name || text.includes(name)) {
       var dot = el.querySelector(dotClass);
       dot.className = dotClass.replace('.','') + (action === 'ON' ? ' on' : ' off');
@@ -478,7 +478,7 @@ function send(){
           var d = JSON.parse(xhr.responseText);
           var reply = d.choices && d.choices[0] ? d.choices[0].message.content : 'Errore.';
           
-          var cmdMatch = reply.match(/\\[CMD:([a-zA-Z0-9_]+)\\]/g);
+          var cmdMatch = reply.match(/\[CMD:([a-zA-Z0-9_]+)\]/g);
           if(cmdMatch){
             cmdMatch.forEach(function(m){
               var cmd = m.replace('[CMD:','').replace(']','');
@@ -487,7 +487,7 @@ function send(){
             });
           }
 
-          var uiMatch = reply.match(/\\[UI:([a-zA-Z0-9_]+)\\]/g);
+          var uiMatch = reply.match(/\[UI:([a-zA-Z0-9_]+)\]/g);
           if(uiMatch){
             uiMatch.forEach(function(m){
               var cmd = m.replace('[UI:','').replace(']','');
