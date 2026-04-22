@@ -58,13 +58,14 @@ canvas.globe{border-radius:50%;border:1px solid rgba(0,212,255,.3);box-shadow:0 
 .globe-tag.move{width:10px;height:10px;background:#00ccff;box-shadow:0 0 7px #00ccff;animation:pmove 1s infinite;}
 .globe-tag.here{width:10px;height:10px;background:#00ff88;box-shadow:0 0 7px #00ff88;}
 @keyframes pmove{0%,100%{opacity:1;transform:translate(-50%,-50%) scale(1);}50%{opacity:.3;transform:translate(-50%,-50%) scale(1.5);}}
-.globe-label{font-size:7px;letter-spacing:2px;color:rgba(0,212,255,.4);text-align:center;}
-.tags{display:flex;flex-direction:column;gap:5px;width:100%;margin-top:4px;padding-left:4px;}
-.tag-item{display:flex;align-items:center;gap:7px;font-size:8.5px;letter-spacing:1px;color:rgba(0,212,255,.85);}
-.tdot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+.globe-label{font-size:7px;letter-spacing:2px;color:rgba(0,212,255,.4);text-align:center;margin-top:15px;}
+.tags{display:flex;flex-direction:column;gap:5px;width:100%;margin-top:8px;padding-left:4px;}
+.tag-item{display:flex;align-items:center;gap:8px;font-size:11px;letter-spacing:1.5px;color:rgba(0,212,255,.85);font-weight:600;}
+.tdot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
 .tdot.stop{background:#ff2200;box-shadow:0 0 5px #ff2200;}
-.tdot.move{background:#00ccff;box-shadow:0 0 5px #00ccff;animation:pmove 1s infinite;}
+.tdot.move{background:#00ccff;box-shadow:0 0 5px #00ccff;animation:tmove 1s infinite;}
 .tdot.here{background:#00ff88;box-shadow:0 0 5px #00ff88;}
+@keyframes tmove{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(1.4);}}
 .right-col{display:flex;flex-direction:column;gap:5px;flex:1;min-width:0;}
 .panel-box{background:rgba(0,12,25,.85);border:1px solid rgba(0,212,255,.18);padding:5px 8px;position:relative;flex-shrink:0;}
 .panel-title{font-size:7px;letter-spacing:2px;color:#ff6b00;margin-bottom:4px;}
@@ -73,12 +74,12 @@ canvas.globe{border-radius:50%;border:1px solid rgba(0,212,255,.3);box-shadow:0 
 .meteo-desc{font-size:8px;color:rgba(0,212,255,.6);letter-spacing:1px;margin-top:1px;}
 .meteo-city{font-size:7px;color:#ff6b00;margin-top:1px;}
 .meteo-detail{font-size:8px;color:rgba(0,212,255,.4);margin-top:1px;}
-.proto-list{display:flex;flex-direction:column;gap:3px;max-height:76px;overflow-y:auto;scrollbar-width:thin;}
+.proto-list{display:flex;flex-direction:column;gap:3px;max-height:50px;overflow-y:auto;scrollbar-width:thin;}
 .proto-item{display:flex;align-items:center;gap:5px;font-size:8.5px;letter-spacing:1px;color:rgba(0,212,255,.85);}
 .pdot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
 .pdot.on{background:#00ff88;box-shadow:0 0 4px #00ff88;}
 .pdot.off{background:#ff6b00;box-shadow:0 0 3px rgba(255,107,0,.4);}
-.dev-list{display:flex;flex-direction:column;gap:3px;}
+.dev-list{display:flex;flex-direction:column;gap:3px;max-height:50px;overflow-y:auto;scrollbar-width:thin;}
 .dev-item{display:flex;align-items:center;gap:5px;font-size:8.5px;letter-spacing:1px;color:rgba(0,212,255,.85);}
 .ddot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
 .ddot.on{background:#00ff88;box-shadow:0 0 5px #00ff88;animation:bk 2s infinite;}
