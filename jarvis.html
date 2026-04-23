@@ -3,50 +3,52 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>JARVIS - SUPREME v5.2 [OFFICIAL]</title>
+<title>JARVIS - SUPREME v5.4 [REAL MAP]</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:#000;color:#00d4ff;font-family:'Rajdhani',sans-serif;height:100vh;overflow:hidden;position:relative;}
 
-.bg{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, #001020 0%, #000 80%);}
+.bg{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, #001020 0%, #000 85%);}
 .grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,212,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.03) 1px,transparent 1px);background-size:40px 40px;}
 .scan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,212,255,0.01) 2px,rgba(0,212,255,0.01) 4px);pointer-events:none;z-index:99;}
 
 .wrap{position:relative;z-index:10;display:flex;flex-direction:column;height:100vh;padding:10px;gap:10px;}
 
 /* HEADER */
-.hdr{display:flex;justify-content:space-between;border-bottom:1px solid rgba(0,212,255,0.3);padding-bottom:5px;}
-.title{font-family:'Orbitron',sans-serif;font-size:16px;letter-spacing:5px;}
+.hdr{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(0,212,255,0.3);padding-bottom:5px;}
+.title{font-family:'Orbitron',sans-serif;font-size:18px;font-weight:900;letter-spacing:6px;text-shadow:0 0 10px #00d4ff;}
 
-.row{display:flex;gap:10px;flex:1;min-height:0;}
-.side{width:160px;display:flex;flex-direction:column;gap:10px;}
+.main{display:flex;gap:10px;flex:1;min-height:0;}
+.side{width:180px;display:flex;flex-direction:column;gap:10px;}
 .box{background:rgba(0,20,40,0.7);border:1px solid rgba(0,212,255,0.2);padding:10px;position:relative;}
 .box::before{content:'';position:absolute;top:0;left:0;width:8px;height:8px;border-top:2px solid #00d4ff;border-left:2px solid #00d4ff;}
-.bt{font-size:7px;color:#ff6b00;font-family:'Orbitron';margin-bottom:8px;}
+.bt{font-size:7px;color:#ff6b00;font-family:'Orbitron';margin-bottom:8px;letter-spacing:1px;}
 
-/* ARK REACTOR TRIANGOLARE (IMAGE 5) */
-.ark-container{width:140px;height:140px;margin:0 auto;display:flex;align-items:center;justify-content:center;position:relative;}
-.tri-wrap{width:100px;height:100px;position:relative;filter:drop-shadow(0 0 15px #00d4ff);}
-.tri-segment{position:absolute;width:0;height:0;border-left:40px solid transparent;border-right:40px solid transparent;border-top:70px solid rgba(0,212,255,0.2);}
-.tri-inner{position:absolute;top:10px;left:10px;width:80px;height:80px;background:radial-gradient(circle, #fff 0%, #00d4ff 40%, transparent 70%);border-radius:50%;animation:pulse 2s infinite;}
-@keyframes pulse{0%,100%{opacity:0.4;transform:scale(0.8);}50%{opacity:1;transform:scale(1.1);}}
+/* TRIANGULAR ARK (SOPRA IL MONDO) */
+.ark-container{height:150px;display:flex;align-items:center;justify-content:center;position:relative;}
+.ark-outer-glow{position:absolute;width:120px;height:120px;background:radial-gradient(circle, rgba(0,212,255,0.2) 0%, transparent 70%);border-radius:50%;animation:pulse 2s infinite;}
+#ark-svg{width:110px;height:110px;filter:drop-shadow(0 0 8px #00d4ff);}
+.tri-frame{fill:none;stroke:#00d4ff;stroke-width:2;}
+.tri-core{fill:#fff;filter:drop-shadow(0 0 5px #fff);}
 
-/* MONDO 3D (IMAGE 2) */
-#globe-canvas{display:block;margin:0 auto;filter:drop-shadow(0 0 10px rgba(0,255,180,0.5));}
+/* MONDO (IMAGE 2 STYLE) */
+.world-wrap{width:150px;height:150px;margin:0 auto;position:relative;border:1px solid rgba(0,212,255,0.2);background:rgba(0,0,0,0.5);}
+#world-canvas{position:absolute;inset:0;}
+.world-img{position:absolute;inset:10px;width:130px;height:130px;opacity:0.6;filter:hue-rotate(150deg) brightness(1.5);}
 
 /* CHAT */
-.chat{flex:1;display:flex;flex-direction:column;background:rgba(0,10,20,0.7);border:1px solid rgba(0,212,255,0.3);}
+.chat{flex:1;display:flex;flex-direction:column;background:rgba(0,10,20,0.8);border:1px solid rgba(0,212,255,0.2);}
 .msgs{flex:1;overflow-y:auto;padding:15px;scrollbar-width:none;}
 .msgs::-webkit-scrollbar{display:none;}
-.msg{margin-bottom:12px;font-size:12px;line-height:1.4;border-left:2px solid #00d4ff;padding-left:10px;color:#fff;}
-.msg.j{border-left-color:#ff6b00;color:#ffcc88;}
-.ms-tag{font-size:7px;opacity:0.4;letter-spacing:1px;margin-bottom:2px;}
+.msg{margin-bottom:12px;font-size:13px;line-height:1.5;border-left:2px solid #00d4ff;padding-left:12px;color:#fff;}
+.msg.j{border-left-color:#ff6b00;color:#ffcc88;background:rgba(255,107,0,0.02);}
 
-.inp-row{display:flex;padding:5px;gap:5px;background:rgba(0,0,0,0.5);border-top:1px solid rgba(0,212,255,0.2);}
-.hin{flex:1;background:rgba(0,30,60,0.3);border:1px solid #00d4ff;color:#fff;padding:10px;font-size:14px;outline:none;}
+.inp-row{display:flex;padding:8px;gap:8px;background:rgba(0,0,0,0.8);border-top:1px solid rgba(0,212,255,0.3);}
+.hin{flex:1;background:rgba(0,30,60,0.4);border:1px solid #00d4ff;color:#fff;padding:12px;font-size:14px;outline:none;}
 .hbtn{background:transparent;border:1px solid #ff6b00;color:#ff6b00;padding:0 20px;font-family:'Orbitron';font-size:10px;cursor:pointer;}
 
+@keyframes pulse{0%,100%{opacity:0.4;transform:scale(0.95);}50%{opacity:1;transform:scale(1.05);}}
 #dummy{position:absolute;opacity:0;pointer-events:none;top:-100px;}
 </style>
 </head>
@@ -55,40 +57,42 @@ body{background:#000;color:#00d4ff;font-family:'Rajdhani',sans-serif;height:100v
 
 <div class="wrap">
   <div class="hdr">
-    <div style="font-size:7px; opacity:0.6;">SYSTEM_UP</div>
+    <div style="font-size:7px; opacity:0.6;">SYSTEM_UP // STARK_OS_70B</div>
     <div class="title">J.A.R.V.I.S.</div>
-    <div style="font-size:7px; opacity:0.6;">STARK_OS</div>
+    <div style="font-size:7px; opacity:0.6;">STARK INDUSTRIES</div>
   </div>
   
-  <div class="row">
+  <div class="main">
     <div class="side">
-      <div class="box">
-        <div class="bt">SYSTEM_RADAR</div>
-        <canvas id="globe-canvas" width="130" height="130"></canvas>
-      </div>
-      <div class="ark-container">
-        <!-- REATTORE TRIANGOLARE SVG -->
-        <svg viewBox="0 0 100 100" style="width:100px; height:100px; filter:drop-shadow(0 0 10px #00d4ff);">
-          <path d="M50 15 L85 75 L15 75 Z" fill="none" stroke="#00d4ff" stroke-width="2" />
-          <path d="M50 25 L75 70 L25 70 Z" fill="rgba(0,212,255,0.2)">
-            <animate attributeName="fill-opacity" values="0.1;0.6;0.1" dur="2s" repeatCount="indefinite" />
+      <!-- REATTORE SOPRA IL MONDO -->
+      <div class="box ark-container">
+        <div class="ark-outer-glow"></div>
+        <svg id="ark-svg" viewBox="0 0 100 100">
+          <path class="tri-frame" d="M50 15 L85 75 L15 75 Z" />
+          <path d="M50 25 L75 70 L25 70 Z" fill="rgba(0,212,255,0.3)">
+            <animate attributeName="fill-opacity" values="0.2;0.7;0.2" dur="1.5s" repeatCount="indefinite" />
           </path>
-          <circle cx="50" cy="55" r="12" fill="#fff">
-            <animate attributeName="r" values="8;14;8" dur="2s" repeatCount="indefinite" />
-          </circle>
+          <circle class="tri-core" cx="50" cy="55" r="10" />
         </svg>
       </div>
+      
+      <!-- MONDO (RADAR REALE) -->
+      <div class="box world-wrap">
+        <div class="bt" style="position:absolute; top:5px; left:5px; z-index:2;">SYSTEM_RADAR</div>
+        <img src="Immagini/Mondo.png" class="world-img" alt="World Map">
+        <canvas id="world-canvas" width="150" height="150"></canvas>
+      </div>
+      
       <div class="box" style="flex:1">
-        <div class="bt">DEVICES</div>
-        <div style="font-size:9px;">MotoBruss <span style="color:#00ff88">OK</span></div>
-        <div style="font-size:9px;">OppoBruss <span style="color:#00ff88">OK</span></div>
-        <div style="font-size:9px;">PcBruss <span style="color:#00ff88">OK</span></div>
+        <div class="bt">DEVICES_LOG</div>
+        <div style="font-size:9px;">MotoBruss <span style="color:#00ff88">ONLINE</span></div>
+        <div style="font-size:9px;">PcBruss <span style="color:#00ff88">ONLINE</span></div>
       </div>
     </div>
     
     <div class="chat">
       <div class="msgs" id="chat"></div>
-      <div id="typ" style="display:none; color:#ff6b00; font-size:8px; padding-left:15px; margin-bottom:5px;">●●● ELABORAZIONE...</div>
+      <div id="typ" style="display:none; color:#ff6b00; font-size:8px; padding:10px 15px;">●●● ELABORAZIONE...</div>
       <div class="inp-row">
         <input class="hin" id="inp" placeholder="COMANDO..." type="text" autocomplete="off">
         <button class="hbtn" onclick="send()">INVIA ►</button>
@@ -103,11 +107,16 @@ body{background:#000;color:#00d4ff;font-family:'Rajdhani',sans-serif;height:100v
       </div>
       <div class="box" style="flex:1">
         <div class="bt">QUICK_LAUNCH</div>
-        <div style="font-size:8px; border:1px solid #00d4ff; padding:8px; text-align:center; margin-bottom:10px;">WHATSAPP</div>
-        <div style="font-size:8px; border:1px solid #00d4ff; padding:8px; text-align:center;">PRIME VIDEO</div>
-        <button onclick="openCam()" style="width:100%; background:transparent; border:1px solid #ff6b00; color:#ff6b00; padding:10px; font-family:'Orbitron'; font-size:8px; margin-top:20px; cursor:pointer;">📷 CAMERA</button>
+        <div style="font-size:9px; border:1px solid #00d4ff; padding:10px; text-align:center; margin-bottom:10px;">WHATSAPP</div>
+        <button onclick="openCam()" style="width:100%; background:transparent; border:1px solid #ff6b00; color:#ff6b00; padding:12px; font-family:'Orbitron'; font-size:9px; margin-top:30px; cursor:pointer;">📷 CAMERA</button>
       </div>
     </div>
+  </div>
+  
+  <div class="ftr">
+    <span id="clk">00:00:00</span>
+    <span>JARVIS v5.4 [ARK_TOP]</span>
+    <span id="upt">UPTIME: 0m</span>
   </div>
 </div>
 
@@ -117,35 +126,32 @@ body{background:#000;color:#00d4ff;font-family:'Rajdhani',sans-serif;height:100v
 var _K1 = 'gsk_dETVcTjKuuOYEGkdit5h';
 var _K2 = 'WGdyb3FYlnxwRdUSnehnzu4mZTPscrFS';
 var KEY = _K1 + _K2;
-var history = [];
+var chatHistory = [];
 
-// MONDO 3D (IMAGE 2 STYLE)
-var gctx = document.getElementById('globe-canvas').getContext('2d');
-var r = 0;
-function drawMondo(){
-  gctx.clearRect(0,0,130,130); r += 0.03;
-  gctx.beginPath(); gctx.arc(65,65,60,0,Math.PI*2); gctx.strokeStyle='rgba(0,255,180,0.1)'; gctx.stroke();
-  // Continenti stilizzati
-  gctx.fillStyle = 'rgba(0,255,180,0.3)';
-  for(var i=0; i<5; i++){
-    var x = 65 + Math.cos(r + i)*40; var y = 65 + Math.sin(r*0.5 + i)*30;
-    gctx.beginPath(); gctx.arc(x,y,15,0,Math.PI*2); gctx.fill();
-  }
-  gctx.beginPath(); gctx.moveTo(65,65); gctx.lineTo(65 + Math.cos(r)*60, 65 + Math.sin(r)*60);
-  gctx.strokeStyle='rgba(0,255,180,0.6)'; gctx.stroke();
-  requestAnimationFrame(drawMondo);
+// RADAR SU MAPPA REALE
+var gctx = document.getElementById('world-canvas').getContext('2d');
+var rot = 0;
+function drawRadar(){
+  gctx.clearRect(0,0,150,150); rot += 0.05;
+  gctx.save(); gctx.translate(75,75); gctx.rotate(rot);
+  gctx.beginPath(); gctx.moveTo(0,0); gctx.lineTo(65,0); gctx.strokeStyle='rgba(0,255,180,0.6)'; gctx.lineWidth=2; gctx.stroke();
+  var grad = gctx.createRadialGradient(0,0,5,0,0,65);
+  grad.addColorStop(0, 'rgba(0,255,180,0.3)'); grad.addColorStop(1, 'transparent');
+  gctx.fillStyle = grad; gctx.beginPath(); gctx.moveTo(0,0); gctx.arc(0,0,65,0,0.4); gctx.fill();
+  gctx.restore();
+  requestAnimationFrame(drawRadar);
 }
-drawMondo();
+drawRadar();
 
-function add(s,t,j){
+function addMsg(s,t,j){
   var d = document.createElement('div'); d.className = 'msg' + (j ? ' j' : '');
-  d.innerHTML = '<div class="ms-tag">'+s+' //</div>'+t;
+  d.innerHTML = '<div style="font-size:7px; opacity:0.5; margin-bottom:2px;">'+s+' //</div>'+t;
   var c = document.getElementById('chat'); c.appendChild(d); c.scrollTop = c.scrollHeight;
 }
 
 function send(){
-  var inp = document.getElementById('inp'); var txt = inp.value.trim(); if(!txt) return;
-  add('USER', txt, false); history.push({role:'user', content:txt}); inp.value = '';
+  var inp = document.getElementById('inp'); var text = inp.value.trim(); if(!text) return;
+  addMsg('USER', text, false); chatHistory.push({role:'user', content:text}); inp.value = '';
   document.getElementById('dummy').focus(); setTimeout(()=>document.getElementById('dummy').blur(), 50);
   
   var xhr = new XMLHttpRequest();
@@ -157,22 +163,25 @@ function send(){
       document.getElementById('typ').style.display='none';
       if(xhr.status===200){
         var r = JSON.parse(xhr.responseText).choices[0].message.content;
-        add('JARVIS', r.replace(/\[.*?\]/g,'').trim(), true);
-        history.push({role:'assistant', content:r});
-      } else { add('JARVIS', 'ERROR '+xhr.status, true); }
+        addMsg('JARVIS', r.replace(/\[.*?\]/g,'').trim(), true);
+        chatHistory.push({role:'assistant', content:r});
+      } else { addMsg('JARVIS', 'ERRORE API (CONTROLLARE KEY)', true); }
     }
   };
   document.getElementById('typ').style.display='block';
   xhr.send(JSON.stringify({
     model: 'llama-3.3-70b-versatile',
-    messages: [{role:'system', content:'Sei Jarvis. Rispondi in italiano.'}].concat(history.slice(-8))
+    messages: [{role:'system', content:'Sei Jarvis. Rispondi in italiano.'}].concat(chatHistory.slice(-6))
   }));
 }
 
 document.getElementById('inp').addEventListener('keydown', e => { if(e.key==='Enter') send(); });
-function openCam() { if(window.AppInventor) window.AppInventor.setWebViewString('CAMERA_ON'); }
+setInterval(()=>{
+  document.getElementById('clk').textContent = new Date().toLocaleTimeString('it-IT');
+  document.getElementById('upt').textContent = 'UPTIME: '+Math.floor((Date.now()-window.performance.timing.navigationStart)/60000)+'m';
+}, 1000);
 
-add('JARVIS', 'Sistema SUPREME v5.2 Online. Modello 70B attivo.', true);
+addMsg('JARVIS', 'Sistema v5.4 Online. Reattore in posizione superiore.', true);
 </script>
 </body>
 </html>
