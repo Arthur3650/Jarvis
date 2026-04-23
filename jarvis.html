@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>JARVIS - v7.6</title>
+<title>JARVIS - v7.7</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -26,32 +26,38 @@ body { background: #000; color: #00d4ff; font-family: 'Orbitron', sans-serif; he
 .map-box { flex: 1.5; border: 1px solid rgba(0,212,255,0.4); overflow: hidden; background: #000; }
 .map-iframe { width: 100%; height: 100%; border: none; filter: contrast(110%) brightness(90%); }
 
-/* COLONNA DESTRA */
-.col-right { width: 190px; display: flex; flex-direction: column; gap: 8px; }
+/* COLONNA DESTRA (3 BLOCCHI) */
+.col-right { width: 200px; display: flex; flex-direction: column; gap: 8px; }
+
+.box { background: rgba(0,5,10,0.9); padding: 10px; display: flex; flex-direction: column; }
+.box-title { font-size: 8px; color: #ff6b00; margin-bottom: 8px; font-weight: bold; font-family: 'Orbitron'; }
 
 /* DISPOSITIVI (GIALLO) */
-.box-dev { border: 2px solid #ffcc00; background: rgba(0,5,10,0.9); flex: 1; display: flex; flex-direction: column; padding: 8px; }
-.box-title { font-size: 8px; color: #ff6b00; margin-bottom: 8px; font-weight: bold; }
+.box-dev { border: 2px solid #ffcc00; flex: 1; }
 .dev-list { flex: 1; overflow-y: auto; scrollbar-width: none; font-family: 'Share Tech Mono'; font-size: 12px; }
 .dev-list::-webkit-scrollbar { display: none; }
 .dev-item { color: #888; margin-bottom: 4px; display: flex; align-items: center; gap: 5px; }
 .dev-item.on { color: #00d4ff; }
 
-/* CALENDARIO (ARANCIO) */
-.box-cal { border: 2px solid #ff6600; background: rgba(0,5,10,0.9); flex: 1.3; display: flex; flex-direction: column; padding: 8px; }
+/* TURNI (ARANCIO) */
+.box-cal { border: 2px solid #ff6600; flex: 1.2; }
 .cal-grid-header { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 8px; color: #ff6600; margin-bottom: 4px; border-bottom: 1px solid #333; }
 .cal-grid-body { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; flex: 1; }
 .cal-day { font-size: 9px; text-align: center; padding: 3px 0; color: #444; border: 1px solid #111; }
 .cal-day.today { border-color: #ff6600; color: #ff6600; background: rgba(255,102,0,0.1); }
-.cal-day.work { color: #fff; }
+.cal-day.work { color: #00d4ff; } /* LAVORO CIANO */
 .cal-day.ferie { color: #ff4444; background: rgba(255,0,0,0.1); }
+
+/* CONTROLLO (GRIGIO) */
+.box-control { 
+    border: 2px solid #444; background: rgba(30,30,30,1); flex: 0.5;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    font-size: 16px; letter-spacing: 4px; color: #00d4ff; font-weight: bold;
+}
 
 /* TAGS */
 .tag-row { display: flex; gap: 6px; }
-.tag-box { flex: 1; background: rgba(0,10,20,0.9); border: 2px solid #444; padding: 10px; text-align: center; font-size: 10px; color: #00d4ff; }
-
-/* CONTROLLO */
-.control-box { flex: 1.5; background: rgba(30,30,30,1); border: 2px solid #444; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 16px; letter-spacing: 4px; color: #00d4ff; }
+.tag-box { flex: 1; background: rgba(0,10,20,0.9); border: 2px solid #444; padding: 12px; text-align: center; font-size: 11px; color: #00d4ff; }
 
 /* CHAT */
 .chat-box { height: 130px; background: rgba(0,5,10,0.95); border: 1px solid #333; display: flex; flex-direction: column; }
@@ -80,8 +86,8 @@ body { background: #000; color: #00d4ff; font-family: 'Orbitron', sans-serif; he
     </div>
     
     <div class="col-right">
-      <div class="box-dev">
-        <div class="box-title">▶ DISPOSITIVI</div>
+      <div class="box box-dev">
+        <div class="box-title">▶ DISPOSITIVI WI-FI</div>
         <div class="dev-list">
           <div class="dev-item on">● Dispositivo 1</div>
           <div class="dev-item on">● Dispositivo 2</div>
@@ -96,12 +102,16 @@ body { background: #000; color: #00d4ff; font-family: 'Orbitron', sans-serif; he
         </div>
       </div>
       
-      <div class="box-cal">
+      <div class="box box-cal">
         <div class="box-title">▶ TURNI</div>
         <div class="cal-grid-header">
           <div>S</div><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div>
         </div>
         <div class="cal-grid-body" id="cal-body"></div>
+      </div>
+
+      <div class="box-control" onclick="openCam()">
+        CONTROLLO
       </div>
     </div>
   </div>
@@ -110,7 +120,6 @@ body { background: #000; color: #00d4ff; font-family: 'Orbitron', sans-serif; he
     <div class="tag-box">TAG 01</div>
     <div class="tag-box">TAG 02</div>
     <div class="tag-box">TAG 03</div>
-    <div class="control-box" onclick="openCam()">CONTROLLO</div>
   </div>
   
   <div class="chat-box">
@@ -183,7 +192,7 @@ function send(){
 
 document.getElementById('inp').addEventListener('keydown', function(e){ if(e.key==='Enter') send(); });
 function openCam(){ if(window.AppInventor) window.AppInventor.setWebViewString('CAMERA_ON'); }
-addMsg('JARVIS', 'Protocollo Turni ricalibrato v7.6.', false);
+addMsg('JARVIS', 'Layout ricalibrato v7.7 Online.', false);
 </script>
 </body>
 </html>
