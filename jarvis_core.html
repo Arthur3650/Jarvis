@@ -208,7 +208,7 @@ canvas.globe{border-radius:50%;border:1px solid rgba(0,212,255,.3);box-shadow:0 
     </div>
   </div>
   <div class="ftr">
-    <span>JARVIS v3.1 (CORE)</span><span id="upt">UPTIME: 0m</span><span>LLAMA 3.3 70B</span>
+    <span>JARVIS v3.2 (CORE)</span><span id="upt">UPTIME: 0m</span><span>LLAMA 3.3 70B</span>
   </div>
 </div>
 <script>
@@ -642,9 +642,8 @@ function send(){
     };
     
     var payloadMessages = [
-      {role:'system', content:SYSTEM},
-      {role:'system', content:getSystemState()}
-    ].concat(chatHistory);
+      {role:'system', content: SYSTEM + "\n\n" + getSystemState()}
+    ].concat(chatHistory.filter(function(m){ return m && m.content; }));
     
     xhr.send(JSON.stringify({
       model: 'llama-3.3-70b-versatile',
