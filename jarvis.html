@@ -2,89 +2,219 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>J.A.R.V.I.S. - DARK SPHERE HUB</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>JARVIS - SUPREME HUD MIX</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;}
-body{background:#000;color:#00d4ff;font-family:'Orbitron',sans-serif;height:100vh;overflow:hidden;position:relative;}
+body{background:#000;color:#00d4ff;font-family:'Rajdhani',sans-serif;height:100vh;overflow:hidden;position:relative;}
 
-/* SFONDO */
-.bg{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, #001525 0%, #000 70%);}
+/* SFONDO DINAMICO */
+.bg{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, #001020 0%, #000 80%);}
+.grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,212,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.03) 1px,transparent 1px);background-size:40px 40px;}
+.scanlines{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,212,255,0.01) 2px,rgba(0,212,255,0.01) 4px);pointer-events:none;}
 
-/* SFERA CENTRALE */
-.center-sphere{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:400px;height:400px;display:flex;align-items:center;justify-content:center;}
-.core-glow{width:120px;height:120px;background:radial-gradient(circle, #fff 0%, #00d4ff 40%, #00d4ff 60%, transparent 100%);border-radius:50%;box-shadow:0 0 50px #00d4ff, 0 0 100px rgba(0,212,255,0.5);}
-.ring{position:absolute;border:2px dashed rgba(0,212,255,0.3);border-radius:50%;}
-.r1{width:200px;height:200px;animation:rot 20s linear infinite;}
-.r2{width:260px;height:260px;animation:rot 30s linear infinite reverse;}
-.r3{width:320px;height:320px;animation:rot 40s linear infinite;}
+/* SFERA CENTRALE SFUMATA (DARK SPHERE STYLE) */
+.dark-sphere{position:absolute;top:40%;left:50%;transform:translate(-50%,-50%);width:500px;height:500px;background:radial-gradient(circle, rgba(0,212,255,0.1) 0%, transparent 70%);border-radius:50%;filter:blur(30px);z-index:1;animation:pulse 4s infinite;}
+@keyframes pulse{0%,100%{opacity:0.3;transform:translate(-50%,-50%) scale(1);}50%{opacity:0.6;transform:translate(-50%,-50%) scale(1.1);}}
 
-@keyframes rot{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+.wrap{position:relative;z-index:10;display:flex;flex-direction:column;height:100vh;padding:10px;gap:10px;}
 
-/* DISPOSITIVI (Sotto a Sinistra) */
-.devices-box{position:absolute;bottom:20px;left:20px;width:320px;background:rgba(0,10,20,0.8);border:1px solid #00d4ff;padding:15px;box-shadow:0 0 15px rgba(0,212,255,0.2);}
-.dev-title{font-size:10px;text-align:center;color:#00d4ff;border-bottom:1px solid #00d4ff;padding-bottom:5px;margin-bottom:10px;letter-spacing:2px;}
-.dev-item{display:flex;justify-content:space-between;align-items:center;font-size:9px;margin-bottom:8px;letter-spacing:1px;}
-.dev-bar{width:80px;height:6px;border:1px solid #00d4ff;position:relative;background:rgba(0,212,255,0.1);}
-.dev-fill{position:absolute;top:0;left:0;height:100%;background:#00d4ff;width:70%;}
+/* HEADER */
+.hdr{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(0,212,255,0.3);padding-bottom:5px;background:rgba(0,0,0,0.5);}
+.title{font-family:'Orbitron',sans-serif;font-size:18px;font-weight:900;letter-spacing:6px;text-shadow:0 0 10px #00d4ff;}
+.st-text{font-size:8px;opacity:0.6;letter-spacing:2px;}
 
-/* PULSANTI (Destra) */
-.btn-group-top{position:absolute;top:20px;right:20px;display:flex;flex-direction:column;gap:10px;}
-.btn-group-bottom{position:absolute;bottom:20px;right:20px;display:flex;flex-direction:column;gap:10px;}
-.btn{width:200px;background:rgba(0,20,40,0.6);border:1px solid #00d4ff;color:#00d4ff;padding:12px;font-size:10px;text-align:center;cursor:pointer;transition:0.3s;letter-spacing:2px;}
-.btn:hover{background:rgba(0,212,255,0.2);box-shadow:0 0 15px #00d4ff;}
+.main{display:flex;gap:10px;flex:1;min-height:0;}
 
-/* MAPPAMONDO (Sopra a Sinistra) */
-.globe-box{position:absolute;top:20px;left:20px;width:180px;height:180px;border:1px solid #00d4ff;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;}
-.globe-sphere{width:140px;height:140px;background:radial-gradient(circle at 30% 30%, #001525, #000);border-radius:50%;border:1px solid rgba(0,212,255,0.3);position:relative;}
+/* SIDEBARS */
+.side{width:180px;display:flex;flex-direction:column;gap:10px;}
+.box{background:rgba(0,20,40,0.7);border:1px solid rgba(0,212,255,0.2);padding:10px;position:relative;}
+.box::before{content:'';position:absolute;top:0;left:0;width:8px;height:8px;border-top:2px solid #00d4ff;border-left:2px solid #00d4ff;}
+.bt-label{font-size:8px;color:#ff6b00;margin-bottom:8px;font-family:'Orbitron';letter-spacing:1px;}
 
-/* FOOTER */
-.ftr{position:absolute;bottom:5px;left:5px;font-size:8px;opacity:0.3;}
+/* MONDO & ARC */
+#globe-canvas{display:block;margin:0 auto;filter:drop-shadow(0 0 5px rgba(0,212,255,0.3));}
+.arc-container{height:120px;display:flex;align-items:center;justify-content:center;}
+#tsvg{width:110px;height:110px;transform:rotate(-90deg);}
+
+/* LISTS */
+.list-item{display:flex;justify-content:space-between;font-size:9px;margin-bottom:4px;border-bottom:1px solid rgba(0,212,255,0.1);padding-bottom:2px;}
+.status-ok{color:#00ff88;font-weight:bold;}
+
+/* CHAT CENTER */
+.chat-center{flex:1;display:flex;flex-direction:column;background:rgba(0,5,10,0.4);border:1px solid rgba(0,212,255,0.1);backdrop-filter:blur(5px);}
+.msgs{flex:1;overflow-y:auto;padding:15px;scrollbar-width:none;}
+.msgs::-webkit-scrollbar{display:none;}
+.msg{margin-bottom:12px;font-size:13px;line-height:1.5;border-left:2px solid #00d4ff;padding-left:12px;color:#fff;}
+.msg.j{border-left-color:#ff6b00;color:#ffcc88;background:rgba(255,107,0,0.03);}
+.ms-tag{font-size:7px;opacity:0.5;margin-bottom:3px;letter-spacing:2px;}
+
+/* INPUT */
+.inp-row{display:flex;padding:8px;gap:8px;background:rgba(0,0,0,0.8);border-top:1px solid rgba(0,212,255,0.3);}
+.hin{flex:1;background:rgba(0,30,60,0.3);border:1px solid #00d4ff;color:#fff;padding:12px;font-family:inherit;font-size:14px;outline:none;}
+.hbtn{background:transparent;border:1px solid #ff6b00;color:#ff6b00;padding:0 20px;font-family:'Orbitron';font-size:10px;cursor:pointer;}
+
+/* QUICK BUTTONS */
+.q-btn{background:rgba(0,40,80,0.3);border:1px solid rgba(0,212,255,0.4);color:#00d4ff;padding:8px;font-size:9px;text-align:center;cursor:pointer;margin-bottom:5px;transition:0.3s;}
+.q-btn:hover{background:rgba(0,212,255,0.2);border-color:#00d4ff;}
+
+.ftr{display:flex;justify-content:space-between;font-size:8px;opacity:0.4;padding:5px;}
+#dummy-focus{position:absolute;opacity:0;pointer-events:none;top:-100px;}
 </style>
 </head>
 <body>
-<div class="bg"></div>
+<div class="bg"></div><div class="grid"></div><div class="scanlines"></div>
+<div class="dark-sphere"></div>
 
-<!-- MAPPAMONDO -->
-<div class="globe-box">
-  <div class="globe-sphere"></div>
+<div class="wrap">
+  <div class="hdr">
+    <div class="st-text">● CORE_SYSTEM_ACTIVE</div>
+    <div class="title">J.A.R.V.I.S.</div>
+    <div class="st-text">STARK INDUSTRIES // 2026</div>
+  </div>
+  
+  <div class="main">
+    <div class="side">
+      <div class="box">
+        <div class="bt-label">SYSTEM_RADAR</div>
+        <canvas id="globe-canvas" width="150" height="150"></canvas>
+      </div>
+      <div class="box">
+        <div class="bt-label">ARC_REACTOR</div>
+        <div class="arc-container">
+          <svg id="tsvg" viewBox="0 0 156 156"></svg>
+        </div>
+      </div>
+      <div class="box" style="flex:1">
+        <div class="bt-label">DEVICES_LOG</div>
+        <div class="list-item"><span>RouterBruss</span><span class="status-ok">ONLINE</span></div>
+        <div class="list-item"><span>MotoBruss</span><span class="status-ok">ONLINE</span></div>
+        <div class="list-item"><span>OppoBruss</span><span class="status-ok">ONLINE</span></div>
+        <div class="list-item"><span>PcBruss</span><span class="status-ok">ONLINE</span></div>
+        <div style="font-size:6px; opacity:0.3; margin-top:10px;">TOTAL: 9 NODES FOUND</div>
+      </div>
+    </div>
+    
+    <div class="chat-center">
+      <div class="msgs" id="chat"></div>
+      <div id="typ" style="display:none; color:#ff6b00; font-size:8px; padding:5px 15px;">●●● ELABORAZIONE...</div>
+      <div class="inp-row">
+        <input class="hin" id="inp" placeholder="COMANDO..." type="text" autocomplete="off">
+        <button class="hbtn" onclick="send()">INVIA ►</button>
+      </div>
+    </div>
+    
+    <div class="side">
+      <div class="box">
+        <div class="bt-label">PROTOCOLS</div>
+        <div class="list-item"><span>HOUSE_GUARD</span><span class="status-ok">ON</span></div>
+        <div class="list-item"><span>BT_MESH</span><span class="status-ok">ON</span></div>
+        <div class="list-item"><span>NIGHT_MODE</span><span style="color:#ff6b00">OFF</span></div>
+      </div>
+      <div class="box">
+        <div class="bt-label">TACTICAL_SHIFTS</div>
+        <div style="font-size:9px; color:#fff;">LUN-VEN: 08:00 - 17:00</div>
+        <div style="font-size:7px; opacity:0.4; margin-top:5px;">SAB-DOM: STANDBY</div>
+      </div>
+      <div class="box" style="flex:1">
+        <div class="bt-label">QUICK_LAUNCH</div>
+        <div class="q-btn">WHATSAPP</div>
+        <div class="q-btn">FACEBOOK</div>
+        <div class="q-btn">PRIME VIDEO</div>
+        <div class="q-btn">DISNEY+</div>
+        <div class="q-btn">RAIPLAY</div>
+        <button onclick="openCam()" style="width:100%; background:transparent; border:1px solid #ff6b00; color:#ff6b00; padding:8px; font-family:'Orbitron'; font-size:8px; margin-top:10px;">📷 CAM_CONTROL</button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="ftr">
+    <span id="clk">00:00:00</span>
+    <span>JARVIS v5.0 [SUPREME MIX]</span>
+    <span id="upt">UPTIME: 0m</span>
+  </div>
 </div>
 
-<!-- SFERA CENTRALE -->
-<div class="center-sphere">
-  <div class="ring r1"></div>
-  <div class="ring r2"></div>
-  <div class="ring r3"></div>
-  <div class="core-glow"></div>
-</div>
+<input type="text" id="dummy-focus">
 
-<!-- DISPOSITIVI -->
-<div class="devices-box">
-  <div class="dev-title">DISPOSITIVI COLLEGATI</div>
-  <div class="dev-item"><span>ROUTERBRUSS</span><span>192.168.43.1</span><div class="dev-bar"><div class="dev-fill" style="width:90%"></div></div></div>
-  <div class="dev-item"><span>MOTOBRUSS</span><span>192.168.43.103</span><div class="dev-bar"><div class="dev-fill" style="width:75%"></div></div></div>
-  <div class="dev-item"><span>OPPOBRUSS</span><span>192.168.43.164</span><div class="dev-bar"><div class="dev-fill" style="width:100%"></div></div></div>
-  <div class="dev-item"><span>PCBRUSS</span><span>192.168.43.208</span><div class="dev-bar"><div class="dev-fill" style="width:85%"></div></div></div>
-  <div class="dev-item"><span>HUAWEIBRUSS</span><span>192.168.43.235</span><div class="dev-bar"><div class="dev-fill" style="width:60%"></div></div></div>
-  <div class="dev-item"><span>PS4BRUSS</span><span>192.168.43.156</span><div class="dev-bar"><div class="dev-fill" style="width:95%"></div></div></div>
-</div>
+<script>
+var _K1 = 'gsk_dETVcTjKuuOYEGkdit5h';
+var _K2 = 'WGdyb3FYlnxwRdUSnehnzu4mZTPscrFS';
+var GROQ_KEY = _K1 + _K2;
+var chatHistory = [];
 
-<!-- PULSANTI TOP -->
-<div class="btn-group-top">
-  <div class="btn">WHATSAPP</div>
-  <div class="btn">FACEBOOK</div>
-</div>
+// ARC REACTOR
+var tsvg = document.getElementById('tsvg');
+for(var i=0; i<72; i++){
+  var a = (i/72)*Math.PI*2; var r = 74; var len = i%6===0 ? 10 : 5;
+  var l = document.createElementNS('http://www.w3.org/2000/svg','line');
+  l.setAttribute('x1', 78 + Math.sin(a)*r); l.setAttribute('y1', 78 - Math.cos(a)*r);
+  l.setAttribute('x2', 78 + Math.sin(a)*(r-len)); l.setAttribute('y2', 78 - Math.cos(a)*(r-len));
+  l.setAttribute('stroke', i%6===0 ? 'rgba(0,212,255,0.9)' : 'rgba(0,212,255,0.3)');
+  l.setAttribute('stroke-width', i%6===0 ? '2' : '1');
+  tsvg.appendChild(l);
+}
 
-<!-- PULSANTI BOTTOM -->
-<div class="btn-group-bottom">
-  <div class="btn">PRIME VIDEO</div>
-  <div class="btn">DISNEY+</div>
-  <div class="btn">MEDIASET</div>
-  <div class="btn">RAIPLAY</div>
-</div>
+// RADAR GLOBE (Mondo.png Style)
+var gc = document.getElementById('globe-canvas'); var gctx = gc.getContext('2d');
+var rot = 0;
+function drawRadar(){
+  gctx.clearRect(0,0,150,150);
+  gctx.beginPath(); gctx.arc(75,75,70,0,Math.PI*2); gctx.strokeStyle='rgba(0,255,180,0.15)'; gctx.stroke();
+  gctx.beginPath(); gctx.arc(75,75,40,0,Math.PI*2); gctx.stroke();
+  gctx.beginPath(); gctx.moveTo(75,75); gctx.lineTo(75 + Math.cos(rot)*70, 75 + Math.sin(rot)*70);
+  gctx.strokeStyle='rgba(0,255,180,0.5)'; gctx.stroke();
+  for(var i=0; i<10; i++){
+    var a = rot - i*0.1;
+    gctx.beginPath(); gctx.arc(75,75,70,a,a+0.1); gctx.strokeStyle='rgba(0,255,180,'+(0.5-i*0.05)+')'; gctx.lineWidth=5; gctx.stroke();
+  }
+  rot += 0.04; requestAnimationFrame(drawRadar);
+}
+drawRadar();
 
-<div class="ftr">J.A.R.V.I.S. - DARK SPHERE HUB</div>
+function addMsg(s,t,j){
+  var d = document.createElement('div'); d.className = 'msg' + (j ? ' j' : '');
+  d.innerHTML = '<div class="ms-tag">'+s+' //</div>'+t;
+  var c = document.getElementById('chat'); c.appendChild(d); c.scrollTop = c.scrollHeight;
+}
 
+function send(){
+  var inp = document.getElementById('inp'); var text = inp.value.trim(); if(!text) return;
+  addMsg('USER', text, false); chatHistory.push({role:'user', content:text}); inp.value = '';
+  var dummy = document.getElementById('dummy-focus');
+  dummy.focus(); setTimeout(function(){ dummy.blur(); }, 50);
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST','https://api.groq.com/openai/v1/chat/completions',true);
+  xhr.setRequestHeader('Content-Type','application/json');
+  xhr.setRequestHeader('Authorization','Bearer '+GROQ_KEY);
+  xhr.onreadystatechange = function(){
+    if(xhr.readyState === 4){
+      document.getElementById('typ').style.display = 'none';
+      if(xhr.status === 200){
+        var d = JSON.parse(xhr.responseText); var reply = d.choices[0].message.content;
+        addMsg('JARVIS', reply.replace(/\[.*?\]/g,'').trim(), true);
+        chatHistory.push({role:'assistant', content:reply});
+      } else { addMsg('JARVIS', 'ERROR 400', true); }
+    }
+  };
+  document.getElementById('typ').style.display = 'block';
+  xhr.send(JSON.stringify({
+    model: 'llama3-8b-8192',
+    messages: [{role:'system', content:'Sei Jarvis.'}].concat(chatHistory.slice(-6))
+  }));
+}
+
+document.getElementById('inp').addEventListener('keydown',function(e){ if(e.key==='Enter') send(); });
+
+setInterval(function(){
+  document.getElementById('clk').textContent = new Date().toLocaleTimeString('it-IT');
+  document.getElementById('upt').textContent = 'UPTIME: '+Math.floor((Date.now()-window.performance.timing.navigationStart)/60000)+'m';
+}, 1000);
+
+function openCam() { if(window.AppInventor) window.AppInventor.setWebViewString('CAMERA_ON'); }
+
+addMsg('JARVIS', 'Sistema SUPREME v5.0 Online. Mix caricato.', true);
+</script>
 </body>
 </html>
