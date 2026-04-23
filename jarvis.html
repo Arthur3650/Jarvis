@@ -50,6 +50,8 @@ body{background:#000;color:#00d4ff;font-family:'Rajdhani',sans-serif;height:100v
 @keyframes rot2{from{transform:translate(-50%,-50%) rotate(0deg);}to{transform:translate(-50%,-50%) rotate(-360deg);}}
 .core-canvas{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:42px;height:42px;}
 .tsvg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:156px;height:156px;pointer-events:none;}
+.radar-sweep { position:absolute; top:50%; left:50%; width:200px; height:200px; background:conic-gradient(from 0deg, transparent 70%, rgba(0,212,255,0.4) 100%); transform-origin:0 0; animation:sweep 3s linear infinite; pointer-events:none; }
+@keyframes sweep { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 .globe-section{display:flex;flex-direction:column;align-items:center;gap:2px;margin-top:25px;}
 .globe-wrap{position:relative;width:130px;height:130px;flex-shrink:0;}
 canvas.globe{border-radius:50%;border:1px solid rgba(0,212,255,.3);box-shadow:0 0 12px rgba(0,212,255,.2);display:block;}
@@ -183,6 +185,12 @@ canvas.globe{border-radius:50%;border:1px solid rgba(0,212,255,.3);box-shadow:0 
           <div class="dev-item"><div class="ddot off"></div>ProiettoreBruss</div>
           <div class="dev-item"><div class="ddot off"></div>ChromecastBruss</div>
           <div class="dev-item"><div class="ddot off"></div>RedmIlenia</div>
+        </div>
+      </div>
+      <div class="panel-box" style="flex:1; display:flex; flex-direction:column; min-height:60px;">
+        <div class="panel-title">▶ DISPLAY TATTICO</div>
+        <div id="tactical-screen" style="flex:1; display:flex; align-items:center; justify-content:center; border:1px solid rgba(0,212,255,0.15); background:rgba(0,12,25,0.6); position:relative; overflow:hidden;">
+          <div style="font-size:7px; color:rgba(0,212,255,0.3); letter-spacing:2px;">MODULO IN ATTESA</div>
         </div>
       </div>
       <button class="ctrl-btn" onclick="openControllo()">📷 CONTROLLO</button>
@@ -361,8 +369,11 @@ xhrMeteo.onreadystatechange = function() {
 };
 xhrMeteo.send();
 
+xhrMeteo.send();
+
 function openControllo(){ 
-  addMsg('JARVIS','Avvio modulo telecamera in corso...',true);
+  addMsg('JARVIS','Avvio feed camera di sorveglianza...',true);
+  processUICommand('CAM_SHOW');
   if(window.AppInventor) window.AppInventor.setWebViewString('CAMERA_ON');
 }
 
@@ -382,13 +393,15 @@ function receiveFromKodular(msg){
 
 var GROQ_KEY = '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';
 var SYSTEM = "Sei Jarvis, assistente IA avanzato (configurato per Salvo/Bruss). Rispondi in italiano. Tono: freddo, tecnico, sintetico. Zero chiacchiere.\n" +
-"Dispositivo principale: MotoBruss. Riceverai lo STATO ATTUALE della dashboard in background.\n" +
+"Dispositivo principale: MotoBruss. Riceverai lo STATO ATTUALE in background.\n" +
 "REGOLE COMANDI (FONDAMENTALE):\n" +
-"1) Per cambiare grafica interfaccia usa: [UI:PROTO_NOME_ON], [UI:DEV_NOME_OFF]\n" +
-"2) Per azionare HARDWARE REALE (es. torcia) DEVI usare: [CMD:NOME_TASK]. Esempi esatti e obbligatori: [CMD:TORCIA_ON], [CMD:TORCIA_OFF], [CMD:CAMERA_ON].\n" +
-"Se l'utente dice 'accendi la torcia', DEVI rispondere ESATTAMENTE: '[CMD:TORCIA_ON] Torcia principale attivata, signore.'";
+"1) Grafica interfaccia: [UI:PROTO_NOME_ON], [UI:DEV_NOME_OFF]\n" +
+"2) Hardware fisico: [CMD:NOME_TASK]. Es. obbligatori: [CMD:TORCIA_ON], [CMD:TORCIA_OFF].\n" +
+"3) DISPLAY TATTICO: Se l'utente chiede i suoi turni o un calendario, usa: [UI:CAL_SHOW]. Per la mappa/radar: [UI:MAPS_SHOW]. Se dichiara di aver preso FERIE in un certo giorno, segnale con: [UI:FERIE_ADD_YYYY-MM-DD] calcolando la data (Usa ISO Date che ricevi in background).\n" +
+"Esempio: L'utente dice 'Domani ho preso ferie'. Tu calcoli il giorno di domani e scrivi '[UI:FERIE_ADD_2026-04-24] Ho registrato il permesso sul calendario, signore.'";
 
 var chatHistory = [];
+var ferieList = [];
 
 // --- SENSORI HARDWARE (PROATTIVITA') ---
 var battLevel = "Sconosciuto";
@@ -403,13 +416,11 @@ if(navigator.getBattery) {
 }
 
 // --- THE BRAIN (MEMORIA PERSISTENTE) ---
-// Attualmente configurato in Memoria Locale (il primo step per non fargli dimenticare nulla). 
-// L'architettura è pronta per sostituire "localStorage" con "Firebase" in futuro per sincronizzare PC, Oppo e Motorola.
 function saveState() {
   var pDots = [], dDots = [];
   document.querySelectorAll('.proto-item').forEach(function(el) { pDots.push(el.querySelector('.pdot').classList.contains('on')); });
   document.querySelectorAll('.dev-item').forEach(function(el) { dDots.push(el.querySelector('.ddot').classList.contains('on')); });
-  localStorage.setItem('jarvis_memory', JSON.stringify({ chat: chatHistory, protos: pDots, devs: dDots }));
+  localStorage.setItem('jarvis_memory', JSON.stringify({ chat: chatHistory, protos: pDots, devs: dDots, ferie: ferieList }));
 }
 
 function loadState() {
@@ -418,6 +429,7 @@ function loadState() {
     try {
       var state = JSON.parse(mem);
       chatHistory = state.chat || [];
+      ferieList = state.ferie || [];
       document.getElementById('chat').innerHTML = '';
       chatHistory.forEach(function(m){
          if(m.role==='user') addMsg('USER', m.content, false);
@@ -428,10 +440,13 @@ function loadState() {
     } catch(e) {}
   }
 }
+loadState();
 
 function getSystemState() {
   var state = "STATO ATTUALE DASHBOARD E HARDWARE:\n";
-  state += "Data e Ora Locale: " + new Date().toLocaleString('it-IT') + "\n";
+  var dObj = new Date();
+  var iso = dObj.getFullYear() + "-" + String(dObj.getMonth()+1).padStart(2,'0') + "-" + String(dObj.getDate()).padStart(2,'0');
+  state += "Data e Ora Locale: " + dObj.toLocaleString('it-IT') + " (ISO: " + iso + ")\n";
   var mTemp = document.getElementById('meteo-temp') ? document.getElementById('meteo-temp').textContent : '--';
   var mDesc = document.getElementById('meteo-desc') ? document.getElementById('meteo-desc').textContent : '--';
   state += "Meteo Attuale: " + mTemp + " " + mDesc + "\n";
@@ -449,17 +464,82 @@ function getSystemState() {
   return state;
 }
 
+// --- DISPLAY TATTICO MULTIFUNZIONE ---
+function renderCalendar() {
+  var anchorDate = new Date("2026-04-23T00:00:00"); // Turno 1 (Notte 1)
+  var cycle = ['N','N','N','N','R','R','P','P','P','P','R','M','M','M','M','R'];
+  var html = '<div style="display:flex; width:100%; height:100%; justify-content:space-evenly; align-items:center;">';
+  var today = new Date(); today.setHours(0,0,0,0);
+  
+  for(var i=0; i<7; i++) {
+    var d = new Date(today); d.setDate(d.getDate() + i);
+    var diffDays = Math.floor((d.getTime() - anchorDate.getTime()) / (1000 * 3600 * 24));
+    var cycleIndex = diffDays % 16; if(cycleIndex < 0) cycleIndex += 16;
+    var shift = cycle[cycleIndex];
+    
+    var isoStr = d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,'0') + "-" + String(d.getDate()).padStart(2,'0');
+    var isFerie = ferieList.includes(isoStr);
+    
+    var color = '#00d4ff'; 
+    if(shift === 'R') color = '#00ff88'; // Riposo = Verde
+    if(isFerie) { shift = 'F'; color = '#ff2a2a'; } // Ferie = Rosso
+    
+    var dayName = ['D','L','M','M','G','V','S'][d.getDay()];
+    var isToday = (i===0) ? 'background:rgba(0,212,255,0.2);' : '';
+    
+    html += '<div style="display:flex; flex-direction:column; gap:3px; align-items:center; padding:3px; border-radius:2px; '+isToday+'">';
+    html += '<span style="font-size:5px; color:rgba(0,212,255,0.7);">'+dayName+' '+String(d.getDate()).padStart(2,'0')+'</span>';
+    html += '<div style="width:16px; height:16px; border:1px solid '+color+'; display:flex; align-items:center; justify-content:center; font-size:9px; font-weight:bold; color:'+color+'; background:rgba(0,0,0,0.5); box-shadow:0 0 5px '+color+';">' + shift + '</div>';
+    html += '</div>';
+  }
+  html += '</div>';
+  var tgt = document.getElementById('tactical-screen');
+  if(tgt) tgt.innerHTML = html;
+}
+
+function renderMaps() {
+  var html = '<div style="position:relative; width:100%; height:100%; overflow:hidden;">';
+  html += '<div style="position:absolute; inset:0; background: radial-gradient(circle, rgba(0,212,255,0.1) 0%, transparent 80%);"></div>';
+  html += '<div class="radar-sweep"></div>';
+  html += '<div style="position:absolute; top:50%; left:50%; width:3px; height:3px; background:#00ff88; border-radius:50%; box-shadow:0 0 8px #00ff88; transform:translate(-50%,-50%);"></div>';
+  html += '<div style="position:absolute; top:30%; left:60%; width:2px; height:2px; background:#ff2a2a; border-radius:50%; box-shadow:0 0 6px #ff2a2a; animation:bk 2s infinite;"></div>';
+  html += '<div style="position:absolute; bottom:2px; left:4px; font-size:5px; color:#00d4ff; letter-spacing:1px;">SAT-LINK: SECURE</div>';
+  html += '</div>';
+  var tgt = document.getElementById('tactical-screen');
+  if(tgt) tgt.innerHTML = html;
+}
+
+function renderCam() {
+  var html = '<div style="position:relative; width:100%; height:100%; background:#050505; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:4px;">';
+  html += '<div style="position:absolute; top:3px; right:4px; font-size:6px; color:#ff2a2a; animation:bk 1s infinite;">REC ●</div>';
+  html += '<div style="font-size:7px; color:rgba(255,255,255,0.4); letter-spacing:1px;">FEED CAM-01 (OFFLINE)</div>';
+  html += '<div style="position:absolute; top:0; left:0; width:10px; height:10px; border-top:1px solid rgba(0,212,255,0.5); border-left:1px solid rgba(0,212,255,0.5);"></div>';
+  html += '<div style="position:absolute; bottom:0; right:0; width:10px; height:10px; border-bottom:1px solid rgba(0,212,255,0.5); border-right:1px solid rgba(0,212,255,0.5);"></div>';
+  html += '</div>';
+  var tgt = document.getElementById('tactical-screen');
+  if(tgt) tgt.innerHTML = html;
+}
+
 function processUICommand(cmd) {
+  if(cmd === 'CAL_SHOW') { renderCalendar(); return; }
+  if(cmd === 'MAPS_SHOW') { renderMaps(); return; }
+  if(cmd === 'CAM_SHOW') { renderCam(); return; }
+  if(cmd.startsWith('FERIE_ADD_')) {
+    var dateStr = cmd.split('_').slice(2).join('_');
+    if(!ferieList.includes(dateStr)) ferieList.push(dateStr);
+    saveState(); renderCalendar(); return;
+  }
+
   var parts = cmd.split('_');
   if(parts.length < 3) return;
   var type = parts[0];
   var action = parts[parts.length-1];
-  var name = parts.slice(1, parts.length-1).join('_').toLowerCase();
+  var name = parts.slice(1, parts.length-1).join('').toLowerCase().replace(/_/g, '');
   var selector = type === 'PROTO' ? '.proto-item' : '.dev-item';
   var dotClass = type === 'PROTO' ? '.pdot' : '.ddot';
   
   document.querySelectorAll(selector).forEach(function(el){
-    var text = el.textContent.trim().toLowerCase().replace(/\s+/g, '_').replace(/\./g,'');
+    var text = el.textContent.trim().toLowerCase().replace(/\s+/g, '').replace(/_/g,'').replace(/\./g,'');
     if(text === name || text.includes(name)) {
       var dot = el.querySelector(dotClass);
       dot.className = dotClass.replace('.','') + (action === 'ON' ? ' on' : ' off');
