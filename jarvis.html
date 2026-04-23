@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>JARVIS - SUPREME v5.5</title>
+<title>JARVIS - v5.6</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600&display=swap');
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -13,66 +13,64 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
 .grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(0,212,255,0.03) 1px,transparent 1px), linear-gradient(90deg,rgba(0,212,255,0.03) 1px,transparent 1px); background-size: 40px 40px; z-index: 2; }
 .scan { position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,212,255,0.01) 2px, rgba(0,212,255,0.01) 4px); pointer-events: none; z-index: 99; }
 
-.wrap { position: relative; z-index: 10; display: flex; flex-direction: column; height: 100vh; padding: 15px; gap: 10px; }
+.wrap { position: relative; z-index: 10; display: flex; flex-direction: column; height: 100vh; padding: 10px; gap: 8px; }
 
 /* HEADER */
-.hdr { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid rgba(0,212,255,0.3); padding-bottom: 10px; }
-.title { font-family: 'Orbitron', sans-serif; font-size: 20px; font-weight: 900; letter-spacing: 8px; text-shadow: 0 0 15px #00d4ff; }
+.hdr { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,212,255,0.3); padding-bottom: 5px; }
+.title { font-family: 'Orbitron', sans-serif; font-size: 18px; font-weight: 900; letter-spacing: 6px; text-shadow: 0 0 10px #00d4ff; }
 
-.main { display: flex; gap: 15px; flex: 1; min-height: 0; }
-.col-left { width: 180px; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+.main { display: flex; gap: 10px; flex: 1; min-height: 0; }
+.col-left { width: 160px; display: flex; flex-direction: column; align-items: center; gap: 15px; }
 .col-right { flex: 1; display: flex; flex-direction: column; gap: 10px; }
 
-/* REATTORE ARK POTENZIATO (MARK II) */
-.arc-wrap { width: 140px; height: 140px; position: relative; display: flex; align-items: center; justify-content: center; margin-top: 20px; }
-.ring { position: absolute; border-radius: 50%; border: 2px solid transparent; }
-.r1 { width: 135px; height: 135px; border-top-color: #00d4ff; animation: rot 20s linear infinite; }
-.r2 { width: 115px; height: 115px; border-left-color: #ff6b00; animation: rot 15s linear infinite reverse; }
-.r3 { width: 95px; height: 95px; border-right-color: #00d4ff; animation: rot 25s linear infinite; opacity: 0.6; }
-.r4 { width: 75px; height: 75px; border-bottom-color: #fff; animation: rot 10s linear infinite reverse; opacity: 0.4; }
-.r5 { width: 55px; height: 55px; border-top-color: #00d4ff; animation: rot 5s linear infinite; }
-.core { width: 30px; height: 30px; background: radial-gradient(circle, #fff 0%, #00d4ff 60%, transparent 100%); border-radius: 50%; box-shadow: 0 0 20px #00d4ff; animation: pulse 2.5s infinite; }
-
+/* ARK REACTOR + NEON BREATH */
+.arc-wrap { width: 140px; height: 140px; position: relative; display: flex; align-items: center; justify-content: center; margin-top: 10px; }
+.neon-breath { position: absolute; width: 110px; height: 110px; border-radius: 50%; background: radial-gradient(circle, rgba(0,212,255,0.2) 0%, transparent 70%); animation: breath 3s infinite ease-in-out; }
+@keyframes breath { 0%, 100% { transform: scale(0.8); opacity: 0.3; } 50% { transform: scale(1.2); opacity: 0.7; } }
+.ring { position: absolute; border-radius: 50%; border: 1.5px solid transparent; }
+.r1 { width: 130px; height: 130px; border-top-color: #00d4ff; animation: rot 15s linear infinite; }
+.r2 { width: 110px; height: 110px; border-left-color: #ff6b00; animation: rot 10s linear infinite reverse; }
+.r3 { width: 90px; height: 90px; border-right-color: #00d4ff; animation: rot 20s linear infinite; opacity: 0.5; }
+.core { width: 25px; height: 25px; background: radial-gradient(circle, #fff 0%, #00d4ff 50%, transparent 100%); border-radius: 50%; box-shadow: 0 0 15px #00d4ff; }
 @keyframes rot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-@keyframes pulse { 0%, 100% { opacity: 0.5; transform: scale(0.85); } 50% { opacity: 1; transform: scale(1.15); } }
 
-/* MONDO GRID HD */
-#globe-canvas { display: block; filter: drop-shadow(0 0 10px rgba(0,212,255,0.4)); }
+/* MONDO GRID */
+#globe-canvas { display: block; filter: drop-shadow(0 0 5px rgba(0,212,255,0.3)); }
 
-/* TAG TRACKER */
+/* TAGS */
 .tag-tracker { width: 100%; font-family: 'Orbitron'; }
-.tag-label { font-size: 8px; color: #ff6b00; letter-spacing: 2px; margin-bottom: 8px; border-bottom: 1px solid rgba(255,107,0,0.3); }
-.tag-item { display: flex; align-items: center; gap: 10px; font-size: 11px; color: #fff; margin-bottom: 6px; }
-.dot { width: 6px; height: 6px; border-radius: 50%; background: #00ff88; box-shadow: 0 0 8px #00ff88; }
+.tag-item { display: flex; align-items: center; gap: 8px; font-size: 10px; color: #fff; margin-bottom: 5px; }
+.dot { width: 5px; height: 5px; border-radius: 50%; background: #00ff88; box-shadow: 0 0 5px #00ff88; }
 
-/* FINESTRE TATTICHE */
-.box { background: rgba(0,20,40,0.8); border: 1px solid rgba(0,212,255,0.3); padding: 12px; position: relative; flex: 1; display: flex; flex-direction: column; min-height: 0; }
-.box::before { content:''; position:absolute; top:0; left:0; width:10px; height:10px; border-top:2px solid #00d4ff; border-left:2px solid #00d4ff; }
-.bt-title { font-size: 9px; color: #ff6b00; letter-spacing: 2px; margin-bottom: 10px; font-family: 'Orbitron'; font-weight: bold; }
-.box-content { flex: 1; overflow-y: auto; font-size: 14px; scrollbar-width: thin; scrollbar-color: #00d4ff transparent; }
-.box-content::-webkit-scrollbar { width: 4px; }
-.box-content::-webkit-scrollbar-thumb { background: #00d4ff; border-radius: 2px; }
+/* FINESTRE */
+.box { background: rgba(0,20,40,0.7); border: 1px solid rgba(0,212,255,0.2); padding: 10px; position: relative; flex: 1; display: flex; flex-direction: column; min-height: 0; }
+.box::before { content:''; position:absolute; top:0; left:0; width:5px; height:5px; border-top:1px solid #00d4ff; border-left:1px solid #00d4ff; }
+.bt-title { font-size: 8px; color: #ff6b00; letter-spacing: 2px; margin-bottom: 8px; font-family: 'Orbitron'; }
+.box-content { flex: 1; overflow-y: auto; font-size: 13px; scrollbar-width: none; }
+.box-content::-webkit-scrollbar { display: none; }
 
-/* CALENDARIO COLORATO */
-.shift-row { display: flex; justify-content: space-between; margin-bottom: 5px; padding: 2px 5px; border-radius: 3px; }
-.work { color: #00ff88; background: rgba(0,255,136,0.1); }
-.rest { color: #00d4ff; background: rgba(0,212,255,0.1); }
-.ferie { color: #ff4444; background: rgba(255,68,68,0.1); }
-.injury { color: #ffff00; background: rgba(255,255,0,0.1); }
+/* CALENDARIO ORIZZONTALE */
+.cal-row { display: flex; gap: 5px; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; }
+.day-card { flex: 0 0 60px; text-align: center; padding: 5px; border: 1px solid rgba(0,212,255,0.1); background: rgba(0,0,0,0.3); border-radius: 4px; font-size: 9px; }
+.day-card.today { border-color: #00ff88; background: rgba(0,255,136,0.1); box-shadow: 0 0 10px rgba(0,255,136,0.2); }
+.day-card .date { font-weight: bold; display: block; margin-bottom: 2px; }
+.day-card.work { color: #00ff88; }
+.day-card.rest { color: #00d4ff; }
+.day-card.ferie { color: #ff4444; }
 
 /* CHAT */
-.chat { height: 180px; display: flex; flex-direction: column; background: rgba(0,10,20,0.95); border: 1px solid rgba(0,212,255,0.4); backdrop-filter: blur(10px); }
-.msgs { flex: 1; overflow-y: auto; padding: 15px; }
-.msg { margin-bottom: 10px; font-size: 14px; line-height: 1.5; border-left: 3px solid #00d4ff; padding-left: 12px; color: #fff; }
+.chat { height: 160px; display: flex; flex-direction: column; background: rgba(0,5,10,0.9); border: 1px solid rgba(0,212,255,0.3); }
+.msgs { flex: 1; overflow-y: auto; padding: 10px; }
+.msg { margin-bottom: 8px; font-size: 13px; border-left: 2px solid #00d4ff; padding-left: 10px; color: #fff; }
 .msg.j { border-left-color: #ff6b00; color: #ffcc88; }
 
-/* TASTO CONTROLLO (CICCIO) */
-.btn-control { background: rgba(0,212,255,0.1); border: 1px solid #00d4ff; color: #00d4ff; padding: 18px; font-family: 'Orbitron'; font-size: 12px; letter-spacing: 4px; cursor: pointer; text-align: center; margin-top: 10px; }
+/* TASTO CONTROLLO */
+.btn-control { background: transparent; border: 1px solid #00d4ff; color: #00d4ff; padding: 14px; font-family: 'Orbitron'; font-size: 11px; letter-spacing: 3px; cursor: pointer; text-align: center; }
 
 /* INPUT */
-.inp-row { display: flex; padding: 10px; gap: 10px; background: #000; border-top: 1px solid rgba(0,212,255,0.3); }
-.inp { flex: 1; background: rgba(0,40,80,0.3); border: 1px solid #00d4ff; color: #fff; padding: 12px; font-size: 16px; outline: none; font-family: inherit; }
-.hbtn { background: transparent; border: 1px solid #ff6b00; color: #ff6b00; padding: 0 25px; font-family: 'Orbitron'; font-size: 12px; cursor: pointer; }
+.inp-row { display: flex; padding: 5px; gap: 5px; background: #000; border-top: 1px solid rgba(0,212,255,0.2); }
+.inp { flex: 1; background: rgba(0,30,60,0.3); border: 1px solid #00d4ff; color: #fff; padding: 10px; font-size: 15px; outline: none; }
+.hbtn { background: transparent; border: 1px solid #ff6b00; color: #ff6b00; padding: 0 15px; font-family: 'Orbitron'; font-size: 10px; }
 
 #dummy { position: fixed; top: -100px; opacity: 0; }
 </style>
@@ -82,53 +80,51 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
 
 <div class="wrap">
   <div class="hdr">
-    <div style="font-size:8px; opacity:0.7; letter-spacing:1px;">CORE_V5.5_ACTIVE</div>
+    <div style="font-size:7px; opacity:0.6;">STARK_OS_ACTIVE</div>
     <div class="title">J.A.R.V.I.S.</div>
-    <div style="font-size:8px; opacity:0.7; letter-spacing:1px;">STARK INDUSTRIES // 2026</div>
+    <div style="font-size:7px; opacity:0.6;">STARK INDUSTRIES</div>
   </div>
   
   <div class="main">
     <div class="col-left">
       <div class="arc-wrap">
-        <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div><div class="ring r4"></div><div class="ring r5"></div>
+        <div class="neon-breath"></div>
+        <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div>
         <div class="core"></div>
       </div>
       
       <canvas id="globe-canvas" width="130" height="130"></canvas>
       
       <div class="tag-tracker">
-        <div class="tag-label">▶ TAG_TRACKER</div>
-        <div class="tag-item"><div class="dot"></div> CHIAVI ILENIA</div>
-        <div class="tag-item"><div class="dot"></div> TAG_02</div>
-        <div class="tag-item"><div class="dot"></div> TAG_03</div>
+        <div class="tag-item"><div class="dot"></div> TAG 1</div>
+        <div class="tag-item"><div class="dot"></div> TAG 02</div>
+        <div class="tag-item"><div class="dot"></div> TAG 03</div>
       </div>
     </div>
     
     <div class="col-right">
       <div class="box">
-        <div class="bt-title">▶ PROTOCOLLI_SICUREZZA</div>
+        <div class="bt-title">▶ PROTOCOLLI</div>
         <div class="box-content">
-          <div style="margin-bottom:8px;">● HOUSE_GUARD_V4: <span style="color:#00ff88">ACTIVE</span></div>
-          <div style="margin-bottom:8px;">● BT_MESH_NETWORK: <span style="color:#00ff88">STABLE</span></div>
-          <div style="margin-bottom:8px;">● ENCRYPTION_LEVEL: <span style="color:#00ff88">AES-256</span></div>
+          <div>● HOUSE_GUARD: <span style="color:#00ff88">ACTIVE</span></div>
+          <div>● BT_MESH: <span style="color:#00ff88">STABLE</span></div>
         </div>
       </div>
       
       <div class="box">
-        <div class="bt-title">▶ DISPOSITIVI_RETE</div>
+        <div class="bt-title">▶ DISPOSITIVI</div>
         <div class="box-content">
-          <div style="margin-bottom:8px;">● MotoBruss_Mobile: <span style="color:#00ff88">CONNECTED</span></div>
-          <div style="margin-bottom:8px;">● PcBruss_Mainframe: <span style="color:#00ff88">CONNECTED</span></div>
-          <div style="margin-bottom:8px;">● OppoBruss_Remote: <span style="color:#00ff88">CONNECTED</span></div>
+          <div>● MotoBruss: <span style="color:#00ff88">ONLINE</span></div>
+          <div>● PcBruss: <span style="color:#00ff88">ONLINE</span></div>
         </div>
       </div>
       
-      <div class="box">
-        <div class="bt-title">▶ CALENDARIO_OPERATIVO</div>
-        <div class="box-content" id="cal"></div>
+      <div class="box" style="flex: 0 0 100px;">
+        <div class="bt-title">▶ CALENDARIO TURNI</div>
+        <div class="cal-row" id="cal"></div>
       </div>
       
-      <div class="btn-control" onclick="openCam()">📷 FEED_CAMERA_TOTALE</div>
+      <div class="btn-control" onclick="openCam()">📷 CONTROLLO</div>
     </div>
   </div>
   
@@ -149,36 +145,35 @@ var _K2 = 'WGdyb3FYlnxwRdUSnehnzu4mZTPscrFS';
 var KEY = _K1 + _K2;
 var chatHistory = [];
 
-// MONDO GRID HD
+// MONDO GRID
 var g_can = document.getElementById('globe-canvas');
 var g_ctx = g_can.getContext('2d');
 var r_ang = 0;
 function drawGlobe() {
   g_ctx.clearRect(0,0,130,130); r_ang += 0.01;
-  g_ctx.strokeStyle = 'rgba(0, 212, 255, 0.3)';
-  for(var i=0; i<6; i++) {
-    var width = 60 * Math.cos(r_ang + i*Math.PI/6);
+  g_ctx.strokeStyle = 'rgba(0, 212, 255, 0.2)';
+  for(var i=0; i<4; i++) {
+    var width = 60 * Math.cos(r_ang + i*Math.PI/4);
     g_ctx.beginPath(); g_ctx.ellipse ? g_ctx.ellipse(65,65,Math.abs(width),60,0,0,Math.PI*2) : g_ctx.arc(65,65,60,0,Math.PI*2); g_ctx.stroke();
-    var height = 60 * Math.sin(r_ang + i*Math.PI/6);
+    var height = 60 * Math.sin(r_ang + i*Math.PI/4);
     g_ctx.beginPath(); g_ctx.ellipse ? g_ctx.ellipse(65,65,60,Math.abs(height),0,0,Math.PI*2) : g_ctx.arc(65,65,60,0,Math.PI*2); g_ctx.stroke();
   }
   requestAnimationFrame(drawGlobe);
 }
 drawGlobe();
 
-// CALENDARIO TURNI
+// CALENDARIO ORIZZONTALE
 function buildCal() {
   var now = new Date();
   var days = ['DOM','LUN','MAR','MER','GIO','VEN','SAB'];
   var html = '';
-  for(var i=0; i<7; i++) {
+  // Mostra 2 giorni prima e 5 giorni dopo (Totale 8 giorni per avere oggi quasi al centro)
+  for(var i=-2; i<6; i++) {
     var d = new Date(); d.setDate(now.getDate() + i);
     var dStr = d.toISOString().split('T')[0];
     var type = 'work'; var label = 'TURNO';
     
-    // LOGICA FERIE (23-25 APR)
     if(dStr >= '2026-04-23' && dStr <= '2026-04-25') { type='ferie'; label='FERIE'; }
-    // LOGICA ROTAZIONE (Base 27 Apr = Pomeriggio)
     else {
       var base = new Date('2026-04-27T00:00:00');
       var diff = Math.floor((d - base)/(1000*60*60*24));
@@ -188,7 +183,8 @@ function buildCal() {
       else if(cycle>=5 && cycle<=8) label='MATTINO';
       else label='NOTTE';
     }
-    html += '<div class="shift-row '+type+'"><span>'+days[d.getDay()]+' '+d.getDate()+'</span><span>'+label+'</span></div>';
+    var isToday = i === 0 ? ' today' : '';
+    html += '<div class="day-card '+type+isToday+'"><span class="date">'+days[d.getDay()]+' '+d.getDate()+'</span>'+label+'</div>';
   }
   document.getElementById('cal').innerHTML = html;
 }
@@ -197,7 +193,7 @@ buildCal();
 function addMsg(s,t,j){
   var c = document.getElementById('chat');
   var d = document.createElement('div'); d.className = 'msg'+(j?' j':'');
-  d.innerHTML = '<div style="font-size:8px; opacity:0.4; margin-bottom:3px;">'+s+' //</div>'+t;
+  d.innerHTML = '<div style="font-size:7px; opacity:0.4; margin-bottom:2px;">'+s+' //</div>'+t;
   c.appendChild(d); c.scrollTop = c.scrollHeight;
 }
 
@@ -221,7 +217,7 @@ function send(){
 
 document.getElementById('inp').addEventListener('keydown', function(e){ if(e.key==='Enter') send(); });
 function openCam(){ if(window.AppInventor) window.AppInventor.setWebViewString('CAMERA_ON'); }
-addMsg('JARVIS', 'SUPREME v5.5 Online. Sistemi ricalibrati.', true);
+addMsg('JARVIS', 'Sistema Online.', true);
 </script>
 </body>
 </html>
