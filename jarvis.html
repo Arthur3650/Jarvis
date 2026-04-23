@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>JARVIS - v3.3 STARK MOD</title>
+<title>JARVIS - v3.3 SHIFT EDITION</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600&display=swap');
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -23,7 +23,7 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
 .col-left { width: 150px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
 .col-right { flex: 1; display: flex; flex-direction: column; gap: 8px; }
 
-/* REATTORE ARK (PIÙ ARCHI) */
+/* REATTORE ARK */
 .arc-wrap { width: 110px; height: 110px; position: relative; display: flex; align-items: center; justify-content: center; }
 .ring { position: absolute; border-radius: 50%; border: 1.5px solid transparent; }
 .r1 { width: 105px; height: 105px; border-top-color: #00d4ff; animation: rot 15s linear infinite; }
@@ -35,7 +35,7 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
 @keyframes rot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 @keyframes pulse { 0%, 100% { opacity: 0.4; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1.1); } }
 
-/* MONDO (IMAGE 2) */
+/* MONDO (REAL) */
 .world-container { width: 130px; height: 130px; position: relative; border-radius: 50%; border: 1px solid rgba(0,212,255,0.2); overflow: hidden; background: #000; }
 .world-img { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.6; filter: hue-rotate(150deg) brightness(1.2); animation: slowRot 40s linear infinite; }
 @keyframes slowRot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
@@ -60,7 +60,7 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
 .msg { margin-bottom: 8px; font-size: 13px; line-height: 1.4; border-left: 2px solid #00d4ff; padding-left: 8px; color: #fff; }
 .msg.j { border-left-color: #ff6b00; color: #ffcc88; }
 
-/* TASTO CONTROLLO (CICCIO) */
+/* TASTO CONTROLLO */
 .btn-control { background: transparent; border: 1px solid #00d4ff; color: #00d4ff; padding: 12px; font-family: 'Orbitron'; font-size: 10px; letter-spacing: 3px; cursor: pointer; text-align: center; }
 
 /* INPUT */
@@ -107,7 +107,6 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
         <div class="box-content">
           <div>HOUSE_GUARD: <span style="color:#00ff88">ON</span></div>
           <div>BT_MESH: <span style="color:#00ff88">ON</span></div>
-          <div>AUTO_PILOT: <span style="color:#ff6b00">OFF</span></div>
         </div>
       </div>
       
@@ -120,12 +119,13 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
         </div>
       </div>
       
+      <!-- RIPRISTINO CALENDARIO TURNI -->
       <div class="box">
-        <div class="bt-title">▶ STATO SISTEMA</div>
+        <div class="bt-title">▶ CALENDARIO TURNI</div>
         <div class="box-content">
-          <div>TEMPERATURA: 32°C</div>
-          <div>CPU_LOAD: 14%</div>
-          <div>STARK_OS: v5.4</div>
+          <div style="color:#ff6b00; margin-bottom:5px;">● TURNI SETTIMANALI</div>
+          <div style="display:flex; justify-content:space-between;"><span>LUN - VEN</span><span>08:00 - 17:00</span></div>
+          <div style="display:flex; justify-content:space-between; opacity:0.5;"><span>SAB - DOM</span><span>OFF-DUTY</span></div>
         </div>
       </div>
       
@@ -150,21 +150,18 @@ var _K2 = 'WGdyb3FYlnxwRdUSnehnzu4mZTPscrFS';
 var KEY = _K1 + _K2;
 var chatHistory = [];
 
-// RADAR SCAN (LENTO)
 var canvas = document.getElementById('world-radar');
 var ctx = canvas.getContext('2d');
 var angle = 0;
 
 function drawRadar() {
   ctx.clearRect(0, 0, 130, 130);
-  angle += 0.02; // RALLENTATO
-  
+  angle += 0.02;
   ctx.beginPath();
   ctx.moveTo(65, 65);
   ctx.lineTo(65 + Math.cos(angle) * 65, 65 + Math.sin(angle) * 65);
   ctx.strokeStyle = 'rgba(0, 255, 180, 0.4)';
   ctx.stroke();
-  
   requestAnimationFrame(drawRadar);
 }
 drawRadar();
@@ -182,20 +179,16 @@ function send() {
   var inp = document.getElementById('inp');
   var txt = inp.value.trim();
   if (!txt) return;
-  
   addMsg('USER', txt, false);
   chatHistory.push({role: 'user', content: txt});
   inp.value = '';
-  
-  var dummy = document.getElementById('dummy-focus');
-  dummy.focus();
-  setTimeout(function() { dummy.blur(); }, 50);
+  document.getElementById('dummy-focus').focus();
+  setTimeout(function() { document.getElementById('dummy-focus').blur(); }, 50);
   
   var xhr = new XMLHttpRequest();
   xhr.open('POST', 'https://api.groq.com/openai/v1/chat/completions', true);
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.setRequestHeader('Authorization', 'Bearer ' + KEY);
-  
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
@@ -207,7 +200,6 @@ function send() {
       }
     }
   };
-  
   xhr.send(JSON.stringify({
     model: 'llama-3.3-70b-versatile',
     messages: [{role: 'system', content: 'Sei Jarvis.'}].concat(chatHistory.slice(-6))
@@ -222,7 +214,7 @@ function openCam() {
   if (window.AppInventor) window.AppInventor.setWebViewString('CAMERA_ON');
 }
 
-addMsg('JARVIS', 'Calibrazione completata. Sistema Stark Online.', true);
+addMsg('JARVIS', 'Calendario turni ripristinato. Sistema allineato.', true);
 </script>
 </body>
 </html>
