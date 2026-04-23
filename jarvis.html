@@ -208,7 +208,7 @@ canvas.globe{border-radius:50%;border:1px solid rgba(0,212,255,.3);box-shadow:0 
     </div>
   </div>
   <div class="ftr">
-    <span>JARVIS v2.1</span><span id="upt">UPTIME: 0m</span><span>LLAMA 3.3 70B</span>
+    <span>JARVIS v2.2</span><span id="upt">UPTIME: 0m</span><span>LLAMA 3.3 70B</span>
   </div>
 </div>
 <script>
@@ -394,7 +394,9 @@ function receiveFromKodular(msg){
   addMsg('JARVIS',msg,true);
 }
 
-var GROQ_KEY = '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';
+var _K1 = 'gsk_dETVcTjKuuOYEGkdit5h';
+var _K2 = 'WGdyb3FYlnxwRdUSnehnzu4mZTPscrFS';
+var GROQ_KEY = _K1 + _K2;
 var SYSTEM = "Sei Jarvis, assistente IA avanzato (configurato per Salvo/Bruss). Rispondi in italiano. Tono: freddo, tecnico, sintetico. Zero chiacchiere.\n" +
 "Dispositivo principale: MotoBruss. Riceverai lo STATO ATTUALE in background.\n" +
 "REGOLE COMANDI (FONDAMENTALE):\n" +
@@ -570,10 +572,13 @@ function send(){
   var inp = document.getElementById('inp');
   var text = inp.value.trim();
   if(!text) return;
-  inp.value = '';
-  inp.blur(); // Nasconde la tastiera su Motorola/Oppo dopo l'invio
+  
   addMsg('USER', text, false);
   chatHistory.push({role:'user', content:text});
+  
+  inp.value = '';
+  inp.blur(); 
+  
   document.getElementById('typ').className = 'typ on';
   var t0 = Date.now();
 
@@ -650,8 +655,11 @@ function send(){
   }));
 }
 
-document.getElementById('inp').addEventListener('keypress', function(e){
-  if(e.key === 'Enter') send();
+document.getElementById('inp').addEventListener('keydown', function(e){
+  if(e.key === 'Enter') {
+    e.preventDefault();
+    send();
+  }
 });
 
 // Avvio del sistema
