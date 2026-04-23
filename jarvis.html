@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>JARVIS - v5.8</title>
+<title>JARVIS - v5.9</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600&display=swap');
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -20,11 +20,11 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
 .title { font-family: 'Orbitron', sans-serif; font-size: 18px; font-weight: 900; letter-spacing: 6px; text-shadow: 0 0 10px #00d4ff; }
 
 .main { display: flex; gap: 10px; flex: 1; min-height: 0; }
-.col-left { width: 160px; display: flex; flex-direction: column; align-items: center; gap: 15px; }
+.col-left { width: 160px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
 .col-right { flex: 1; display: flex; flex-direction: column; gap: 10px; }
 
-/* ARK REACTOR MARK III */
-.arc-wrap { width: 150px; height: 150px; position: relative; display: flex; align-items: center; justify-content: center; margin-top: 10px; }
+/* ARK REACTOR */
+.arc-wrap { width: 150px; height: 150px; position: relative; display: flex; align-items: center; justify-content: center; }
 .neon-breath { position: absolute; width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, rgba(0,212,255,0.2) 0%, transparent 70%); animation: breath 4s infinite ease-in-out; }
 @keyframes breath { 0%, 100% { transform: scale(0.85); opacity: 0.2; } 50% { transform: scale(1.15); opacity: 0.6; } }
 .ark-outer-line { position: absolute; width: 145px; height: 145px; border: 0.5px solid rgba(0,212,255,0.5); border-radius: 50%; animation: pulseLine 2s infinite ease-in-out; }
@@ -36,10 +36,9 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
 .core { width: 28px; height: 28px; background: radial-gradient(circle, #fff 0%, #00d4ff 50%, transparent 100%); border-radius: 50%; box-shadow: 0 0 15px #00d4ff; }
 @keyframes rot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-/* MONDO REALE (IL VERO MONDO DA MONDO.PNG) */
-.world-wrap { width: 130px; height: 130px; position: relative; border-radius: 50%; border: 1px solid rgba(0,212,255,0.3); overflow: hidden; background: #000; box-shadow: 0 0 10px rgba(0,212,255,0.2); }
-.world-img { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.7; filter: hue-rotate(150deg) brightness(1.3); animation: slowRot 60s linear infinite; }
-@keyframes slowRot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+/* MAPS JARVIS STYLE */
+.world-wrap { width: 140px; height: 140px; position: relative; border-radius: 50%; border: 1px solid rgba(0,212,255,0.4); overflow: hidden; background: #000; box-shadow: 0 0 15px rgba(0,212,255,0.2); }
+.world-iframe { width: 100%; height: 100%; border: none; filter: invert(90%) hue-rotate(150deg) contrast(120%) brightness(110%); pointer-events: none; }
 
 /* TAGS */
 .tag-tracker { width: 100%; font-family: 'Orbitron'; }
@@ -53,12 +52,13 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
 .box-content { flex: 1; overflow-y: auto; font-size: 13px; scrollbar-width: none; }
 .box-content::-webkit-scrollbar { display: none; }
 
-/* CALENDARIO ORIZZONTALE INFINITO */
-.cal-row { display: flex; gap: 6px; overflow-x: auto; padding: 5px 0; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
-.cal-row::-webkit-scrollbar { display: none; }
-.day-card { flex: 0 0 70px; text-align: center; padding: 8px 5px; border: 1px solid rgba(0,212,255,0.1); background: rgba(0,0,0,0.4); border-radius: 4px; font-size: 9px; }
-.day-card.today { border-color: #00ff88; background: rgba(0,255,136,0.15); box-shadow: 0 0 15px rgba(0,255,136,0.2); }
-.day-card .date { font-weight: bold; display: block; margin-bottom: 4px; font-size: 10px; }
+/* CALENDARIO CON PULSANTI */
+.cal-container { position: relative; display: flex; align-items: center; gap: 5px; }
+.cal-row { display: flex; gap: 6px; overflow-x: hidden; padding: 5px 0; scroll-behavior: smooth; flex: 1; }
+.cal-btn { background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.4); color: #00d4ff; padding: 10px 5px; cursor: pointer; font-size: 12px; font-family: 'Orbitron'; }
+.day-card { flex: 0 0 65px; text-align: center; padding: 8px 5px; border: 1px solid rgba(0,212,255,0.1); background: rgba(0,0,0,0.4); border-radius: 4px; font-size: 8px; }
+.day-card.today { border-color: #00ff88; background: rgba(0,255,136,0.15); box-shadow: 0 0 10px rgba(0,255,136,0.2); }
+.day-card .date { font-weight: bold; display: block; margin-bottom: 4px; font-size: 9px; }
 .day-card.work { color: #00ff88; }
 .day-card.rest { color: #00d4ff; opacity: 0.8; }
 .day-card.ferie { color: #ff4444; }
@@ -85,7 +85,7 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
 
 <div class="wrap">
   <div class="hdr">
-    <div style="font-size:7px; opacity:0.6;">STARK_OS_V5.8</div>
+    <div style="font-size:7px; opacity:0.6;">STARK_SATELLITE_FEED</div>
     <div class="title">J.A.R.V.I.S.</div>
     <div style="font-size:7px; opacity:0.6;">STARK INDUSTRIES</div>
   </div>
@@ -100,7 +100,7 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
       </div>
       
       <div class="world-wrap">
-        <img src="Immagini/Mondo.png" class="world-img" alt="World Map">
+        <iframe class="world-iframe" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1000000!2d12.5!3d42.5!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sit!2sit!4v1700000000000!5m2!1sit!2sit"></iframe>
       </div>
       
       <div class="tag-tracker">
@@ -128,8 +128,12 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
       </div>
       
       <div class="box" style="flex: 0 0 105px;">
-        <div class="bt-title">▶ CALENDARIO TURNI (SCORRI ►)</div>
-        <div class="cal-row" id="cal"></div>
+        <div class="bt-title">▶ CALENDARIO TURNI</div>
+        <div class="cal-container">
+          <button class="cal-btn" onclick="scrollCal(-1)">◄</button>
+          <div class="cal-row" id="cal"></div>
+          <button class="cal-btn" onclick="scrollCal(1)">►</button>
+        </div>
       </div>
       
       <div class="btn-control" onclick="openCam()">📷 CONTROLLO</div>
@@ -153,12 +157,12 @@ var _K2 = 'WGdyb3FYlnxwRdUSnehnzu4mZTPscrFS';
 var KEY = _K1 + _K2;
 var chatHistory = [];
 
-// CALENDARIO SCORREVOLE
+// CALENDARIO CON PULSANTI
 function buildCal() {
   var now = new Date();
   var days = ['DOM','LUN','MAR','MER','GIO','VEN','SAB'];
   var html = '';
-  for(var i=-5; i<25; i++) {
+  for(var i=-5; i<30; i++) {
     var d = new Date(); d.setDate(now.getDate() + i);
     var dStr = d.toISOString().split('T')[0];
     var type = 'work'; var label = 'TURNO';
@@ -177,16 +181,20 @@ function buildCal() {
   }
   var cal = document.getElementById('cal');
   cal.innerHTML = html;
-  setTimeout(function(){ cal.scrollLeft = (76 * 5) - (cal.clientWidth / 2) + 38; }, 100);
+  setTimeout(function(){ cal.scrollLeft = (71 * 5) - (cal.clientWidth / 2) + 35; }, 100);
 }
 buildCal();
+
+function scrollCal(dir) {
+  var cal = document.getElementById('cal');
+  cal.scrollBy({ left: dir * 140, behavior: 'smooth' });
+}
 
 function addMsg(s,t,j){
   var c = document.getElementById('chat');
   var d = document.createElement('div'); d.className = 'msg'+(j?' j':'');
   d.innerHTML = '<div style="font-size:7px; opacity:0.4; margin-bottom:2px;">'+s+' //</div>'+t;
-  box = document.getElementById('chat');
-  box.appendChild(d); box.scrollTop = box.scrollHeight;
+  c.appendChild(d); c.scrollTop = c.scrollHeight;
 }
 
 function send(){
@@ -209,7 +217,7 @@ function send(){
 
 document.getElementById('inp').addEventListener('keydown', function(e){ if(e.key==='Enter') send(); });
 function openCam(){ if(window.AppInventor) window.AppInventor.setWebViewString('CAMERA_ON'); }
-addMsg('JARVIS', 'Sistema Online.', true);
+addMsg('JARVIS', 'Satellite Online. Controlli tattici abilitati.', true);
 </script>
 </body>
 </html>
