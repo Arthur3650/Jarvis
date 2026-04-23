@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>JARVIS - SUPREME v5.1</title>
+<title>JARVIS - SUPREME v5.2 [OFFICIAL]</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -11,76 +11,82 @@ body{background:#000;color:#00d4ff;font-family:'Rajdhani',sans-serif;height:100v
 
 .bg{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, #001020 0%, #000 80%);}
 .grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,212,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.03) 1px,transparent 1px);background-size:40px 40px;}
-.scanlines{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,212,255,0.01) 2px,rgba(0,212,255,0.01) 4px);pointer-events:none;z-index:99;}
+.scan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,212,255,0.01) 2px,rgba(0,212,255,0.01) 4px);pointer-events:none;z-index:99;}
 
-.wrap{position:relative;z-index:10;display:flex;flex-direction:column;height:100vh;padding:8px;gap:8px;}
+.wrap{position:relative;z-index:10;display:flex;flex-direction:column;height:100vh;padding:10px;gap:10px;}
 
 /* HEADER */
-.hdr{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(0,212,255,0.3);padding-bottom:5px;}
-.title{font-family:'Orbitron',sans-serif;font-size:16px;font-weight:900;letter-spacing:5px;text-shadow:0 0 10px #00d4ff;}
-.st-text{font-size:7px;opacity:0.6;letter-spacing:2px;}
+.hdr{display:flex;justify-content:space-between;border-bottom:1px solid rgba(0,212,255,0.3);padding-bottom:5px;}
+.title{font-family:'Orbitron',sans-serif;font-size:16px;letter-spacing:5px;}
 
-.main-row{display:flex;gap:10px;flex:1;min-height:0;}
+.row{display:flex;gap:10px;flex:1;min-height:0;}
 .side{width:160px;display:flex;flex-direction:column;gap:10px;}
 .box{background:rgba(0,20,40,0.7);border:1px solid rgba(0,212,255,0.2);padding:10px;position:relative;}
 .box::before{content:'';position:absolute;top:0;left:0;width:8px;height:8px;border-top:2px solid #00d4ff;border-left:2px solid #00d4ff;}
-.bt-label{font-size:7px;color:#ff6b00;margin-bottom:8px;font-family:'Orbitron';letter-spacing:1px;}
+.bt{font-size:7px;color:#ff6b00;font-family:'Orbitron';margin-bottom:8px;}
 
-/* GFX */
-#globe-canvas{display:block;margin:0 auto;filter:drop-shadow(0 0 5px #00ffb4);}
-.arc-wrap{width:140px;height:140px;margin:0 auto;position:relative;display:flex;align-items:center;justify-content:center;}
-#tsvg{position:absolute;inset:0;transform:rotate(-90deg);}
-#arc-core{position:relative;z-index:2;}
+/* ARK REACTOR TRIANGOLARE (IMAGE 5) */
+.ark-container{width:140px;height:140px;margin:0 auto;display:flex;align-items:center;justify-content:center;position:relative;}
+.tri-wrap{width:100px;height:100px;position:relative;filter:drop-shadow(0 0 15px #00d4ff);}
+.tri-segment{position:absolute;width:0;height:0;border-left:40px solid transparent;border-right:40px solid transparent;border-top:70px solid rgba(0,212,255,0.2);}
+.tri-inner{position:absolute;top:10px;left:10px;width:80px;height:80px;background:radial-gradient(circle, #fff 0%, #00d4ff 40%, transparent 70%);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:0.4;transform:scale(0.8);}50%{opacity:1;transform:scale(1.1);}}
 
-/* LISTS */
-.list-item{display:flex;justify-content:space-between;font-size:9px;margin-bottom:4px;border-bottom:1px solid rgba(0,212,255,0.1);padding-bottom:2px;}
-.ok{color:#00ff88;font-weight:bold;}
+/* MONDO 3D (IMAGE 2) */
+#globe-canvas{display:block;margin:0 auto;filter:drop-shadow(0 0 10px rgba(0,255,180,0.5));}
 
 /* CHAT */
-.chat-area{flex:1;display:flex;flex-direction:column;background:rgba(0,10,20,0.6);border:1px solid rgba(0,212,255,0.2);}
-.msgs{flex:1;overflow-y:auto;padding:12px;scrollbar-width:none;}
+.chat{flex:1;display:flex;flex-direction:column;background:rgba(0,10,20,0.7);border:1px solid rgba(0,212,255,0.3);}
+.msgs{flex:1;overflow-y:auto;padding:15px;scrollbar-width:none;}
 .msgs::-webkit-scrollbar{display:none;}
 .msg{margin-bottom:12px;font-size:12px;line-height:1.4;border-left:2px solid #00d4ff;padding-left:10px;color:#fff;}
 .msg.j{border-left-color:#ff6b00;color:#ffcc88;}
-.ms-tag{font-size:7px;opacity:0.4;letter-spacing:2px;margin-bottom:2px;}
+.ms-tag{font-size:7px;opacity:0.4;letter-spacing:1px;margin-bottom:2px;}
 
 .inp-row{display:flex;padding:5px;gap:5px;background:rgba(0,0,0,0.5);border-top:1px solid rgba(0,212,255,0.2);}
-.hin{flex:1;background:rgba(0,30,60,0.3);border:1px solid #00d4ff;color:#fff;padding:8px;font-family:inherit;font-size:13px;outline:none;}
-.hbtn{background:transparent;border:1px solid #ff6b00;color:#ff6b00;padding:0 15px;font-size:9px;font-family:'Orbitron';cursor:pointer;}
+.hin{flex:1;background:rgba(0,30,60,0.3);border:1px solid #00d4ff;color:#fff;padding:10px;font-size:14px;outline:none;}
+.hbtn{background:transparent;border:1px solid #ff6b00;color:#ff6b00;padding:0 20px;font-family:'Orbitron';font-size:10px;cursor:pointer;}
 
-.ftr{display:flex;justify-content:space-between;font-size:7px;opacity:0.4;padding:3px;}
-#dummy-focus{position:absolute;opacity:0;pointer-events:none;top:-100px;}
+#dummy{position:absolute;opacity:0;pointer-events:none;top:-100px;}
 </style>
 </head>
 <body>
-<div class="bg"></div><div class="grid"></div><div class="scanlines"></div>
+<div class="bg"></div><div class="grid"></div><div class="scan"></div>
 
 <div class="wrap">
   <div class="hdr">
-    <div class="st-text">● CORE_SYSTEM_ACTIVE</div>
+    <div style="font-size:7px; opacity:0.6;">SYSTEM_UP</div>
     <div class="title">J.A.R.V.I.S.</div>
-    <div class="st-text">STARK INDUSTRIES // 2026</div>
+    <div style="font-size:7px; opacity:0.6;">STARK_OS</div>
   </div>
   
-  <div class="main-row">
+  <div class="row">
     <div class="side">
       <div class="box">
-        <div class="bt-label">SYSTEM_RADAR</div>
+        <div class="bt">SYSTEM_RADAR</div>
         <canvas id="globe-canvas" width="130" height="130"></canvas>
       </div>
-      <div class="arc-wrap">
-        <svg id="tsvg" viewBox="0 0 156 156"></svg>
-        <canvas id="arc-core" width="46" height="46"></canvas>
+      <div class="ark-container">
+        <!-- REATTORE TRIANGOLARE SVG -->
+        <svg viewBox="0 0 100 100" style="width:100px; height:100px; filter:drop-shadow(0 0 10px #00d4ff);">
+          <path d="M50 15 L85 75 L15 75 Z" fill="none" stroke="#00d4ff" stroke-width="2" />
+          <path d="M50 25 L75 70 L25 70 Z" fill="rgba(0,212,255,0.2)">
+            <animate attributeName="fill-opacity" values="0.1;0.6;0.1" dur="2s" repeatCount="indefinite" />
+          </path>
+          <circle cx="50" cy="55" r="12" fill="#fff">
+            <animate attributeName="r" values="8;14;8" dur="2s" repeatCount="indefinite" />
+          </circle>
+        </svg>
       </div>
       <div class="box" style="flex:1">
-        <div class="bt-label">DEVICES_LOG</div>
-        <div class="list-item"><span>MotoBruss</span><span class="ok">OK</span></div>
-        <div class="list-item"><span>OppoBruss</span><span class="ok">OK</span></div>
-        <div class="list-item"><span>PcBruss</span><span class="ok">OK</span></div>
+        <div class="bt">DEVICES</div>
+        <div style="font-size:9px;">MotoBruss <span style="color:#00ff88">OK</span></div>
+        <div style="font-size:9px;">OppoBruss <span style="color:#00ff88">OK</span></div>
+        <div style="font-size:9px;">PcBruss <span style="color:#00ff88">OK</span></div>
       </div>
     </div>
     
-    <div class="chat-area">
+    <div class="chat">
       <div class="msgs" id="chat"></div>
       <div id="typ" style="display:none; color:#ff6b00; font-size:8px; padding-left:15px; margin-bottom:5px;">●●● ELABORAZIONE...</div>
       <div class="inp-row">
@@ -91,74 +97,47 @@ body{background:#000;color:#00d4ff;font-family:'Rajdhani',sans-serif;height:100v
     
     <div class="side">
       <div class="box">
-        <div class="bt-label">PROTOCOLS</div>
-        <div class="list-item"><span>HOUSE_GUARD</span><span class="ok">ON</span></div>
-        <div class="list-item"><span>BT_MESH</span><span class="ok">ON</span></div>
+        <div class="bt">PROTOCOLS</div>
+        <div style="font-size:9px;">HOUSE_GUARD <span style="color:#00ff88">ON</span></div>
+        <div style="font-size:9px;">BT_MESH <span style="color:#00ff88">ON</span></div>
       </div>
       <div class="box" style="flex:1">
-        <div class="bt-label">QUICK_LAUNCH</div>
-        <div style="font-size:8px; color:#00d4ff; cursor:pointer; margin-bottom:10px; border:1px solid rgba(0,212,255,0.3); padding:8px; text-align:center;">WHATSAPP</div>
-        <div style="font-size:8px; color:#00d4ff; cursor:pointer; margin-bottom:10px; border:1px solid rgba(0,212,255,0.3); padding:8px; text-align:center;">PRIME VIDEO</div>
-        <div style="font-size:8px; color:#00d4ff; cursor:pointer; border:1px solid rgba(0,212,255,0.3); padding:8px; text-align:center;">DISNEY+</div>
+        <div class="bt">QUICK_LAUNCH</div>
+        <div style="font-size:8px; border:1px solid #00d4ff; padding:8px; text-align:center; margin-bottom:10px;">WHATSAPP</div>
+        <div style="font-size:8px; border:1px solid #00d4ff; padding:8px; text-align:center;">PRIME VIDEO</div>
         <button onclick="openCam()" style="width:100%; background:transparent; border:1px solid #ff6b00; color:#ff6b00; padding:10px; font-family:'Orbitron'; font-size:8px; margin-top:20px; cursor:pointer;">📷 CAMERA</button>
       </div>
     </div>
   </div>
-  
-  <div class="ftr">
-    <span id="clk">00:00:00</span>
-    <span>JARVIS v5.1 [FIXED SUPREME]</span>
-    <span id="upt">UPTIME: 0m</span>
-  </div>
 </div>
 
-<input type="text" id="dummy-focus">
+<input type="text" id="dummy">
 
 <script>
 var _K1 = 'gsk_dETVcTjKuuOYEGkdit5h';
 var _K2 = 'WGdyb3FYlnxwRdUSnehnzu4mZTPscrFS';
 var KEY = _K1 + _K2;
-var chatHistory = [];
+var history = [];
 
-// ARC REACTOR
-var tsvg = document.getElementById('tsvg');
-for(var i=0; i<72; i++){
-  var a = (i/72)*Math.PI*2; var r = 74; var len = i%6===0 ? 10 : 5;
-  var l = document.createElementNS('http://www.w3.org/2000/svg','line');
-  l.setAttribute('x1', 78 + Math.sin(a)*r); l.setAttribute('y1', 78 - Math.cos(a)*r);
-  l.setAttribute('x2', 78 + Math.sin(a)*(r-len)); l.setAttribute('y2', 78 - Math.cos(a)*(r-len));
-  l.setAttribute('stroke', i%6===0 ? 'rgba(0,212,255,0.9)' : 'rgba(0,212,255,0.3)');
-  l.setAttribute('stroke-width', i%6===0 ? '2' : '1');
-  tsvg.appendChild(l);
-}
-var arcCtx = document.getElementById('arc-core').getContext('2d');
-var arcP = 0;
-function drawArc(){
-  arcCtx.clearRect(0,0,46,46); arcP += 0.05; var pulse = 0.8 + Math.sin(arcP)*0.2;
-  var g = arcCtx.createRadialGradient(23,23,2,23,23,20);
-  g.addColorStop(0, 'rgba(255,255,255,'+(0.9*pulse)+')'); g.addColorStop(0.4, 'rgba(0,212,255,0.4)'); g.addColorStop(1, 'transparent');
-  arcCtx.fillStyle = g; arcCtx.beginPath(); arcCtx.arc(23,23,20,0,Math.PI*2); arcCtx.fill();
-  requestAnimationFrame(drawArc);
-}
-drawArc();
-
-// RADAR
+// MONDO 3D (IMAGE 2 STYLE)
 var gctx = document.getElementById('globe-canvas').getContext('2d');
-var rot = 0;
-function drawRadar(){
-  gctx.clearRect(0,0,130,130); rot += 0.04;
+var r = 0;
+function drawMondo(){
+  gctx.clearRect(0,0,130,130); r += 0.03;
   gctx.beginPath(); gctx.arc(65,65,60,0,Math.PI*2); gctx.strokeStyle='rgba(0,255,180,0.1)'; gctx.stroke();
-  gctx.beginPath(); gctx.moveTo(65,65); gctx.lineTo(65 + Math.cos(rot)*60, 65 + Math.sin(rot)*60);
-  gctx.strokeStyle='rgba(0,255,180,0.4)'; gctx.stroke();
-  for(var i=0; i<8; i++){
-    var a = rot - i*0.1;
-    gctx.beginPath(); gctx.arc(65,65,60,a,a+0.1); gctx.strokeStyle='rgba(0,255,180,'+(0.4-i*0.05)+')'; gctx.lineWidth=4; gctx.stroke();
+  // Continenti stilizzati
+  gctx.fillStyle = 'rgba(0,255,180,0.3)';
+  for(var i=0; i<5; i++){
+    var x = 65 + Math.cos(r + i)*40; var y = 65 + Math.sin(r*0.5 + i)*30;
+    gctx.beginPath(); gctx.arc(x,y,15,0,Math.PI*2); gctx.fill();
   }
-  requestAnimationFrame(drawRadar);
+  gctx.beginPath(); gctx.moveTo(65,65); gctx.lineTo(65 + Math.cos(r)*60, 65 + Math.sin(r)*60);
+  gctx.strokeStyle='rgba(0,255,180,0.6)'; gctx.stroke();
+  requestAnimationFrame(drawMondo);
 }
-drawRadar();
+drawMondo();
 
-function addMsg(s,t,j){
+function add(s,t,j){
   var d = document.createElement('div'); d.className = 'msg' + (j ? ' j' : '');
   d.innerHTML = '<div class="ms-tag">'+s+' //</div>'+t;
   var c = document.getElementById('chat'); c.appendChild(d); c.scrollTop = c.scrollHeight;
@@ -166,8 +145,8 @@ function addMsg(s,t,j){
 
 function send(){
   var inp = document.getElementById('inp'); var txt = inp.value.trim(); if(!txt) return;
-  addMsg('USER', txt, false); chatHistory.push({role:'user', content:txt}); inp.value = '';
-  document.getElementById('dummy-focus').focus(); setTimeout(()=>document.getElementById('dummy-focus').blur(), 50);
+  add('USER', txt, false); history.push({role:'user', content:txt}); inp.value = '';
+  document.getElementById('dummy').focus(); setTimeout(()=>document.getElementById('dummy').blur(), 50);
   
   var xhr = new XMLHttpRequest();
   xhr.open('POST', 'https://api.groq.com/openai/v1/chat/completions', true);
@@ -178,26 +157,22 @@ function send(){
       document.getElementById('typ').style.display='none';
       if(xhr.status===200){
         var r = JSON.parse(xhr.responseText).choices[0].message.content;
-        addMsg('JARVIS', r.replace(/\[.*?\]/g,'').trim(), true);
-        chatHistory.push({role:'assistant', content:r});
-      } else { addMsg('JARVIS', 'ERROR '+xhr.status, true); }
+        add('JARVIS', r.replace(/\[.*?\]/g,'').trim(), true);
+        history.push({role:'assistant', content:r});
+      } else { add('JARVIS', 'ERROR '+xhr.status, true); }
     }
   };
   document.getElementById('typ').style.display='block';
   xhr.send(JSON.stringify({
-    model: 'llama3-8b-8192',
-    messages: [{role:'system', content:'Sei Jarvis. Rispondi in italiano.'}].concat(chatHistory.slice(-8))
+    model: 'llama-3.3-70b-versatile',
+    messages: [{role:'system', content:'Sei Jarvis. Rispondi in italiano.'}].concat(history.slice(-8))
   }));
 }
 
 document.getElementById('inp').addEventListener('keydown', e => { if(e.key==='Enter') send(); });
-setInterval(()=>{
-  document.getElementById('clk').textContent = new Date().toLocaleTimeString('it-IT');
-  document.getElementById('upt').textContent = 'UPTIME: '+Math.floor((Date.now()-window.performance.timing.navigationStart)/60000)+'m';
-}, 1000);
 function openCam() { if(window.AppInventor) window.AppInventor.setWebViewString('CAMERA_ON'); }
 
-addMsg('JARVIS', 'Sistema v5.1 Online. Error 400 risolto.', true);
+add('JARVIS', 'Sistema SUPREME v5.2 Online. Modello 70B attivo.', true);
 </script>
 </body>
 </html>
