@@ -1,184 +1,223 @@
 <!DOCTYPE html>
-<html lang="it">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <title>J.A.R.V.I.S. HUD</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600&display=swap');
-    
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { background: #000 !important; color: #00d4ff; font-family: 'Rajdhani', sans-serif; height: 100%; width: 100%; overflow: hidden; position: fixed; }
-    
-    /* SFONDO E GRID */
-    .bg { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 35%, #001020 0%, #000810 60%, #000 100%); z-index: 1; }
-    .grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(0,212,255,0.02) 1px,transparent 1px), linear-gradient(90deg,rgba(0,212,255,0.02) 1px,transparent 1px); background-size: 30px 30px; z-index: 2; }
-    .scan { position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,212,255,0.01) 2px, rgba(0,212,255,0.01) 4px); pointer-events: none; z-index: 99; }
-    
-    .wrap { position: relative; z-index: 10; display: flex; flex-direction: column; height: 100%; padding: 10px; gap: 5px; }
-    
-    /* TITOLO HUD */
-    .title { font-family: 'Orbitron', sans-serif; font-size: 16px; font-weight: 900; letter-spacing: 8px; text-align: center; color: #00d4ff; text-shadow: 0 0 10px rgba(0,212,255,0.5); padding: 5px 0; border-bottom: 1px solid rgba(0,212,255,0.2); }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>JARVIS v4.1 RESTORED</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#000;color:#00d4ff;font-family:'Rajdhani',sans-serif;height:100vh;overflow:hidden;position:relative;}
+.bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 35%,#001020 0%,#000810 60%,#000 100%);}
+.grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,212,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.025) 1px,transparent 1px);background-size:28px 28px;}
+.scan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,212,255,0.012) 2px,rgba(0,212,255,0.012) 4px);pointer-events:none;z-index:99;}
 
-    .main-hud { display: flex; flex: 1; gap: 10px; min-height: 0; margin-top: 10px; }
-    
-    /* COLONNA SINISTRA (ARC REACTOR & GLOBE) */
-    .left-hud { width: 150px; display: flex; flex-direction: column; align-items: center; gap: 20px; }
-    .arc-wrap { width: 140px; height: 140px; position: relative; display: flex; align-items: center; justify-content: center; }
-    .ring { position: absolute; border-radius: 50%; border: 1.5px solid transparent; }
-    .r1 { width: 130px; height: 130px; border-top-color: #00d4ff; animation: rot 10s linear infinite; }
-    .r2 { width: 110px; height: 110px; border-left-color: #ff6b00; animation: rot 7s linear infinite reverse; }
-    .r3 { width: 90px; height: 90px; border-bottom-color: #00d4ff; animation: rot 5s linear infinite; }
-    .core { width: 40px; height: 40px; background: radial-gradient(circle, #fff 0%, #00d4ff 50%, transparent 100%); border-radius: 50%; box-shadow: 0 0 20px #00d4ff; animation: pulse 2s infinite; }
-    
-    @keyframes rot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-    @keyframes pulse { 0%, 100% { opacity: 0.4; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1.1); } }
+.wrap{position:relative;z-index:10;display:flex;flex-direction:column;height:100vh;padding:10px;gap:8px;}
+.hdr{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(0,212,255,0.3);padding-bottom:5px;}
+.title{font-family:'Orbitron',sans-serif;font-size:16px;font-weight:900;letter-spacing:5px;text-shadow:0 0 10px rgba(0,212,255,0.5);}
+.st{font-size:8px;opacity:0.6;letter-spacing:2px;}
 
-    /* COLONNA DESTRA (PANELS) */
-    .right-hud { flex: 1; display: flex; flex-direction: column; gap: 8px; }
-    .panel { background: rgba(0,15,30,0.8); border: 1px solid rgba(0,212,255,0.2); padding: 8px; position: relative; }
-    .panel::before { content:''; position:absolute; top:0; left:0; width:5px; height:5px; border-top:1px solid #00d4ff; border-left:1px solid #00d4ff; }
-    .p-tag { font-size: 7px; color: #ff6b00; letter-spacing: 2px; margin-bottom: 4px; font-family: 'Orbitron'; }
-    .p-val { font-size: 14px; font-weight: bold; color: #00d4ff; }
+.row{display:flex;gap:10px;flex:1;min-height:0;}
+.col-l{width:160px;display:flex;flex-direction:column;gap:10px;}
+.col-r{flex:1;display:flex;flex-direction:column;gap:10px;}
 
-    /* CHAT FUTURISTICA */
-    .chat-box { height: 180px; display: flex; flex-direction: column; background: rgba(0,5,10,0.9); border: 1px solid rgba(0,212,255,0.3); position: relative; }
-    .chat-box::after { content: '▶ TERMINAL'; position: absolute; top: -8px; left: 10px; font-size: 6px; background: #000; padding: 0 5px; color: #ff6b00; }
-    .msgs { flex: 1; overflow-y: auto; padding: 12px; }
-    .msg { margin-bottom: 12px; font-size: 15px; border-left: 2px solid rgba(0,212,255,0.4); padding-left: 10px; color: #fff; line-height: 1.4; }
-    .msg.j { border-left-color: #ff6b00; color: #ffcc88; background: rgba(255,107,0,0.03); }
-    .msg-tag { font-size: 7px; opacity: 0.4; letter-spacing: 2px; margin-bottom: 2px; }
+.box{background:rgba(0,20,40,0.6);border:1px solid rgba(0,212,255,0.2);padding:8px;position:relative;overflow:hidden;}
+.box::before{content:'';position:absolute;top:0;left:0;width:5px;height:5px;border-top:1px solid #00d4ff;border-left:1px solid #00d4ff;}
+.bt{font-size:7px;color:#ff6b00;letter-spacing:1px;margin-bottom:5px;font-family:'Orbitron';}
 
-    .input-area { display: flex; padding: 8px; gap: 8px; background: #000; }
-    .inp { flex: 1; background: rgba(0,30,60,0.3); border: 1px solid #00d4ff; color: #00d4ff; padding: 12px; font-size: 16px; outline: none; font-family: 'Rajdhani'; }
-    .btn-send { background: transparent; border: 1px solid #ff6b00; color: #ff6b00; font-family: 'Orbitron'; font-size: 10px; padding: 0 15px; cursor: pointer; transition: 0.3s; }
-    .btn-send:active { background: rgba(255,107,0,0.2); }
+.arc-c{width:140px;height:140px;margin:0 auto;position:relative;display:flex;align-items:center;justify-content:center;}
+#tsvg{position:absolute;inset:0;transform:rotate(-90deg);filter:drop-shadow(0 0 5px rgba(0,212,255,0.5));}
+#arc-core{position:relative;z-index:2;border-radius:50%;}
 
-    .footer { display: flex; justify-content: space-between; font-size: 8px; color: rgba(0,212,255,0.2); padding: 5px; }
-    #reset-link { cursor: pointer; text-decoration: underline; }
-  </style>
+.stat-g{display:grid;grid-template-columns:1fr 1fr;gap:5px;}
+.stat-i{text-align:center;padding:5px;background:rgba(0,0,0,0.3);border:1px solid rgba(0,212,255,0.1);}
+.sv{font-size:12px;font-weight:bold;color:#fff;}
+.sl{font-size:6px;opacity:0.5;}
+
+.chat{flex:1;display:flex;flex-direction:column;background:rgba(0,10,20,0.8);border:1px solid rgba(0,212,255,0.3);min-height:0;}
+.msgs{flex:1;overflow-y:auto;padding:10px;scrollbar-width:none;}
+.msgs::-webkit-scrollbar{display:none;}
+.msg{margin-bottom:10px;font-size:13px;line-height:1.4;border-left:2px solid #00d4ff;padding-left:8px;}
+.msg.j{border-left-color:#ff6b00;color:#ffcc88;background:rgba(255,107,0,0.03);}
+.ms{font-size:7px;opacity:0.4;letter-spacing:1px;margin-bottom:2px;}
+
+.inprow{display:flex;padding:5px;gap:5px;background:rgba(0,0,0,0.5);border-top:1px solid rgba(0,212,255,0.2);}
+.hin{flex:1;background:rgba(0,30,60,0.3);border:1px solid #00d4ff;color:#00d4ff;padding:8px;font-family:inherit;font-size:14px;outline:none;}
+.hbtn{background:transparent;border:1px solid #ff6b00;color:#ff6b00;padding:0 15px;font-size:9px;font-family:'Orbitron';cursor:pointer;}
+
+.ftr{display:flex;justify-content:space-between;font-size:7px;opacity:0.4;padding:2px 0;}
+
+@keyframes bk{0%,100%{opacity:0.4;}50%{opacity:1;}}
+.radar-sweep{position:absolute;width:100%;height:100%;background:conic-gradient(from 0deg,transparent,rgba(0,212,255,0.2));border-radius:50%;animation:rot 4s linear infinite;}
+@keyframes rot{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+
+#dummy-focus{position:absolute;opacity:0;pointer-events:none;top:-100px;}
+</style>
 </head>
 <body>
-  <div class="bg"></div><div class="grid"></div><div class="scan"></div>
-  
-  <div class="wrap">
+<div class="bg"></div><div class="grid"></div><div class="scan"></div>
+
+<div class="wrap">
+  <div class="hdr">
+    <div class="st">● ONLINE</div>
     <div class="title">J.A.R.V.I.S.</div>
+    <div class="st">STARK INDUSTRIES</div>
+  </div>
+  
+  <div class="row">
+    <div class="col-l">
+      <div class="box stat-g">
+        <div class="stat-i"><div class="sl">STATO AI</div><div class="sv" style="color:#00ff88">ON</div></div>
+        <div class="stat-i"><div class="sl">LATENZA</div><div id="lat" class="sv">---ms</div></div>
+      </div>
+      
+      <div class="arc-c">
+        <svg id="tsvg" viewBox="0 0 156 156"></svg>
+        <canvas id="arc-core" width="42" height="42"></canvas>
+      </div>
+      
+      <div class="box" style="flex:1">
+        <div class="bt">TAG TRACKER</div>
+        <div style="font-size:10px; color:#ff2a2a; margin-bottom:5px;">● CHIAVI ILENIA</div>
+        <div style="font-size:10px; opacity:0.5;">● TAG-02 ---</div>
+        <div style="font-size:10px; opacity:0.5;">● TAG-03 ---</div>
+        <canvas id="globe" width="130" height="130" style="display:block; margin:10px auto 0;"></canvas>
+      </div>
+    </div>
     
-    <div class="main-hud">
-      <div class="left-hud">
-        <div class="arc-wrap">
-          <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div>
-          <div class="core"></div>
-        </div>
-        <div class="panel" style="width:100%">
-          <div class="p-tag">ENERGIA</div>
-          <div id="bat" class="p-val">--%</div>
+    <div class="col-r">
+      <div class="stat-g">
+        <div class="box"><div class="bt">METEO</div><div id="m-t" style="font-size:18px; font-weight:bold;">12°C</div><div id="m-d" style="font-size:8px;">SERENO</div></div>
+        <div class="box"><div class="bt">PROTOCOLLO</div><div style="font-size:12px; font-weight:bold; color:#ff6b00;">ATTIVO</div></div>
+      </div>
+      
+      <div class="box" style="flex:1">
+        <div class="bt">DISPLAY TATTICO</div>
+        <div id="tactical-screen" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center;">
+           <div style="font-size:8px; opacity:0.3; letter-spacing:2px;">MODULO IN ATTESA</div>
         </div>
       </div>
       
-      <div class="right-hud">
-        <div class="panel">
-          <div class="p-tag">METEO LOCALE</div>
-          <div id="weth" class="p-val">12°C SERENO</div>
-        </div>
-        <div class="panel" style="flex:1; display:flex; align-items:center; justify-content:center;">
-          <div class="p-tag" style="position:absolute; top:8px; left:8px;">TACTICAL</div>
-          <div style="font-size:8px; opacity:0.3; letter-spacing:2px;">IN ATTESA...</div>
-        </div>
-        <button onclick="openCam()" style="background:transparent; border:1px solid #00d4ff; color:#00d4ff; padding:10px; font-family:'Orbitron'; font-size:10px; letter-spacing:2px;">📷 CONTROLLO</button>
-      </div>
-    </div>
-    
-    <div class="chat-box">
-      <div class="msgs" id="chat"></div>
-      <div class="input-area">
-        <input type="text" id="inp" class="inp" placeholder="COMANDO..." autocomplete="off">
-        <button class="btn-send" onclick="send()">INVIA ►</button>
-      </div>
-    </div>
-    
-    <div class="footer">
-      <span>HUD v4.0 [STARK ORIGINAL]</span>
-      <span id="clk">00:00:00</span>
-      <span id="reset-link" onclick="nuclear()">RESET MEMORY</span>
+      <button onclick="openControllo()" style="background:transparent; border:1px solid #00d4ff; color:#00d4ff; padding:10px; font-family:'Orbitron'; font-size:10px; letter-spacing:3px;">📷 CONTROLLO</button>
     </div>
   </div>
+  
+  <div class="chat">
+    <div class="msgs" id="chat"></div>
+    <div class="typ" id="typ" style="display:none">●●●</div>
+    <div class="inprow">
+      <input class="hin" id="inp" placeholder="COMANDO..." type="text" autocomplete="off" inputmode="text" enterkeyhint="send">
+      <button class="hbtn" onclick="send()">INVIA ►</button>
+    </div>
+  </div>
+  
+  <div class="ftr">
+    <span>JARVIS v4.1 [RESTORED]</span><span id="upt">UPTIME: 0m</span><span>LLAMA 3.3 70B</span>
+  </div>
+</div>
 
-  <input type="text" id="dummy" style="position:fixed; top:-100px; opacity:0;">
+<input type="text" id="dummy-focus">
 
-  <script>
-    var _K1 = 'gsk_dETVcTjKuuOYEGkdit5h';
-    var _K2 = 'WGdyb3FYlnxwRdUSnehnzu4mZTPscrFS';
-    var KEY = _K1 + _K2;
-    var history = [];
+<script>
+var _K1 = 'gsk_dETVcTjKuuOYEGkdit5h';
+var _K2 = 'WGdyb3FYlnxwRdUSnehnzu4mZTPscrFS';
+var GROQ_KEY = _K1 + _K2;
+var chatHistory = [];
 
-    function nuclear() { localStorage.clear(); location.reload(); }
+// GFX: ARC REACTOR
+var tsvg = document.getElementById('tsvg');
+for(var i=0; i<72; i++){
+  var a = (i/72)*Math.PI*2; var r = 74; var len = i%6===0 ? 9 : i%2===0 ? 5 : 3;
+  var l = document.createElementNS('http://www.w3.org/2000/svg','line');
+  l.setAttribute('x1', 78 + Math.sin(a)*r); l.setAttribute('y1', 78 - Math.cos(a)*r);
+  l.setAttribute('x2', 78 + Math.sin(a)*(r-len)); l.setAttribute('y2', 78 - Math.cos(a)*(r-len));
+  l.setAttribute('stroke', i%6===0 ? 'rgba(0,212,255,0.9)' : i%2===0 ? 'rgba(0,212,255,0.4)' : 'rgba(0,212,255,0.15)');
+  l.setAttribute('stroke-width', i%6===0 ? '1.8' : '0.8');
+  tsvg.appendChild(l);
+}
+var arcCanvas = document.getElementById('arc-core');
+var arcCtx = arcCanvas.getContext('2d');
+var arcPulse = 0;
+function drawArc(){
+  arcCtx.clearRect(0,0,42,42); var pulse = 0.7 + Math.sin(arcPulse)*0.3; arcPulse += 0.04; var cx=21,cy=21;
+  var g = arcCtx.createRadialGradient(cx,cy,4,cx,cy,20);
+  g.addColorStop(0, 'rgba(0,212,255,'+(0.15*pulse)+')'); g.addColorStop(1, 'transparent');
+  arcCtx.beginPath(); arcCtx.arc(cx,cy,20,0,Math.PI*2); arcCtx.fillStyle=g; arcCtx.fill();
+  g = arcCtx.createRadialGradient(cx-2,cy-2,1,cx,cy,10);
+  g.addColorStop(0, 'rgba(255,255,255,'+(0.95*pulse)+')'); g.addColorStop(1, 'rgba(0,40,120,0.3)');
+  arcCtx.beginPath(); arcCtx.arc(cx,cy,10,0,Math.PI*2); arcCtx.fillStyle=g; arcCtx.fill();
+  requestAnimationFrame(drawArc);
+}
+drawArc();
 
-    function add(s, t, j) {
-      var box = document.getElementById('chat');
-      var div = document.createElement('div');
-      div.className = 'msg' + (j ? ' j' : '');
-      div.innerHTML = '<div class="msg-tag">' + s + ' //</div>' + t;
-      box.appendChild(div);
-      box.scrollTop = box.scrollHeight;
+// GFX: GLOBE
+var gc = document.getElementById('globe'); var gctx = gc.getContext('2d'); var GS=130, GR=62, GCX=65, GCY=65, rot=0;
+function drawGlobe(){
+  gctx.clearRect(0,0,GS,GS);
+  gctx.beginPath(); gctx.arc(GCX,GCY,GR,0,Math.PI*2); gctx.strokeStyle='rgba(0,212,255,0.2)'; gctx.stroke();
+  for(var i=0; i<8; i++){
+    var a = (rot + i*45) * Math.PI/180;
+    var x = GCX + Math.cos(a)*GR; var y = GCY + Math.sin(a)*GR*0.3;
+    gctx.beginPath(); gctx.arc(x,y,2,0,Math.PI*2); gctx.fillStyle='rgba(0,212,255,0.5)'; gctx.fill();
+  }
+  rot += 1; requestAnimationFrame(drawGlobe);
+}
+drawGlobe();
+
+function addMsg(s,t,j){
+  var d = document.createElement('div'); d.className = 'msg' + (j ? ' j' : '');
+  d.innerHTML = '<div class="ms">'+s+' //</div>'+t;
+  var c = document.getElementById('chat'); c.appendChild(d); c.scrollTop = c.scrollHeight;
+}
+
+function openControllo(){ 
+  addMsg('JARVIS','Avvio feed camera...',true);
+  if(window.AppInventor) window.AppInventor.setWebViewString('CAMERA_ON');
+}
+
+function send(){
+  var inp = document.getElementById('inp'); var text = inp.value.trim(); if(!text) return;
+  addMsg('USER', text, false); chatHistory.push({role:'user', content:text}); inp.value = '';
+  
+  // Fix Tastiera Motorola
+  var dummy = document.getElementById('dummy-focus');
+  dummy.focus(); setTimeout(function(){ dummy.blur(); }, 50);
+
+  var t0 = Date.now();
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST','https://api.groq.com/openai/v1/chat/completions',true);
+  xhr.setRequestHeader('Content-Type','application/json');
+  xhr.setRequestHeader('Authorization','Bearer '+GROQ_KEY);
+  
+  xhr.onreadystatechange = function(){
+    if(xhr.readyState === 4){
+      if(xhr.status === 200){
+        var d = JSON.parse(xhr.responseText); var reply = d.choices[0].message.content;
+        var cleanR = reply.replace(/\[.*?\]/g,'').trim();
+        addMsg('JARVIS', cleanR, true);
+        chatHistory.push({role:'assistant', content:reply});
+        if(window.AppInventor) window.AppInventor.setWebViewString(reply);
+        document.getElementById('lat').textContent = (Date.now()-t0)+'ms';
+      } else {
+        addMsg('JARVIS', 'ERRORE API ('+xhr.status+')', true);
+      }
     }
+  };
+  
+  xhr.send(JSON.stringify({
+    model: 'llama3-8b-8192',
+    messages: [{role:'system', content:'Sei Jarvis. Rispondi in italiano, sintetico.'}].concat(chatHistory.slice(-8))
+  }));
+}
 
-    function send() {
-      var inp = document.getElementById('inp');
-      var txt = inp.value.trim();
-      if(!txt) return;
+document.getElementById('inp').addEventListener('keydown',function(e){ if(e.key==='Enter') send(); });
 
-      add('USER', txt, false);
-      history.push({role:'user', content:txt});
-      inp.value = '';
+setInterval(function(){
+  document.getElementById('upt').textContent = 'UPTIME: '+Math.floor((Date.now()-window.performance.timing.navigationStart)/60000)+'m';
+}, 60000);
 
-      // Fix Tastiera Motorola
-      var d = document.getElementById('dummy');
-      d.focus(); 
-      setTimeout(function(){ d.blur(); }, 50);
-
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', 'https://api.groq.com/openai/v1/chat/completions', true);
-      xhr.setRequestHeader('Content-Type', 'application/json');
-      xhr.setRequestHeader('Authorization', 'Bearer ' + KEY);
-      
-      xhr.onreadystatechange = function() {
-        if(xhr.readyState === 4) {
-          if(xhr.status === 200) {
-            var r = JSON.parse(xhr.responseText).choices[0].message.content;
-            var cleanR = r.replace(/\[.*?\]/g,'').trim();
-            add('JARVIS', cleanR, true);
-            history.push({role:'assistant', content:r});
-            if(window.AppInventor) window.AppInventor.setWebViewString(r);
-          } else {
-            add('JARVIS', 'ERRORE CONNESSIONE ('+xhr.status+')', true);
-          }
-        }
-      };
-      
-      xhr.send(JSON.stringify({
-        model: "llama3-8b-8192",
-        messages: [{role:"system", content:"Sei Jarvis. Rispondi in italiano, sintetico e tecnico."}].concat(history.slice(-8))
-      }));
-    }
-
-    document.getElementById('inp').addEventListener('keydown', function(e){ if(e.key==='Enter') send(); });
-
-    setInterval(function(){
-      document.getElementById('clk').textContent = new Date().toLocaleTimeString('it-IT');
-    }, 1000);
-
-    if(navigator.getBattery) navigator.getBattery().then(function(b){ 
-      document.getElementById('bat').textContent = Math.round(b.level * 100) + '%';
-    });
-
-    function openCam() {
-      add('JARVIS', 'Avvio feed camera...', true);
-      if(window.AppInventor) window.AppInventor.setWebViewString('CAMERA_ON');
-    }
-
-    add('JARVIS', 'Sistema Stark v4.0 Online. In attesa di input.', true);
-  </script>
+addMsg('JARVIS', 'Sistema v4.1 Ripristinato. Pronto ai comandi.', true);
+</script>
 </body>
 </html>
