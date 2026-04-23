@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>JARVIS - v6.6</title>
+<title>JARVIS - v6.8</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600&display=swap');
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -15,12 +15,13 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
 .wrap { position: relative; z-index: 10; display: flex; flex-direction: column; height: 100vh; padding: 10px; gap: 8px; }
 
 /* HEADER */
-.hdr-wrap { text-align: center; border-bottom: 2px solid rgba(0,212,255,0.3); padding-bottom: 10px; }
+.hdr-wrap { text-align: center; }
 .title { font-family: 'Orbitron', sans-serif; font-size: 24px; font-weight: 900; letter-spacing: 12px; animation: glowBreath 5s infinite ease-in-out; }
 @keyframes glowBreath { 0%, 100% { color: #00d4ff; text-shadow: 0 0 10px #00d4ff; } 50% { color: #0088ff; text-shadow: 0 0 20px #0088ff; } }
 
-/* PROTOCOLLI */
-.proto-box { background: rgba(0,20,40,0.6); border: 1px solid rgba(0,212,255,0.3); padding: 8px; display: flex; justify-content: center; gap: 20px; font-family: 'Orbitron'; font-size: 11px; color: #00ff88; margin-bottom: 5px; }
+/* PROTOCOLLI (CIANO/ARANCIO) */
+.proto-box { background: rgba(0,20,40,0.6); border: 1px solid rgba(0,212,255,0.3); padding: 8px; display: flex; justify-content: center; gap: 20px; font-family: 'Orbitron'; font-size: 11px; color: #00d4ff; margin-bottom: 5px; }
+.proto-item { border-bottom: 1px solid rgba(0,212,255,0.3); }
 
 .main { display: flex; gap: 10px; flex: 1; min-height: 0; }
 
@@ -36,24 +37,21 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
 .box::before { content:''; position:absolute; top:0; left:0; width:10px; height:10px; border-top:2px solid #ff6b00; border-left:2px solid #ff6b00; }
 .bt-title { font-size: 9px; color: #ff6b00; letter-spacing: 2px; margin-bottom: 8px; font-family: 'Orbitron'; border-bottom: 1px solid rgba(255,107,0,0.3); }
 .box-content { flex: 1; overflow-y: auto; font-size: 14px; font-weight: 600; scrollbar-width: none; }
-.box-content::-webkit-scrollbar { display: none; }
 
-/* CALENDARIO TATTICO VERTICALE */
+/* CALENDARIO TATTICO (ZERO VERDE) */
 .cal-list { display: flex; flex-direction: column; gap: 4px; }
-.cal-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; background: rgba(0,0,0,0.5); border: 1px solid rgba(0,212,255,0.1); border-radius: 2px; font-size: 11px; }
-.cal-row.today { border-color: #00ff88; background: rgba(0,255,136,0.1); box-shadow: inset 0 0 10px rgba(0,255,136,0.1); }
-.cal-row.work { color: #00ff88; }
-.cal-row.rest { color: #00d4ff; opacity: 0.7; }
+.cal-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; background: rgba(0,0,0,0.5); border: 1px solid rgba(0,212,255,0.1); border-radius: 2px; font-size: 11px; color: #00d4ff; }
+.cal-row.today { border-color: #ff6b00; background: rgba(255,107,0,0.1); box-shadow: inset 0 0 10px rgba(255,107,0,0.1); color: #fff; }
+.cal-row.rest { color: #0088ff; opacity: 0.6; }
 .cal-row.ferie { color: #ff4444; }
 .cal-day { font-family: 'Orbitron'; width: 80px; }
-.cal-shift { font-weight: bold; text-align: right; }
 
 /* BARRA INFERIORE */
 .footer-row { display: flex; align-items: center; justify-content: space-between; gap: 20px; border-top: 1px solid rgba(0,212,255,0.2); padding-top: 10px; }
 .tag-tracker { flex: 1; display: flex; gap: 25px; font-family: 'Orbitron'; }
 .tag-item { display: flex; align-items: center; gap: 8px; font-size: 11px; color: #fff; }
-.dot { width: 6px; height: 6px; border-radius: 50%; background: #00ff88; box-shadow: 0 0 5px #00ff88; }
-.btn-control { width: 160px; background: transparent; border: 1px solid #00d4ff; color: #00d4ff; padding: 15px; font-family: 'Orbitron'; font-size: 12px; letter-spacing: 3px; cursor: pointer; text-align: center; }
+.dot { width: 6px; height: 6px; border-radius: 50%; background: #00d4ff; box-shadow: 0 0 5px #00d4ff; }
+.btn-control { width: 160px; background: transparent; border: 1px solid #00d4ff; color: #00d4ff; padding: 15px; font-family: 'Orbitron'; font-size: 12px; cursor: pointer; text-align: center; }
 
 /* CHAT */
 .chat { height: 160px; display: flex; flex-direction: column; background: rgba(0,5,10,0.95); border: 1px solid rgba(0,212,255,0.3); }
@@ -80,13 +78,13 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
     <div class="proto-item">● HOUSE_GUARD: ON</div>
     <div class="proto-item">● BT_MESH: STABLE</div>
     <div class="proto-item">● ENCRYPTION: ACTIVE</div>
-    <div class="proto-item">● SAT_FEED: TORINO</div>
+    <div class="proto-item">● SATELLITE: TORINO_LOCK</div>
   </div>
   
   <div class="main">
-      <div class="map-wrap">
-        <iframe class="world-iframe" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d30000!2d7.6869!3d45.0703!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sit!2sit!4v1713873000000!5m2!1sit!2sit"></iframe>
-      </div>
+    <div class="map-wrap">
+      <iframe class="world-iframe" src="https://maps.google.com/maps?q=45.0703,7.6869&t=k&z=14&output=embed"></iframe>
+    </div>
     
     <div class="col-right">
       <div class="box">
@@ -94,15 +92,12 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
         <div class="box-content">
           <div>● MotoBruss: <span style="color:#00ff88">ONLINE</span></div>
           <div>● PcBruss: <span style="color:#00ff88">STABLE</span></div>
-          <div>● OppoBruss: <span style="color:#00ff88">ONLINE</span></div>
         </div>
       </div>
       
       <div class="box" style="flex: 2;">
-        <div class="bt-title">▶ CALENDARIO TATTICO (LUN-DOM)</div>
-        <div class="box-content cal-list" id="cal">
-          <!-- CALCOLATO DINAMICAMENTE -->
-        </div>
+        <div class="bt-title">▶ CALENDARIO TATTICO</div>
+        <div class="box-content cal-list" id="cal"></div>
       </div>
     </div>
   </div>
@@ -133,39 +128,30 @@ var _K2 = 'WGdyb3FYlnxwRdUSnehnzu4mZTPscrFS';
 var KEY = _K1 + _K2;
 var chatHistory = [];
 
-// CALENDARIO TATTICO VERTICALE (INFINITO)
 function buildCal() {
-  var now = new Date();
-  var daysLabels = ['DOM','LUN','MAR','MER','GIO','VEN','SAB'];
-  var html = '';
-  
-  // Genera i prossimi 30 giorni per permettere lo scorrimento
-  for(var i=-2; i<30; i++) {
-    var d = new Date();
-    d.setDate(now.getDate() + i);
+  var now = new Date(); var daysLabels = ['DOM','LUN','MAR','MER','GIO','VEN','SAB']; var html = '';
+  for(var i=-10; i<40; i++) {
+    var d = new Date(); d.setDate(now.getDate() + i);
     var dStr = d.toISOString().split('T')[0];
-    
     var type = 'work'; var label = 'TURNO';
     
     if(dStr >= '2026-04-23' && dStr <= '2026-04-25') { type='ferie'; label='FERIE'; }
     else {
-      var base = new Date('2026-04-22T00:00:00'); // 22 APR = 1a NOTTE
+      // CICLO: 4 Notti, 2 Riposi, 4 Pomeriggi, 1 Riposo, 4 Mattine, 1 Riposo (16gg)
+      var base = new Date('2026-04-22T00:00:00'); // 22 APR = 1a NOTTE (Giorno 0)
       var diff = Math.floor((d - base)/(1000*60*60*24));
       var cycle = diff % 16; if(cycle<0) cycle+=16;
       
       if(cycle >= 0 && cycle <= 3) label = 'NOTTE';
-      else if(cycle === 4) { type='rest'; label = 'RIPOSO'; }
-      else if(cycle >= 5 && cycle <= 8) label = 'POMERIGGIO';
-      else if(cycle === 9) { type='rest'; label = 'RIPOSO'; }
-      else if(cycle >= 10 && cycle <= 13) label = 'MATTINO';
+      else if(cycle === 4 || cycle === 5) { type='rest'; label = 'RIPOSO'; }
+      else if(cycle >= 6 && cycle <= 9) label = 'POMERIGGIO';
+      else if(cycle === 10) { type='rest'; label = 'RIPOSO'; }
+      else if(cycle >= 11 && cycle <= 14) label = 'MATTINO';
       else { type='rest'; label = 'RIPOSO'; }
     }
     
     var isToday = i === 0 ? ' today' : '';
-    html += '<div class="cal-row '+type+isToday+'">';
-    html += '<span class="cal-day">'+daysLabels[d.getDay()]+' '+d.getDate()+'</span>';
-    html += '<span class="cal-shift">'+label+'</span>';
-    html += '</div>';
+    html += '<div class="cal-row '+type+isToday+'"><span class="cal-day">'+daysLabels[d.getDay()]+' '+d.getDate()+'</span><span class="cal-shift">'+label+'</span></div>';
   }
   document.getElementById('cal').innerHTML = html;
 }
@@ -197,7 +183,7 @@ function send(){
 
 document.getElementById('inp').addEventListener('keydown', function(e){ if(e.key==='Enter') send(); });
 function openCam(){ if(window.AppInventor) window.AppInventor.setWebViewString('CAMERA_ON'); }
-addMsg('JARVIS', 'Calendario Tattico v6.6 Attivo.', true);
+addMsg('JARVIS', 'Algoritmo Precision v6.8 Online. Zero Verde.', true);
 </script>
 </body>
 </html>
