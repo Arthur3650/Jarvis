@@ -208,7 +208,7 @@ canvas.globe{border-radius:50%;border:1px solid rgba(0,212,255,.3);box-shadow:0 
     </div>
   </div>
   <div class="ftr">
-    <span>JARVIS v3.0 (CORE)</span><span id="upt">UPTIME: 0m</span><span>LLAMA 3.3 70B</span>
+    <span>JARVIS v3.1 (CORE)</span><span id="upt">UPTIME: 0m</span><span>LLAMA 3.3 70B</span>
   </div>
 </div>
 <script>
@@ -400,13 +400,13 @@ function receiveFromKodular(msg){
   addMsg('JARVIS',msg,true);
 }
 
-var SYSTEM = "Sei Jarvis, assistente IA avanzato (configurato per Salvo/Bruss). Rispondi in italiano. Tono: freddo, tecnico, sintetico. Zero chiacchiere.\n" +
-"Dispositivo principale: MotoBruss. Riceverai lo STATO ATTUALE in background.\n" +
-"REGOLE COMANDI (FONDAMENTALE):\n" +
-"1) Grafica interfaccia: [UI:PROTO_NOME_ON], [UI:DEV_NOME_OFF]\n" +
-"2) Hardware fisico: [CMD:NOME_TASK]. Es. obbligatori: [CMD:TORCIA_ON], [CMD:TORCIA_OFF].\n" +
-"3) DISPLAY TATTICO: Se l'utente chiede i suoi turni o un calendario, usa: [UI:CAL_SHOW]. Per la mappa/radar: [UI:MAPS_SHOW]. Se dichiara di aver preso FERIE in un certo giorno, segnale con: [UI:FERIE_ADD_YYYY-MM-DD] calcolando la data (Usa ISO Date che ricevi in background).\n" +
-"Esempio: L'utente dice 'Domani ho preso ferie'. Tu calcoli il giorno di domani e scrivi '[UI:FERIE_ADD_2026-04-24] Ho registrato il permesso sul calendario, signore.'";
+var SYSTEM = `Sei Jarvis, assistente IA avanzato (configurato per Salvo/Bruss). Rispondi in italiano. Tono: freddo, tecnico, sintetico. Zero chiacchiere.
+Dispositivo principale: MotoBruss. Riceverai lo STATO ATTUALE in background.
+REGOLE COMANDI (FONDAMENTALE):
+1) Grafica interfaccia: [UI:PROTO_NOME_ON], [UI:DEV_NOME_OFF]
+2) Hardware fisico: [CMD:NOME_TASK]. Es. obbligatori: [CMD:TORCIA_ON], [CMD:TORCIA_OFF].
+3) DISPLAY TATTICO: Se l'utente chiede i suoi turni o un calendario, usa: [UI:CAL_SHOW]. Per la mappa/radar: [UI:MAPS_SHOW]. Se dichiara di aver preso FERIE in un certo giorno, segnale con: [UI:FERIE_ADD_YYYY-MM-DD] calcolando la data (Usa ISO Date che ricevi in background).
+Esempio: L'utente dice 'Domani ho preso ferie'. Tu calcoli il giorno di domani e scrivi '[UI:FERIE_ADD_2026-04-24] Ho registrato il permesso sul calendario, signore.'`;
 
 // --- SENSORI HARDWARE (PROATTIVITA') ---
 var battLevel = "Sconosciuto";
