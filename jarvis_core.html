@@ -212,6 +212,12 @@ canvas.globe{border-radius:50%;border:1px solid rgba(0,212,255,.3);box-shadow:0 
   </div>
 </div>
 <script>
+var _K1 = 'gsk_dETVcTjKuuOYEGkdit5h';
+var _K2 = 'WGdyb3FYlnxwRdUSnehnzu4mZTPscrFS';
+var GROQ_KEY = _K1 + _K2;
+var chatHistory = [];
+var ferieList = [];
+
 var tsvg = document.getElementById('tsvg');
 for(var i=0; i<72; i++){
   var a = (i/72)*Math.PI*2;
@@ -394,9 +400,6 @@ function receiveFromKodular(msg){
   addMsg('JARVIS',msg,true);
 }
 
-var _K1 = 'gsk_dETVcTjKuuOYEGkdit5h';
-var _K2 = 'WGdyb3FYlnxwRdUSnehnzu4mZTPscrFS';
-var GROQ_KEY = _K1 + _K2;
 var SYSTEM = "Sei Jarvis, assistente IA avanzato (configurato per Salvo/Bruss). Rispondi in italiano. Tono: freddo, tecnico, sintetico. Zero chiacchiere.\n" +
 "Dispositivo principale: MotoBruss. Riceverai lo STATO ATTUALE in background.\n" +
 "REGOLE COMANDI (FONDAMENTALE):\n" +
@@ -404,9 +407,6 @@ var SYSTEM = "Sei Jarvis, assistente IA avanzato (configurato per Salvo/Bruss). 
 "2) Hardware fisico: [CMD:NOME_TASK]. Es. obbligatori: [CMD:TORCIA_ON], [CMD:TORCIA_OFF].\n" +
 "3) DISPLAY TATTICO: Se l'utente chiede i suoi turni o un calendario, usa: [UI:CAL_SHOW]. Per la mappa/radar: [UI:MAPS_SHOW]. Se dichiara di aver preso FERIE in un certo giorno, segnale con: [UI:FERIE_ADD_YYYY-MM-DD] calcolando la data (Usa ISO Date che ricevi in background).\n" +
 "Esempio: L'utente dice 'Domani ho preso ferie'. Tu calcoli il giorno di domani e scrivi '[UI:FERIE_ADD_2026-04-24] Ho registrato il permesso sul calendario, signore.'";
-
-var chatHistory = [];
-var ferieList = [];
 
 // --- SENSORI HARDWARE (PROATTIVITA') ---
 var battLevel = "Sconosciuto";
@@ -570,6 +570,7 @@ function speak(text) {
 
 function send(){
   try {
+    if(!chatHistory) chatHistory = [];
     var inp = document.getElementById('inp');
     var text = inp.value.trim();
     if(!text) return;
