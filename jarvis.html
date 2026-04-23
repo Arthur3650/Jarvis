@@ -178,7 +178,7 @@ function send(){
       chatHistory.push({role:'assistant', content:r});
     }
   };
-  xhr.send(JSON.stringify({model:'llama-3.3-70b-versatile', messages:[{role:'system', content:'Sei Jarvis.'}].concat(chatHistory.slice(-6))}));
+  xhr.send(JSON.stringify({model:'llama-3.3-70b-versatile', messages:[{role:'system', content:'Sei J.A.R.V.I.S., l\'IA di Tony Stark. Rispondi sempre in italiano, in modo conciso, professionale e leggermente ironico.'}].concat(chatHistory.slice(-6))}));
 }
 
 document.getElementById('inp').addEventListener('keydown', function(e){ if(e.key==='Enter') send(); });
