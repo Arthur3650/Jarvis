@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>JARVIS - v3.3 3D WORLD</title>
+<title>JARVIS - v3.3 STARK MOD</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600&display=swap');
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -21,20 +21,25 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
 
 .main { display: flex; gap: 10px; flex: 1; min-height: 0; margin-top: 5px; }
 .col-left { width: 150px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
-.col-right { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+.col-right { flex: 1; display: flex; flex-direction: column; gap: 8px; }
 
-/* REATTORE (SOPRA IL MONDO) */
+/* REATTORE ARK (PIÙ ARCHI) */
 .arc-wrap { width: 110px; height: 110px; position: relative; display: flex; align-items: center; justify-content: center; }
 .ring { position: absolute; border-radius: 50%; border: 1.5px solid transparent; }
-.r1 { width: 100px; height: 100px; border-top-color: #00d4ff; animation: rot 10s linear infinite; }
-.r2 { width: 80px; height: 80px; border-left-color: #ff6b00; animation: rot 7s linear infinite reverse; }
-.core { width: 25px; height: 25px; background: radial-gradient(circle, #fff 0%, #00d4ff 50%, transparent 100%); border-radius: 50%; box-shadow: 0 0 15px #00d4ff; animation: pulse 2s infinite; }
+.r1 { width: 105px; height: 105px; border-top-color: #00d4ff; animation: rot 15s linear infinite; }
+.r2 { width: 85px; height: 85px; border-left-color: #ff6b00; animation: rot 10s linear infinite reverse; }
+.r3 { width: 70px; height: 70px; border-right-color: #00d4ff; animation: rot 12s linear infinite; opacity: 0.5; }
+.r4 { width: 55px; height: 55px; border-bottom-color: #fff; animation: rot 8s linear infinite reverse; opacity: 0.3; }
+.core { width: 22px; height: 22px; background: radial-gradient(circle, #fff 0%, #00d4ff 50%, transparent 100%); border-radius: 50%; box-shadow: 0 0 15px #00d4ff; animation: pulse 3s infinite; }
 
 @keyframes rot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 @keyframes pulse { 0%, 100% { opacity: 0.4; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1.1); } }
 
-/* MONDO 3D WIREFRAME (130px) */
-#globe-canvas { display: block; margin-top: 5px; }
+/* MONDO (IMAGE 2) */
+.world-container { width: 130px; height: 130px; position: relative; border-radius: 50%; border: 1px solid rgba(0,212,255,0.2); overflow: hidden; background: #000; }
+.world-img { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.6; filter: hue-rotate(150deg) brightness(1.2); animation: slowRot 40s linear infinite; }
+@keyframes slowRot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+#world-radar { position: absolute; inset: 0; }
 
 /* TAG TRACKER */
 .tag-tracker { width: 100%; font-family: 'Orbitron'; margin-top: 5px; }
@@ -42,21 +47,21 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
 .tag-item { display: flex; align-items: center; gap: 8px; font-size: 9px; color: #00d4ff; margin-bottom: 4px; }
 .dot { width: 4px; height: 4px; border-radius: 50%; background: #00ff88; box-shadow: 0 0 5px #00ff88; }
 
-/* FINESTRE WIDGET (RIGHT) */
-.box { background: rgba(0,15,30,0.8); border: 1px solid rgba(0,212,255,0.2); padding: 8px; position: relative; max-height: 110px; display: flex; flex-direction: column; }
+/* 3 FINESTRE UGUALI */
+.box { background: rgba(0,15,30,0.8); border: 1px solid rgba(0,212,255,0.2); padding: 8px; position: relative; flex: 1; display: flex; flex-direction: column; min-height: 0; }
 .box::before { content:''; position:absolute; top:0; left:0; width:5px; height:5px; border-top:1px solid #00d4ff; border-left:1px solid #00d4ff; }
 .bt-title { font-size: 7px; color: #ff6b00; letter-spacing: 1px; margin-bottom: 5px; font-family: 'Orbitron'; }
 .box-content { flex: 1; overflow-y: auto; font-size: 10px; scrollbar-width: none; }
 .box-content::-webkit-scrollbar { display: none; }
 
 /* CHAT */
-.chat { height: 160px; display: flex; flex-direction: column; background: rgba(0,5,10,0.9); border: 1px solid rgba(0,212,255,0.3); }
+.chat { height: 150px; display: flex; flex-direction: column; background: rgba(0,5,10,0.9); border: 1px solid rgba(0,212,255,0.3); }
 .msgs { flex: 1; overflow-y: auto; padding: 10px; }
 .msg { margin-bottom: 8px; font-size: 13px; line-height: 1.4; border-left: 2px solid #00d4ff; padding-left: 8px; color: #fff; }
 .msg.j { border-left-color: #ff6b00; color: #ffcc88; }
 
 /* TASTO CONTROLLO (CICCIO) */
-.btn-control { background: transparent; border: 1px solid #00d4ff; color: #00d4ff; padding: 15px; font-family: 'Orbitron'; font-size: 11px; letter-spacing: 3px; cursor: pointer; text-align: center; margin-top: auto; }
+.btn-control { background: transparent; border: 1px solid #00d4ff; color: #00d4ff; padding: 12px; font-family: 'Orbitron'; font-size: 10px; letter-spacing: 3px; cursor: pointer; text-align: center; }
 
 /* INPUT */
 .inp-row { display: flex; padding: 5px; gap: 5px; background: #000; border-top: 1px solid rgba(0,212,255,0.2); }
@@ -79,11 +84,14 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
   <div class="main">
     <div class="col-left">
       <div class="arc-wrap">
-        <div class="ring r1"></div><div class="ring r2"></div>
+        <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div><div class="ring r4"></div>
         <div class="core"></div>
       </div>
       
-      <canvas id="globe-canvas" width="130" height="130"></canvas>
+      <div class="world-container">
+        <img src="Immagini/Mondo.png" class="world-img" alt="World">
+        <canvas id="world-radar" width="130" height="130"></canvas>
+      </div>
       
       <div class="tag-tracker">
         <div class="tag-label">▶ TAG TRACKER</div>
@@ -99,6 +107,7 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
         <div class="box-content">
           <div>HOUSE_GUARD: <span style="color:#00ff88">ON</span></div>
           <div>BT_MESH: <span style="color:#00ff88">ON</span></div>
+          <div>AUTO_PILOT: <span style="color:#ff6b00">OFF</span></div>
         </div>
       </div>
       
@@ -108,6 +117,15 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
           <div>MotoBruss: <span style="color:#00ff88">OK</span></div>
           <div>OppoBruss: <span style="color:#00ff88">OK</span></div>
           <div>PcBruss: <span style="color:#00ff88">OK</span></div>
+        </div>
+      </div>
+      
+      <div class="box">
+        <div class="bt-title">▶ STATO SISTEMA</div>
+        <div class="box-content">
+          <div>TEMPERATURA: 32°C</div>
+          <div>CPU_LOAD: 14%</div>
+          <div>STARK_OS: v5.4</div>
         </div>
       </div>
       
@@ -132,34 +150,24 @@ var _K2 = 'WGdyb3FYlnxwRdUSnehnzu4mZTPscrFS';
 var KEY = _K1 + _K2;
 var chatHistory = [];
 
-// MONDO 3D WIREFRAME (ES5 COMPATIBLE)
-var canvas = document.getElementById('globe-canvas');
+// RADAR SCAN (LENTO)
+var canvas = document.getElementById('world-radar');
 var ctx = canvas.getContext('2d');
-var r = 0;
+var angle = 0;
 
-function drawGlobe() {
+function drawRadar() {
   ctx.clearRect(0, 0, 130, 130);
-  r += 0.03;
+  angle += 0.02; // RALLENTATO
   
-  // Cerchi di latitudine e longitudine per effetto 3D
-  for(var i=0; i<3; i++) {
-    var angle = r + (i * Math.PI / 3);
-    var width = 60 * Math.cos(angle);
-    
-    ctx.beginPath();
-    ctx.ellipse ? ctx.ellipse(65, 65, Math.abs(width), 60, 0, 0, Math.PI * 2) : ctx.arc(65, 65, 60, 0, Math.PI*2);
-    ctx.strokeStyle = 'rgba(0, 212, 255, 0.2)';
-    ctx.stroke();
-    
-    ctx.beginPath();
-    ctx.ellipse ? ctx.ellipse(65, 65, 60, Math.abs(width), 0, 0, Math.PI * 2) : ctx.arc(65, 65, 60, 0, Math.PI*2);
-    ctx.strokeStyle = 'rgba(0, 212, 255, 0.1)';
-    ctx.stroke();
-  }
+  ctx.beginPath();
+  ctx.moveTo(65, 65);
+  ctx.lineTo(65 + Math.cos(angle) * 65, 65 + Math.sin(angle) * 65);
+  ctx.strokeStyle = 'rgba(0, 255, 180, 0.4)';
+  ctx.stroke();
   
-  requestAnimationFrame(drawGlobe);
+  requestAnimationFrame(drawRadar);
 }
-drawGlobe();
+drawRadar();
 
 function addMsg(s, t, j) {
   var box = document.getElementById('chat');
@@ -214,7 +222,7 @@ function openCam() {
   if (window.AppInventor) window.AppInventor.setWebViewString('CAMERA_ON');
 }
 
-addMsg('JARVIS', 'Mondo 3D ripristinato. Sistema online.', true);
+addMsg('JARVIS', 'Calibrazione completata. Sistema Stark Online.', true);
 </script>
 </body>
 </html>
