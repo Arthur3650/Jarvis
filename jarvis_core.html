@@ -2,14 +2,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600&display=swap');
-*{margin:0;padding:0;box-sizing:border-box;}
-body{background:#000;color:#00d4ff;font-family:'Rajdhani',sans-serif;height:100vh;overflow:hidden;position:relative;}
+html, body{background:#000 !important; background-color:#000 !important; color:#00d4ff; font-family:'Rajdhani',sans-serif; height:100%; width:100%; overflow:hidden; position:relative; margin:0; padding:0;}
+body{ padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
 .bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 35%,#001020 0%,#000810 60%,#000 100%);}
 .grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,212,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.025) 1px,transparent 1px);background-size:28px 28px;}
 .scan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,212,255,0.012) 2px,rgba(0,212,255,0.012) 4px);pointer-events:none;z-index:99;}
@@ -203,14 +203,16 @@ canvas.globe{border-radius:50%;border:1px solid rgba(0,212,255,.3);box-shadow:0 
     <div class="msgs" id="chat"></div>
     <div class="typ" id="typ"><div class="td"></div><div class="td"></div><div class="td"></div></div>
     <div class="inprow">
-      <input class="hin" id="inp" placeholder="COMANDO..." type="text"/>
+      <input class="hin" id="inp" placeholder="COMANDO..." type="text" inputmode="text" enterkeyhint="send" autocomplete="off"/>
       <button class="hbtn" onclick="send()">INVIA ►</button>
     </div>
   </div>
   <div class="ftr">
-    <span>JARVIS v3.2 (CORE)</span><span id="upt">UPTIME: 0m</span><span>LLAMA 3.3 70B</span>
+    <span>JARVIS v3.3 (CORE)</span><span id="upt">UPTIME: 0m</span><span>LLAMA 3.3 70B</span>
   </div>
 </div>
+<!-- Elemento segreto per forzare la chiusura della tastiera -->
+<input type="text" id="dummy-focus" style="position:absolute; opacity:0; pointer-events:none; top:-100px;">
 <script>
 var _K1 = 'gsk_dETVcTjKuuOYEGkdit5h';
 var _K2 = 'WGdyb3FYlnxwRdUSnehnzu4mZTPscrFS';
@@ -579,7 +581,11 @@ function send(){
     chatHistory.push({role:'user', content:text});
     
     inp.value = '';
-    inp.blur(); 
+    
+    // TRUCCO FINALE TASTIERA: Sposta il focus su un elemento invisibile e poi toglilo
+    var dummy = document.getElementById('dummy-focus');
+    dummy.focus();
+    setTimeout(function(){ dummy.blur(); }, 50);
     
     document.getElementById('typ').className = 'typ on';
     var t0 = Date.now();
