@@ -4,61 +4,104 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <title>JARVIS MASTER v3.6</title>
+  <title>J.A.R.V.I.S. HUD</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Rajdhani:wght@400;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600&display=swap');
+    
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { background: #000 !important; color: #00d4ff; font-family: 'Rajdhani', sans-serif; height: 100%; width: 100%; overflow: hidden; position: fixed; }
-    .wrap { position: relative; z-index: 10; display: flex; flex-direction: column; height: 100%; padding: env(safe-area-inset-top) 10px env(safe-area-inset-bottom); background: #000; }
     
-    /* BOTTONE EMERGENZA */
-    #reset-btn { background: #ff2a2a; color: #fff; border: none; padding: 5px; font-size: 10px; font-weight: bold; width: 100%; margin-bottom: 5px; border-radius: 4px; display: none; }
+    /* SFONDO E GRID */
+    .bg { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 35%, #001020 0%, #000810 60%, #000 100%); z-index: 1; }
+    .grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(0,212,255,0.02) 1px,transparent 1px), linear-gradient(90deg,rgba(0,212,255,0.02) 1px,transparent 1px); background-size: 30px 30px; z-index: 2; }
+    .scan { position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,212,255,0.01) 2px, rgba(0,212,255,0.01) 4px); pointer-events: none; z-index: 99; }
     
-    .title { font-family: 'Orbitron', sans-serif; font-size: 20px; font-weight: 900; letter-spacing: 4px; text-align: center; color: #00d4ff; padding: 5px 0; }
-    .main { display: flex; flex: 1; gap: 8px; min-height: 0; }
-    .panel { background: rgba(0,25,50,0.7); border: 1px solid #00d4ff; padding: 10px; border-radius: 4px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-    .p-val { font-size: 18px; font-weight: bold; font-family: 'Orbitron'; }
-    .p-lab { font-size: 8px; color: #ff6b00; letter-spacing: 1px; }
+    .wrap { position: relative; z-index: 10; display: flex; flex-direction: column; height: 100%; padding: 10px; gap: 5px; }
+    
+    /* TITOLO HUD */
+    .title { font-family: 'Orbitron', sans-serif; font-size: 16px; font-weight: 900; letter-spacing: 8px; text-align: center; color: #00d4ff; text-shadow: 0 0 10px rgba(0,212,255,0.5); padding: 5px 0; border-bottom: 1px solid rgba(0,212,255,0.2); }
 
-    .chat { height: 200px; display: flex; flex-direction: column; background: #050505; border: 1px solid #00d4ff; margin-top: 5px; }
-    .msgs { flex: 1; overflow-y: auto; padding: 10px; }
-    .msg { margin-bottom: 10px; padding: 8px; border-left: 3px solid #00d4ff; background: rgba(0,212,255,0.05); color: #fff; font-size: 14px; }
-    .msg.j { border-left-color: #ff6b00; color: #ffcc88; background: rgba(255,107,0,0.05); }
-
-    .inp-row { display: flex; padding: 10px; gap: 10px; background: #000; border-top: 1px solid #00d4ff; }
-    .inp { flex: 1; background: #111; border: 1px solid #00d4ff; color: #00d4ff; padding: 12px; font-size: 16px; outline: none; border-radius: 4px; }
-    .btn { background: #ff6b00; color: #000; border: none; padding: 0 20px; font-weight: 900; border-radius: 4px; font-size: 14px; }
+    .main-hud { display: flex; flex: 1; gap: 10px; min-height: 0; margin-top: 10px; }
     
-    .footer { display: flex; justify-content: space-between; font-size: 9px; opacity: 0.4; padding: 5px; }
+    /* COLONNA SINISTRA (ARC REACTOR & GLOBE) */
+    .left-hud { width: 150px; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+    .arc-wrap { width: 140px; height: 140px; position: relative; display: flex; align-items: center; justify-content: center; }
+    .ring { position: absolute; border-radius: 50%; border: 1.5px solid transparent; }
+    .r1 { width: 130px; height: 130px; border-top-color: #00d4ff; animation: rot 10s linear infinite; }
+    .r2 { width: 110px; height: 110px; border-left-color: #ff6b00; animation: rot 7s linear infinite reverse; }
+    .r3 { width: 90px; height: 90px; border-bottom-color: #00d4ff; animation: rot 5s linear infinite; }
+    .core { width: 40px; height: 40px; background: radial-gradient(circle, #fff 0%, #00d4ff 50%, transparent 100%); border-radius: 50%; box-shadow: 0 0 20px #00d4ff; animation: pulse 2s infinite; }
+    
+    @keyframes rot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes pulse { 0%, 100% { opacity: 0.4; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1.1); } }
+
+    /* COLONNA DESTRA (PANELS) */
+    .right-hud { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+    .panel { background: rgba(0,15,30,0.8); border: 1px solid rgba(0,212,255,0.2); padding: 8px; position: relative; }
+    .panel::before { content:''; position:absolute; top:0; left:0; width:5px; height:5px; border-top:1px solid #00d4ff; border-left:1px solid #00d4ff; }
+    .p-tag { font-size: 7px; color: #ff6b00; letter-spacing: 2px; margin-bottom: 4px; font-family: 'Orbitron'; }
+    .p-val { font-size: 14px; font-weight: bold; color: #00d4ff; }
+
+    /* CHAT FUTURISTICA */
+    .chat-box { height: 180px; display: flex; flex-direction: column; background: rgba(0,5,10,0.9); border: 1px solid rgba(0,212,255,0.3); position: relative; }
+    .chat-box::after { content: '▶ TERMINAL'; position: absolute; top: -8px; left: 10px; font-size: 6px; background: #000; padding: 0 5px; color: #ff6b00; }
+    .msgs { flex: 1; overflow-y: auto; padding: 12px; }
+    .msg { margin-bottom: 12px; font-size: 15px; border-left: 2px solid rgba(0,212,255,0.4); padding-left: 10px; color: #fff; line-height: 1.4; }
+    .msg.j { border-left-color: #ff6b00; color: #ffcc88; background: rgba(255,107,0,0.03); }
+    .msg-tag { font-size: 7px; opacity: 0.4; letter-spacing: 2px; margin-bottom: 2px; }
+
+    .input-area { display: flex; padding: 8px; gap: 8px; background: #000; }
+    .inp { flex: 1; background: rgba(0,30,60,0.3); border: 1px solid #00d4ff; color: #00d4ff; padding: 12px; font-size: 16px; outline: none; font-family: 'Rajdhani'; }
+    .btn-send { background: transparent; border: 1px solid #ff6b00; color: #ff6b00; font-family: 'Orbitron'; font-size: 10px; padding: 0 15px; cursor: pointer; transition: 0.3s; }
+    .btn-send:active { background: rgba(255,107,0,0.2); }
+
+    .footer { display: flex; justify-content: space-between; font-size: 8px; color: rgba(0,212,255,0.2); padding: 5px; }
+    #reset-link { cursor: pointer; text-decoration: underline; }
   </style>
 </head>
 <body>
+  <div class="bg"></div><div class="grid"></div><div class="scan"></div>
+  
   <div class="wrap">
-    <button id="reset-btn" onclick="nuclearReset()">⚠ RIPRISTINA SISTEMA (PREMI SE NON RISPONDE)</button>
     <div class="title">J.A.R.V.I.S.</div>
     
-    <div class="main">
-      <div class="panel" style="flex:1">
-        <div class="p-lab">BATTERIA</div>
-        <div id="bat" class="p-val">--%</div>
+    <div class="main-hud">
+      <div class="left-hud">
+        <div class="arc-wrap">
+          <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div>
+          <div class="core"></div>
+        </div>
+        <div class="panel" style="width:100%">
+          <div class="p-tag">ENERGIA</div>
+          <div id="bat" class="p-val">--%</div>
+        </div>
       </div>
-      <div class="panel" style="flex:1">
-        <div class="p-lab">ORA LOCALE</div>
-        <div id="clk" class="p-val">--:--</div>
+      
+      <div class="right-hud">
+        <div class="panel">
+          <div class="p-tag">METEO LOCALE</div>
+          <div id="weth" class="p-val">12°C SERENO</div>
+        </div>
+        <div class="panel" style="flex:1; display:flex; align-items:center; justify-content:center;">
+          <div class="p-tag" style="position:absolute; top:8px; left:8px;">TACTICAL</div>
+          <div style="font-size:8px; opacity:0.3; letter-spacing:2px;">IN ATTESA...</div>
+        </div>
+        <button onclick="openCam()" style="background:transparent; border:1px solid #00d4ff; color:#00d4ff; padding:10px; font-family:'Orbitron'; font-size:10px; letter-spacing:2px;">📷 CONTROLLO</button>
       </div>
     </div>
-
-    <div class="chat">
+    
+    <div class="chat-box">
       <div class="msgs" id="chat"></div>
-      <div class="inp-row">
-        <input type="text" id="inp" class="inp" placeholder="SCRIVI QUI..." inputmode="text" enterkeyhint="send" autocomplete="off">
-        <button class="btn" onclick="send()">INVIA</button>
+      <div class="input-area">
+        <input type="text" id="inp" class="inp" placeholder="COMANDO..." autocomplete="off">
+        <button class="btn-send" onclick="send()">INVIA ►</button>
       </div>
     </div>
-
+    
     <div class="footer">
-      <span>MASTER v3.7 (CORE)</span>
-      <span id="diag">STATUS: OK</span>
+      <span>HUD v4.0 [STARK ORIGINAL]</span>
+      <span id="clk">00:00:00</span>
+      <span id="reset-link" onclick="nuclear()">RESET MEMORY</span>
     </div>
   </div>
 
@@ -70,21 +113,15 @@
     var KEY = _K1 + _K2;
     var history = [];
 
-    // MOSTRA RESET DOPO 5 SECONDI
-    setTimeout(function(){ document.getElementById('reset-btn').style.display = 'block'; }, 5000);
+    function nuclear() { localStorage.clear(); location.reload(); }
 
     function add(s, t, j) {
       var box = document.getElementById('chat');
       var div = document.createElement('div');
       div.className = 'msg' + (j ? ' j' : '');
-      div.innerHTML = '<b>' + s + ':</b><br>' + t;
+      div.innerHTML = '<div class="msg-tag">' + s + ' //</div>' + t;
       box.appendChild(div);
       box.scrollTop = box.scrollHeight;
-    }
-
-    function nuclearReset() {
-      localStorage.clear();
-      location.href = location.pathname + "?v=" + Date.now();
     }
 
     function send() {
@@ -92,13 +129,14 @@
       var txt = inp.value.trim();
       if(!txt) return;
 
-      add('TU', txt, false);
+      add('USER', txt, false);
       history.push({role:'user', content:txt});
       inp.value = '';
 
       // Fix Tastiera Motorola
       var d = document.getElementById('dummy');
-      d.focus(); setTimeout(function(){ d.blur(); }, 50);
+      d.focus(); 
+      setTimeout(function(){ d.blur(); }, 50);
 
       var xhr = new XMLHttpRequest();
       xhr.open('POST', 'https://api.groq.com/openai/v1/chat/completions', true);
@@ -109,32 +147,38 @@
         if(xhr.readyState === 4) {
           if(xhr.status === 200) {
             var r = JSON.parse(xhr.responseText).choices[0].message.content;
-            add('JARVIS', r.replace(/\[.*?\]/g,''), true);
+            var cleanR = r.replace(/\[.*?\]/g,'').trim();
+            add('JARVIS', cleanR, true);
             history.push({role:'assistant', content:r});
             if(window.AppInventor) window.AppInventor.setWebViewString(r);
           } else {
-            var err = "ERRORE " + xhr.status;
-            try { err += ": " + JSON.parse(xhr.responseText).error.message; } catch(e){}
-            add('JARVIS', err, true);
-            if(window.AppInventor) window.AppInventor.setWebViewString("ERROR:" + err);
+            add('JARVIS', 'ERRORE CONNESSIONE ('+xhr.status+')', true);
           }
         }
       };
+      
       xhr.send(JSON.stringify({
         model: "llama3-8b-8192",
-        messages: [{role:"system", content:"Sei Jarvis. Rispondi breve."}].concat(history.slice(-6))
+        messages: [{role:"system", content:"Sei Jarvis. Rispondi in italiano, sintetico e tecnico."}].concat(history.slice(-8))
       }));
     }
 
-    document.getElementById('inp').addEventListener('keydown',function(e){ if(e.key==='Enter') send(); });
+    document.getElementById('inp').addEventListener('keydown', function(e){ if(e.key==='Enter') send(); });
 
     setInterval(function(){
-      document.getElementById('clk').textContent = new Date().toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'});
+      document.getElementById('clk').textContent = new Date().toLocaleTimeString('it-IT');
     }, 1000);
 
-    if(navigator.getBattery) navigator.getBattery().then(function(b){ document.getElementById('bat').textContent = Math.round(b.level*100)+'%'; });
+    if(navigator.getBattery) navigator.getBattery().then(function(b){ 
+      document.getElementById('bat').textContent = Math.round(b.level * 100) + '%';
+    });
 
-    add('JARVIS', 'Sistema v3.6 Online. Pronto ai comandi.', true);
+    function openCam() {
+      add('JARVIS', 'Avvio feed camera...', true);
+      if(window.AppInventor) window.AppInventor.setWebViewString('CAMERA_ON');
+    }
+
+    add('JARVIS', 'Sistema Stark v4.0 Online. In attesa di input.', true);
   </script>
 </body>
 </html>
