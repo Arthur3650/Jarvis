@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>JARVIS - v3.3 SHIFT EDITION</title>
+<title>JARVIS - v3.3 SHIFT CALCULATOR</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600&display=swap');
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -35,7 +35,7 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
 @keyframes rot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 @keyframes pulse { 0%, 100% { opacity: 0.4; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1.1); } }
 
-/* MONDO (REAL) */
+/* MONDO (IMAGE 2) */
 .world-container { width: 130px; height: 130px; position: relative; border-radius: 50%; border: 1px solid rgba(0,212,255,0.2); overflow: hidden; background: #000; }
 .world-img { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.6; filter: hue-rotate(150deg) brightness(1.2); animation: slowRot 40s linear infinite; }
 @keyframes slowRot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
@@ -119,13 +119,10 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
         </div>
       </div>
       
-      <!-- RIPRISTINO CALENDARIO TURNI -->
       <div class="box">
         <div class="bt-title">▶ CALENDARIO TURNI</div>
-        <div class="box-content">
-          <div style="color:#ff6b00; margin-bottom:5px;">● TURNI SETTIMANALI</div>
-          <div style="display:flex; justify-content:space-between;"><span>LUN - VEN</span><span>08:00 - 17:00</span></div>
-          <div style="display:flex; justify-content:space-between; opacity:0.5;"><span>SAB - DOM</span><span>OFF-DUTY</span></div>
+        <div class="box-content" id="shift-content">
+          <!-- CALCOLATO DINAMICAMENTE -->
         </div>
       </div>
       
@@ -150,18 +147,50 @@ var _K2 = 'WGdyb3FYlnxwRdUSnehnzu4mZTPscrFS';
 var KEY = _K1 + _K2;
 var chatHistory = [];
 
+// CALCOLO TURNI (ES5)
+function updateShifts() {
+  var now = new Date();
+  var todayStr = now.toISOString().split('T')[0];
+  var content = document.getElementById('shift-content');
+  var html = '';
+
+  // ECCEZIONE FERIE (23, 24, 25 Aprile)
+  if (todayStr === '2026-04-23' || todayStr === '2026-04-24' || todayStr === '2026-04-25') {
+    html += '<div style="color:#ff6b00; font-weight:bold; margin-bottom:5px;">● STATO ATTUALE: FERIE</div>';
+    html += '<div style="font-size:8px; opacity:0.7;">RIENTRO PREVISTO:</div>';
+    html += '<div style="color:#00ff88;">LUN 27 APR - POMERIGGIO (14-22)</div>';
+  } else {
+    // LOGICA ROTAZIONE (Base: 27 Apr 2026 = Giorno 0 Ciclo 16gg)
+    var baseDate = new Date('2026-04-27T00:00:00');
+    var diffDays = Math.floor((now - baseDate) / (1000 * 60 * 60 * 24));
+    var dayInCycle = diffDays % 16;
+    if (dayInCycle < 0) dayInCycle += 16;
+
+    var currentShift = '';
+    if (dayInCycle >= 0 && dayInCycle <= 3) currentShift = 'POMERIGGIO (14-22)';
+    else if (dayInCycle === 4) currentShift = 'RIPOSO';
+    else if (dayInCycle >= 5 && dayInCycle <= 8) currentShift = 'MATTINO (06-14)';
+    else if (dayInCycle === 9) currentShift = 'RIPOSO';
+    else if (dayInCycle >= 10 && dayInCycle <= 13) currentShift = 'NOTTE (22-06)';
+    else currentShift = 'RIPOSO';
+
+    html += '<div style="color:#00d4ff; margin-bottom:5px;">● TURNO DI OGGI:</div>';
+    html += '<div style="font-size:11px; font-weight:bold; color:#fff;">' + currentShift + '</div>';
+    html += '<div style="font-size:8px; margin-top:10px; opacity:0.6;">SEQUENZA: 4N-2R-4P-1R-4M-1R</div>';
+  }
+  content.innerHTML = html;
+}
+updateShifts();
+
+// RADAR
 var canvas = document.getElementById('world-radar');
 var ctx = canvas.getContext('2d');
 var angle = 0;
-
 function drawRadar() {
   ctx.clearRect(0, 0, 130, 130);
   angle += 0.02;
-  ctx.beginPath();
-  ctx.moveTo(65, 65);
-  ctx.lineTo(65 + Math.cos(angle) * 65, 65 + Math.sin(angle) * 65);
-  ctx.strokeStyle = 'rgba(0, 255, 180, 0.4)';
-  ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(65, 65); ctx.lineTo(65 + Math.cos(angle) * 65, 65 + Math.sin(angle) * 65);
+  ctx.strokeStyle = 'rgba(0, 255, 180, 0.4)'; ctx.stroke();
   requestAnimationFrame(drawRadar);
 }
 drawRadar();
@@ -176,45 +205,27 @@ function addMsg(s, t, j) {
 }
 
 function send() {
-  var inp = document.getElementById('inp');
-  var txt = inp.value.trim();
-  if (!txt) return;
-  addMsg('USER', txt, false);
-  chatHistory.push({role: 'user', content: txt});
-  inp.value = '';
-  document.getElementById('dummy-focus').focus();
-  setTimeout(function() { document.getElementById('dummy-focus').blur(); }, 50);
-  
+  var inp = document.getElementById('inp'); var txt = inp.value.trim(); if (!txt) return;
+  addMsg('USER', txt, false); chatHistory.push({role: 'user', content: txt}); inp.value = '';
+  document.getElementById('dummy-focus').focus(); setTimeout(function() { document.getElementById('dummy-focus').blur(); }, 50);
   var xhr = new XMLHttpRequest();
   xhr.open('POST', 'https://api.groq.com/openai/v1/chat/completions', true);
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.setRequestHeader('Authorization', 'Bearer ' + KEY);
   xhr.onreadystatechange = function() {
-    if (xhr.readyState === 4) {
-      if (xhr.status === 200) {
-        var r = JSON.parse(xhr.responseText).choices[0].message.content;
-        addMsg('JARVIS', r.replace(/\[.*?\]/g, '').trim(), true);
-        chatHistory.push({role: 'assistant', content: r});
-      } else {
-        addMsg('JARVIS', 'ERRORE API (' + xhr.status + ')', true);
-      }
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      var r = JSON.parse(xhr.responseText).choices[0].message.content;
+      addMsg('JARVIS', r.replace(/\[.*?\]/g, '').trim(), true);
+      chatHistory.push({role: 'assistant', content: r});
     }
   };
-  xhr.send(JSON.stringify({
-    model: 'llama-3.3-70b-versatile',
-    messages: [{role: 'system', content: 'Sei Jarvis.'}].concat(chatHistory.slice(-6))
-  }));
+  xhr.send(JSON.stringify({model: 'llama-3.3-70b-versatile', messages: [{role: 'system', content: 'Sei Jarvis.'}].concat(chatHistory.slice(-6))}));
 }
 
-document.getElementById('inp').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') send();
-});
+document.getElementById('inp').addEventListener('keydown', function(e) { if (e.key === 'Enter') send(); });
+function openCam() { if (window.AppInventor) window.AppInventor.setWebViewString('CAMERA_ON'); }
 
-function openCam() {
-  if (window.AppInventor) window.AppInventor.setWebViewString('CAMERA_ON');
-}
-
-addMsg('JARVIS', 'Calendario turni ripristinato. Sistema allineato.', true);
+addMsg('JARVIS', 'Turni ricalcolati. Oggi sei in ferie, rientro Lunedì 27. Buona pausa, Signore.', true);
 </script>
 </body>
 </html>
