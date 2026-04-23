@@ -3,89 +3,66 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>JARVIS - v7.1</title>
+<title>JARVIS - v7.3</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600&family=Share+Tech+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; height: 100vh; overflow: hidden; position: relative; }
+body { background: #000; color: #00d4ff; font-family: 'Orbitron', sans-serif; height: 100vh; overflow: hidden; position: relative; }
 
 .bg { position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, #001020 0%, #000 85%); z-index: 1; }
-.grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(0,212,255,0.03) 1px,transparent 1px), linear-gradient(90deg,rgba(0,212,255,0.03) 1px,transparent 1px); background-size: 40px 40px; z-index: 2; }
+.grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(0,212,255,0.03) 1px,transparent 1px), linear-gradient(90deg,rgba(0,212,255,0.03) 1px,transparent 1px); background-size: 30px 30px; z-index: 2; }
 
-.wrap { position: relative; z-index: 10; display: flex; flex-direction: column; height: 100vh; padding: 12px; gap: 10px; }
+.wrap { position: relative; z-index: 10; display: flex; flex-direction: column; height: 100vh; padding: 10px; gap: 8px; }
 
-/* HEADER */
-.hdr { text-align: center; }
-.title { font-family: 'Orbitron', sans-serif; font-size: 32px; font-weight: 900; letter-spacing: 15px; color: #00d4ff; text-shadow: 0 0 15px rgba(0,212,255,0.6); margin-bottom: 5px; }
-
-/* PROTOCOLLO ATTIVO (FRECCIA ROSSA) */
+/* PROTOCOLLO ATTIVO (UNICA SCRITTA IN ALTO) */
 .active-proto { 
-    background: rgba(0,20,40,0.8); border: 1px solid rgba(0,212,255,0.4); border-radius: 2px;
-    padding: 12px; text-align: center; font-family: 'Orbitron'; font-size: 16px; letter-spacing: 4px;
-    color: #00d4ff; box-shadow: inset 0 0 15px rgba(0,212,255,0.1); margin-bottom: 5px;
+    background: rgba(0,15,30,0.9); border: 1px solid #00d4ff; padding: 12px;
+    text-align: center; font-size: 16px; font-weight: 900; letter-spacing: 5px; color: #00d4ff;
+    box-shadow: 0 0 10px rgba(0,212,255,0.2);
 }
-.active-proto span { color: #fff; text-shadow: 0 0 5px #fff; }
 
-.main { display: flex; gap: 10px; flex: 1; min-height: 0; }
+.main { display: flex; gap: 8px; flex: 1; min-height: 0; }
 
-/* MAPPA (FRECCIA VERDE) */
-.map-box { flex: 1.4; position: relative; border: 1px solid rgba(0,212,255,0.3); overflow: hidden; background: #000; }
-.map-iframe { width: 100%; height: 130%; margin-top: -45px; border: none; filter: invert(90%) hue-rotate(150deg) contrast(120%) brightness(110%); }
+/* MAPPA TORINO */
+.map-box { flex: 1.5; border: 1px solid rgba(0,212,255,0.4); overflow: hidden; background: #000; }
+.map-iframe { width: 100%; height: 100%; border: none; filter: invert(90%) hue-rotate(150deg) contrast(120%) brightness(110%); }
 
 /* COLONNA DESTRA */
-.col-right { width: 200px; display: flex; flex-direction: column; gap: 10px; }
+.col-right { width: 190px; display: flex; flex-direction: column; gap: 8px; }
 
-/* DISPOSITIVI (BORDO GIALLO) */
-.box-dev { 
-    border: 2px solid #ffcc00; background: rgba(0,5,10,0.9); flex: 1.2; 
-    display: flex; flex-direction: column; position: relative; padding: 10px;
-}
-.box-dev::before { content: '◣'; position: absolute; top: -2px; left: -2px; color: #ffcc00; font-size: 10px; }
-.box-title { font-family: 'Orbitron'; font-size: 9px; color: #ff6b00; margin-bottom: 10px; letter-spacing: 1px; }
-.dev-list { flex: 1; overflow-y: auto; scrollbar-width: none; font-family: 'Share Tech Mono'; font-size: 13px; }
+/* DISPOSITIVI (GIALLO) */
+.box-dev { border: 2px solid #ffcc00; background: rgba(0,5,10,0.9); flex: 1; display: flex; flex-direction: column; padding: 8px; }
+.box-title { font-size: 8px; color: #ff6b00; margin-bottom: 8px; font-weight: bold; }
+.dev-list { flex: 1; overflow-y: auto; scrollbar-width: none; font-family: 'Share Tech Mono'; font-size: 12px; }
 .dev-list::-webkit-scrollbar { display: none; }
-.dev-item { color: #888; margin-bottom: 5px; display: flex; align-items: center; gap: 8px; }
+.dev-item { color: #888; margin-bottom: 4px; display: flex; align-items: center; gap: 5px; }
 .dev-item.on { color: #00d4ff; }
-.dev-dot { width: 4px; height: 4px; border-radius: 50%; background: #00d4ff; box-shadow: 0 0 4px #00d4ff; }
 
-/* CALENDARIO (BORDO ARANCIO + GRIGLIA) */
-.box-cal { 
-    border: 2px solid #ff6600; background: rgba(0,5,10,0.9); flex: 1.5; 
-    display: flex; flex-direction: column; padding: 10px;
-}
-.cal-grid-header { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 9px; color: #ff6600; margin-bottom: 5px; font-weight: bold; border-bottom: 1px solid #333; padding-bottom: 3px; }
-.cal-grid-body { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; flex: 1; }
-.cal-day { font-size: 10px; text-align: center; padding: 4px 0; color: #fff; border: 1px solid #222; position: relative; }
+/* CALENDARIO (ARANCIO) */
+.box-cal { border: 2px solid #ff6600; background: rgba(0,5,10,0.9); flex: 1.3; display: flex; flex-direction: column; padding: 8px; }
+.cal-grid-header { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 8px; color: #ff6600; margin-bottom: 4px; border-bottom: 1px solid #333; }
+.cal-grid-body { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; flex: 1; }
+.cal-day { font-size: 9px; text-align: center; padding: 3px 0; color: #fff; border: 1px solid #111; }
 .cal-day.today { border-color: #ff6600; background: rgba(255,102,0,0.2); }
-.cal-day.work { color: #00d4ff; font-weight: bold; }
-.cal-day.rest { color: #444; }
-.cal-day.ferie { background: rgba(255,0,0,0.15); color: #ff4444; }
+.cal-day.work { color: #00d4ff; }
+.cal-day.ferie { background: rgba(255,0,0,0.2); color: #ff4444; }
 
-/* TAGS IN RIQUADRI GRIGI */
-.tag-row { display: flex; gap: 8px; }
-.tag-box { 
-    flex: 1; background: rgba(0,10,20,0.8); border: 2px solid #444; 
-    padding: 10px; text-align: center; font-family: 'Orbitron'; font-size: 11px; color: #00d4ff;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-}
-.tag-dot { width: 5px; height: 5px; border-radius: 50%; background: #00d4ff; box-shadow: 0 0 5px #00d4ff; }
+/* TAGS */
+.tag-row { display: flex; gap: 6px; }
+.tag-box { flex: 1; background: rgba(0,10,20,0.9); border: 2px solid #444; padding: 10px; text-align: center; font-size: 10px; color: #00d4ff; }
 
-/* CONTROLLO (RETTANGOLO GRIGIO) */
-.control-box { 
-    flex: 1.5; background: rgba(20,20,20,0.9); border: 2px solid #444; 
-    display: flex; align-items: center; justify-content: center; cursor: pointer;
-    font-family: 'Orbitron'; font-size: 18px; letter-spacing: 5px; color: #00d4ff;
-}
+/* CONTROLLO */
+.control-box { flex: 1.5; background: rgba(30,30,30,1); border: 2px solid #444; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 16px; letter-spacing: 4px; color: #00d4ff; }
 
-/* CHAT AREA */
-.chat-box { height: 140px; background: rgba(0,5,10,0.95); border: 1px solid #333; display: flex; flex-direction: column; }
-.chat-msgs { flex: 1; overflow-y: auto; padding: 10px; font-size: 13px; }
-.msg-j { color: #ffcc88; margin-bottom: 5px; border-left: 2px solid #ff6600; padding-left: 10px; }
-.msg-u { color: #fff; margin-bottom: 5px; border-left: 2px solid #00d4ff; padding-left: 10px; opacity: 0.8; }
+/* CHAT */
+.chat-box { height: 130px; background: rgba(0,5,10,0.95); border: 1px solid #333; display: flex; flex-direction: column; }
+.chat-msgs { flex: 1; overflow-y: auto; padding: 8px; font-size: 12px; }
+.msg-j { color: #ffcc88; margin-bottom: 4px; border-left: 2px solid #ff6600; padding-left: 8px; }
+.msg-u { color: #fff; margin-bottom: 4px; border-left: 2px solid #00d4ff; padding-left: 8px; }
 
-.inp-row { display: flex; padding: 5px; gap: 5px; background: #000; border-top: 1px solid #333; }
-.inp { flex: 1; background: #080808; border: 1px solid #00d4ff; color: #fff; padding: 10px; font-size: 15px; outline: none; }
-.send-btn { background: #ff6600; border: none; color: #000; padding: 0 25px; font-family: 'Orbitron'; font-weight: bold; cursor: pointer; }
+.inp-row { display: flex; padding: 4px; gap: 4px; background: #000; }
+.inp { flex: 1; background: #080808; border: 1px solid #00d4ff; color: #fff; padding: 8px; font-size: 14px; outline: none; }
+.send-btn { background: #ff6600; border: none; color: #000; padding: 0 20px; font-weight: bold; cursor: pointer; }
 
 #dummy { position: fixed; top: -100px; opacity: 0; }
 </style>
@@ -94,38 +71,34 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
 <div class="bg"></div><div class="grid"></div>
 
 <div class="wrap">
-  <div class="hdr">
-    <div class="title">J.A.R.V.I.S.</div>
-  </div>
-
   <div class="active-proto">
-    PROTOCOL: <span>HOUSE_GUARD v1.0 // ACTIVE</span>
+    PROTOCOLLO ATTIVO
   </div>
   
   <div class="main">
     <div class="map-box">
-      <iframe class="map-iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d45063.1532158434!2d7.6534!3d45.0703!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47886d1264b9759d%3A0x67302f37c356f108!2sTorino%20TO!5e0!3m2!1sit!2sit!4v1713873000000!5m2!1sit!2sit"></iframe>
+      <iframe class="map-iframe" src="https://www.bing.com/maps/embed?h=400&w=600&cp=45.0703~7.6869&lvl=13&typ=d&sty=h&src=SHELL&FORM=MBEDV8"></iframe>
     </div>
     
     <div class="col-right">
       <div class="box-dev">
         <div class="box-title">▶ DISPOSITIVI_RETE</div>
         <div class="dev-list">
-          <div class="dev-item on"><div class="dev-dot"></div> MotoBruss: ONLINE</div>
-          <div class="dev-item on"><div class="dev-dot"></div> PcBruss: STABLE</div>
-          <div class="dev-item on"><div class="dev-dot"></div> OppoBruss: ACTIVE</div>
-          <div class="dev-item"><div class="dev-dot"></div> Dispositivo 04: IDLE</div>
-          <div class="dev-item"><div class="dev-dot"></div> Dispositivo 05: IDLE</div>
-          <div class="dev-item"><div class="dev-dot"></div> Dispositivo 06: IDLE</div>
-          <div class="dev-item"><div class="dev-dot"></div> Dispositivo 07: IDLE</div>
-          <div class="dev-item"><div class="dev-dot"></div> Dispositivo 08: IDLE</div>
-          <div class="dev-item"><div class="dev-dot"></div> Dispositivo 09: IDLE</div>
-          <div class="dev-item"><div class="dev-dot"></div> Dispositivo 10: IDLE</div>
+          <div class="dev-item on">● Dispositivo 1: ONLINE</div>
+          <div class="dev-item on">● Dispositivo 2: STABLE</div>
+          <div class="dev-item">● Dispositivo 3: IDLE</div>
+          <div class="dev-item">● Dispositivo 4: IDLE</div>
+          <div class="dev-item">● Dispositivo 5: IDLE</div>
+          <div class="dev-item">● Dispositivo 6: IDLE</div>
+          <div class="dev-item">● Dispositivo 7: IDLE</div>
+          <div class="dev-item">● Dispositivo 8: IDLE</div>
+          <div class="dev-item">● Dispositivo 9: IDLE</div>
+          <div class="dev-item">● Dispositivo 10: IDLE</div>
         </div>
       </div>
       
       <div class="box-cal">
-        <div class="box-title" id="cal-month-name">▶ TURNI_APR_2026</div>
+        <div class="box-title">▶ TURNI_MENSILE</div>
         <div class="cal-grid-header">
           <div>S</div><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div>
         </div>
@@ -135,9 +108,9 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
   </div>
   
   <div class="tag-row">
-    <div class="tag-box"><div class="tag-dot"></div> TAG 01</div>
-    <div class="tag-box"><div class="tag-dot"></div> TAG 02</div>
-    <div class="tag-box"><div class="tag-dot"></div> TAG 03</div>
+    <div class="tag-box">TAG 01</div>
+    <div class="tag-box">TAG 02</div>
+    <div class="tag-box">TAG 03</div>
     <div class="control-box" onclick="openCam()">CONTROLLO</div>
   </div>
   
@@ -158,40 +131,25 @@ var _K2 = 'WGdyb3FYlnxwRdUSnehnzu4mZTPscrFS';
 var KEY = _K1 + _K2;
 var chatHistory = [];
 
-// CALENDARIO A GRIGLIA (MONTHLY GRID)
 function buildGridCal() {
-  var now = new Date();
-  var month = now.getMonth();
-  var year = now.getFullYear();
-  
+  var now = new Date(); var month = now.getMonth(); var year = now.getFullYear();
   var firstDay = new Date(year, month, 1).getDay();
   var daysInMonth = new Date(year, month + 1, 0).getDate();
-  
   var html = '';
-  // Padding vuoto
   for(var p=0; p<firstDay; p++) { html += '<div class="cal-day" style="opacity:0"></div>'; }
-  
   for(var d=1; d<=daysInMonth; d++) {
-    var dateObj = new Date(year, month, d);
-    var dStr = dateObj.toISOString().split('T')[0];
-    var todayStr = now.toISOString().split('T')[0];
-    
+    var dateObj = new Date(year, month, d); var dStr = dateObj.toISOString().split('T')[0];
     var type = 'work';
     if(dStr >= '2026-04-23' && dStr <= '2026-04-25') { type='ferie'; }
     else {
-      // CICLO: 4 Notti, 1 Riposo, 4 Pomeriggi, 2 Riposi, 4 Mattine, 1 Riposo (16gg)
-      var base = new Date('2026-04-22T00:00:00');
-      var diff = Math.floor((dateObj - base)/(1000*60*60*24));
+      // CICLO 16gg: 4N-1R-4A-2R-4M-1R
+      var base = new Date('2026-04-22T00:00:00'); var diff = Math.floor((dateObj - base)/(1000*60*60*24));
       var cycle = diff % 16; if(cycle<0) cycle+=16;
-      if(cycle>=0 && cycle<=3) type='work'; // Notte
-      else if(cycle===4) type='rest';
-      else if(cycle>=5 && cycle<=8) type='work'; // Pomeriggio
-      else if(cycle>=9 && cycle<=10) type='rest';
-      else if(cycle>=11 && cycle<=14) type='work'; // Mattino
-      else type='rest';
+      if(cycle>=0 && cycle<=3) type='work'; else if(cycle===4) type='rest';
+      else if(cycle>=5 && cycle<=8) type='work'; else if(cycle>=9 && cycle<=10) type='rest';
+      else if(cycle>=11 && cycle<=14) type='work'; else type='rest';
     }
-    
-    var isToday = dStr === todayStr ? ' today' : '';
+    var isToday = dStr === now.toISOString().split('T')[0] ? ' today' : '';
     html += '<div class="cal-day '+type+isToday+'">'+d+'</div>';
   }
   document.getElementById('cal-body').innerHTML = html;
@@ -208,10 +166,6 @@ function addMsg(s,t,u){
 function send(){
   var inp = document.getElementById('inp'); var txt = inp.value.trim(); if(!txt) return;
   addMsg('USER', txt, true); chatHistory.push({role:'user', content:txt}); inp.value = '';
-  
-  // LOGICA TURNI PER AI
-  var shiftLogic = "Il mio ciclo è di 16 giorni: 4 Notti, 1 Riposo, 4 Pomeriggi, 2 Riposi, 4 Mattine, 1 Riposo. Base: 22 Aprile = 1ª Notte. 23-25 Aprile = FERIE.";
-  
   var xhr = new XMLHttpRequest();
   xhr.open('POST', 'https://api.groq.com/openai/v1/chat/completions', true);
   xhr.setRequestHeader('Content-Type', 'application/json');
@@ -225,13 +179,13 @@ function send(){
   };
   xhr.send(JSON.stringify({
     model:'llama-3.3-70b-versatile', 
-    messages:[{role:'system', content:'Sei J.A.R.V.I.S., IA di Tony Stark. '+shiftLogic+' Rispondi in modo tecnico e professionale.'}].concat(chatHistory.slice(-6))
+    messages:[{role:'system', content:'Sei J.A.R.V.I.S., IA di Tony Stark. Rispondi in italiano in modo tecnico. Non usare titoli di cortesia come signore.'}].concat(chatHistory.slice(-6))
   }));
 }
 
 document.getElementById('inp').addEventListener('keydown', function(e){ if(e.key==='Enter') send(); });
 function openCam(){ if(window.AppInventor) window.AppInventor.setWebViewString('CAMERA_ON'); }
-addMsg('JARVIS', 'Sistemi ricalibrati secondo lo schema Stark v7.1. Torino Online.', false);
+addMsg('JARVIS', 'Protocollo Operativo v7.3 Attivo.', false);
 </script>
 </body>
 </html>
