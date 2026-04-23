@@ -57,7 +57,7 @@
     </div>
 
     <div class="footer">
-      <span>MASTER v3.6 (CORE)</span>
+      <span>MASTER v3.7 (CORE)</span>
       <span id="diag">STATUS: OK</span>
     </div>
   </div>
@@ -121,7 +121,7 @@
         }
       };
       xhr.send(JSON.stringify({
-        model: "llama-3.3-70b-versatile",
+        model: "llama3-8b-8192",
         messages: [{role:"system", content:"Sei Jarvis. Rispondi breve."}].concat(history.slice(-6))
       }));
     }
