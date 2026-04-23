@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>JARVIS - v5.9</title>
+<title>JARVIS - v6.0</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600&display=swap');
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -19,63 +19,67 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
 .hdr { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,212,255,0.3); padding-bottom: 5px; }
 .title { font-family: 'Orbitron', sans-serif; font-size: 18px; font-weight: 900; letter-spacing: 6px; text-shadow: 0 0 10px #00d4ff; }
 
-.main { display: flex; gap: 10px; flex: 1; min-height: 0; }
-.col-left { width: 160px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
-.col-right { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+.main { display: flex; gap: 12px; flex: 1; min-height: 0; }
+.col-left { width: 220px; display: flex; flex-direction: column; align-items: center; gap: 10px; } /* ALLARGATO */
+.col-right { flex: 1; display: flex; flex-direction: column; gap: 10px; min-width: 100px; } /* STRETTO */
 
 /* ARK REACTOR */
-.arc-wrap { width: 150px; height: 150px; position: relative; display: flex; align-items: center; justify-content: center; }
-.neon-breath { position: absolute; width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, rgba(0,212,255,0.2) 0%, transparent 70%); animation: breath 4s infinite ease-in-out; }
+.arc-wrap { width: 140px; height: 140px; position: relative; display: flex; align-items: center; justify-content: center; }
+.neon-breath { position: absolute; width: 110px; height: 110px; border-radius: 50%; background: radial-gradient(circle, rgba(0,212,255,0.2) 0%, transparent 70%); animation: breath 4s infinite ease-in-out; }
 @keyframes breath { 0%, 100% { transform: scale(0.85); opacity: 0.2; } 50% { transform: scale(1.15); opacity: 0.6; } }
-.ark-outer-line { position: absolute; width: 145px; height: 145px; border: 0.5px solid rgba(0,212,255,0.5); border-radius: 50%; animation: pulseLine 2s infinite ease-in-out; }
-@keyframes pulseLine { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 1; transform: scale(1.02); } }
+.ark-outer-line { position: absolute; width: 135px; height: 135px; border: 0.5px solid rgba(0,212,255,0.5); border-radius: 50%; animation: pulseLine 2s infinite ease-in-out; }
 .ring { position: absolute; border-radius: 50%; border: 1.5px solid transparent; }
-.r1 { width: 130px; height: 130px; border-top-color: #00d4ff; animation: rot 15s linear infinite; }
-.r2 { width: 110px; height: 110px; border-left-color: #ff6b00; animation: rot 10s linear infinite reverse; }
-.r3 { width: 90px; height: 90px; border-right-color: #00d4ff; animation: rot 20s linear infinite; opacity: 0.5; }
-.core { width: 28px; height: 28px; background: radial-gradient(circle, #fff 0%, #00d4ff 50%, transparent 100%); border-radius: 50%; box-shadow: 0 0 15px #00d4ff; }
+.r1 { width: 125px; height: 125px; border-top-color: #00d4ff; animation: rot 15s linear infinite; }
+.r2 { width: 105px; height: 105px; border-left-color: #ff6b00; animation: rot 10s linear infinite reverse; }
+.core { width: 25px; height: 25px; background: radial-gradient(circle, #fff 0%, #00d4ff 50%, transparent 100%); border-radius: 50%; box-shadow: 0 0 15px #00d4ff; }
 @keyframes rot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-/* MAPS JARVIS STYLE */
-.world-wrap { width: 140px; height: 140px; position: relative; border-radius: 50%; border: 1px solid rgba(0,212,255,0.4); overflow: hidden; background: #000; box-shadow: 0 0 15px rgba(0,212,255,0.2); }
-.world-iframe { width: 100%; height: 100%; border: none; filter: invert(90%) hue-rotate(150deg) contrast(120%) brightness(110%); pointer-events: none; }
+/* MAP TORINO RECTANGLE (GOOGLE LOGO HIDDEN) */
+.world-wrap { width: 100%; height: 180px; position: relative; border: 1px solid rgba(0,212,255,0.4); overflow: hidden; background: #000; box-shadow: 0 0 15px rgba(0,212,255,0.2); }
+.world-iframe { 
+  width: 100%; height: 250px; /* PIU ALTA PER NASCONDERE LOGO */
+  margin-top: -35px; /* NASCONDE TOP */
+  border: none; 
+  filter: invert(90%) hue-rotate(150deg) contrast(120%) brightness(110%); 
+  pointer-events: none; 
+}
 
 /* TAGS */
-.tag-tracker { width: 100%; font-family: 'Orbitron'; }
-.tag-item { display: flex; align-items: center; gap: 8px; font-size: 10px; color: #fff; margin-bottom: 5px; }
-.dot { width: 5px; height: 5px; border-radius: 50%; background: #00ff88; box-shadow: 0 0 5px #00ff88; }
+.tag-tracker { width: 100%; font-family: 'Orbitron'; padding: 5px; }
+.tag-item { display: flex; align-items: center; gap: 8px; font-size: 9px; color: #fff; margin-bottom: 4px; }
+.dot { width: 4px; height: 4px; border-radius: 50%; background: #00ff88; box-shadow: 0 0 5px #00ff88; }
 
 /* FINESTRE */
-.box { background: rgba(0,20,40,0.7); border: 1px solid rgba(0,212,255,0.2); padding: 10px; position: relative; flex: 1; display: flex; flex-direction: column; min-height: 0; }
+.box { background: rgba(0,20,40,0.7); border: 1px solid rgba(0,212,255,0.2); padding: 8px; position: relative; flex: 1; display: flex; flex-direction: column; min-height: 0; }
 .box::before { content:''; position:absolute; top:0; left:0; width:5px; height:5px; border-top:1px solid #00d4ff; border-left:1px solid #00d4ff; }
-.bt-title { font-size: 8px; color: #ff6b00; letter-spacing: 2px; margin-bottom: 8px; font-family: 'Orbitron'; }
-.box-content { flex: 1; overflow-y: auto; font-size: 13px; scrollbar-width: none; }
+.bt-title { font-size: 7px; color: #ff6b00; letter-spacing: 2px; margin-bottom: 5px; font-family: 'Orbitron'; }
+.box-content { flex: 1; overflow-y: auto; font-size: 11px; scrollbar-width: none; }
 .box-content::-webkit-scrollbar { display: none; }
 
-/* CALENDARIO CON PULSANTI */
-.cal-container { position: relative; display: flex; align-items: center; gap: 5px; }
-.cal-row { display: flex; gap: 6px; overflow-x: hidden; padding: 5px 0; scroll-behavior: smooth; flex: 1; }
-.cal-btn { background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.4); color: #00d4ff; padding: 10px 5px; cursor: pointer; font-size: 12px; font-family: 'Orbitron'; }
-.day-card { flex: 0 0 65px; text-align: center; padding: 8px 5px; border: 1px solid rgba(0,212,255,0.1); background: rgba(0,0,0,0.4); border-radius: 4px; font-size: 8px; }
-.day-card.today { border-color: #00ff88; background: rgba(0,255,136,0.15); box-shadow: 0 0 10px rgba(0,255,136,0.2); }
-.day-card .date { font-weight: bold; display: block; margin-bottom: 4px; font-size: 9px; }
+/* CALENDARIO */
+.cal-container { position: relative; display: flex; align-items: center; gap: 3px; }
+.cal-row { display: flex; gap: 4px; overflow-x: hidden; padding: 3px 0; scroll-behavior: smooth; flex: 1; }
+.cal-btn { background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.3); color: #00d4ff; padding: 5px; cursor: pointer; font-size: 10px; font-family: 'Orbitron'; }
+.day-card { flex: 0 0 55px; text-align: center; padding: 5px 2px; border: 1px solid rgba(0,212,255,0.1); background: rgba(0,0,0,0.4); border-radius: 3px; font-size: 7px; }
+.day-card.today { border-color: #00ff88; background: rgba(0,255,136,0.15); }
+.day-card .date { font-weight: bold; display: block; margin-bottom: 2px; font-size: 8px; }
 .day-card.work { color: #00ff88; }
 .day-card.rest { color: #00d4ff; opacity: 0.8; }
 .day-card.ferie { color: #ff4444; }
 
 /* CHAT */
-.chat { height: 160px; display: flex; flex-direction: column; background: rgba(0,5,10,0.9); border: 1px solid rgba(0,212,255,0.3); }
+.chat { height: 150px; display: flex; flex-direction: column; background: rgba(0,5,10,0.9); border: 1px solid rgba(0,212,255,0.3); }
 .msgs { flex: 1; overflow-y: auto; padding: 10px; }
-.msg { margin-bottom: 8px; font-size: 13px; border-left: 2px solid #00d4ff; padding-left: 10px; color: #fff; }
+.msg { margin-bottom: 8px; font-size: 12px; border-left: 2px solid #00d4ff; padding-left: 8px; color: #fff; }
 .msg.j { border-left-color: #ff6b00; color: #ffcc88; }
 
 /* TASTO CONTROLLO */
-.btn-control { background: transparent; border: 1px solid #00d4ff; color: #00d4ff; padding: 14px; font-family: 'Orbitron'; font-size: 11px; letter-spacing: 3px; cursor: pointer; text-align: center; }
+.btn-control { background: transparent; border: 1px solid #00d4ff; color: #00d4ff; padding: 10px; font-family: 'Orbitron'; font-size: 10px; letter-spacing: 2px; cursor: pointer; text-align: center; }
 
 /* INPUT */
 .inp-row { display: flex; padding: 5px; gap: 5px; background: #000; border-top: 1px solid rgba(0,212,255,0.2); }
-.inp { flex: 1; background: rgba(0,30,60,0.3); border: 1px solid #00d4ff; color: #fff; padding: 10px; font-size: 15px; outline: none; }
-.hbtn { background: transparent; border: 1px solid #ff6b00; color: #ff6b00; padding: 0 15px; font-family: 'Orbitron'; font-size: 10px; }
+.inp { flex: 1; background: rgba(0,30,60,0.3); border: 1px solid #00d4ff; color: #fff; padding: 8px; font-size: 14px; outline: none; }
+.hbtn { background: transparent; border: 1px solid #ff6b00; color: #ff6b00; padding: 0 10px; font-family: 'Orbitron'; font-size: 9px; }
 
 #dummy { position: fixed; top: -100px; opacity: 0; }
 </style>
@@ -85,9 +89,9 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
 
 <div class="wrap">
   <div class="hdr">
-    <div style="font-size:7px; opacity:0.6;">STARK_SATELLITE_FEED</div>
+    <div style="font-size:7px; opacity:0.6;">STARK_SATELLITE_FIX</div>
     <div class="title">J.A.R.V.I.S.</div>
-    <div style="font-size:7px; opacity:0.6;">STARK INDUSTRIES</div>
+    <div style="font-size:7px; opacity:0.6;">TORINO_OPERATIONAL_UNIT</div>
   </div>
   
   <div class="main">
@@ -95,12 +99,13 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
       <div class="arc-wrap">
         <div class="neon-breath"></div>
         <div class="ark-outer-line"></div>
-        <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div>
+        <div class="ring r1"></div><div class="ring r2"></div>
         <div class="core"></div>
       </div>
       
       <div class="world-wrap">
-        <iframe class="world-iframe" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1000000!2d12.5!3d42.5!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sit!2sit!4v1700000000000!5m2!1sit!2sit"></iframe>
+        <!-- TORINO CENTERED MAP -->
+        <iframe class="world-iframe" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d10000!2d7.6869!3d45.0703!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sit!2sit!4v1700000000000!5m2!1sit!2sit"></iframe>
       </div>
       
       <div class="tag-tracker">
@@ -114,7 +119,7 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
       <div class="box">
         <div class="bt-title">▶ PROTOCOLLI</div>
         <div class="box-content">
-          <div>● HOUSE_GUARD: <span style="color:#00ff88">ACTIVE</span></div>
+          <div>● HOUSE_GUARD: <span style="color:#00ff88">ON</span></div>
           <div>● BT_MESH: <span style="color:#00ff88">STABLE</span></div>
         </div>
       </div>
@@ -127,7 +132,7 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
         </div>
       </div>
       
-      <div class="box" style="flex: 0 0 105px;">
+      <div class="box" style="flex: 0 0 95px;">
         <div class="bt-title">▶ CALENDARIO TURNI</div>
         <div class="cal-container">
           <button class="cal-btn" onclick="scrollCal(-1)">◄</button>
@@ -157,19 +162,14 @@ var _K2 = 'WGdyb3FYlnxwRdUSnehnzu4mZTPscrFS';
 var KEY = _K1 + _K2;
 var chatHistory = [];
 
-// CALENDARIO CON PULSANTI
 function buildCal() {
-  var now = new Date();
-  var days = ['DOM','LUN','MAR','MER','GIO','VEN','SAB'];
-  var html = '';
+  var now = new Date(); var days = ['DOM','LUN','MAR','MER','GIO','VEN','SAB']; var html = '';
   for(var i=-5; i<30; i++) {
-    var d = new Date(); d.setDate(now.getDate() + i);
-    var dStr = d.toISOString().split('T')[0];
+    var d = new Date(); d.setDate(now.getDate() + i); var dStr = d.toISOString().split('T')[0];
     var type = 'work'; var label = 'TURNO';
     if(dStr >= '2026-04-23' && dStr <= '2026-04-25') { type='ferie'; label='FERIE'; }
     else {
-      var base = new Date('2026-04-27T00:00:00');
-      var diff = Math.floor((d - base)/(1000*60*60*24));
+      var base = new Date('2026-04-27T00:00:00'); var diff = Math.floor((d - base)/(1000*60*60*24));
       var cycle = diff % 16; if(cycle<0) cycle+=16;
       if(cycle==4 || cycle==9 || cycle>=14) { type='rest'; label='RIPOSO'; }
       else if(cycle>=0 && cycle<=3) label='POMERIGGIO';
@@ -179,20 +179,15 @@ function buildCal() {
     var isToday = i === 0 ? ' today' : '';
     html += '<div class="day-card '+type+isToday+'"><span class="date">'+days[d.getDay()]+' '+d.getDate()+'</span>'+label+'</div>';
   }
-  var cal = document.getElementById('cal');
-  cal.innerHTML = html;
-  setTimeout(function(){ cal.scrollLeft = (71 * 5) - (cal.clientWidth / 2) + 35; }, 100);
+  var cal = document.getElementById('cal'); cal.innerHTML = html;
+  setTimeout(function(){ cal.scrollLeft = (59 * 5) - (cal.clientWidth / 2) + 30; }, 100);
 }
 buildCal();
 
-function scrollCal(dir) {
-  var cal = document.getElementById('cal');
-  cal.scrollBy({ left: dir * 140, behavior: 'smooth' });
-}
+function scrollCal(dir) { document.getElementById('cal').scrollBy({ left: dir * 120, behavior: 'smooth' }); }
 
 function addMsg(s,t,j){
-  var c = document.getElementById('chat');
-  var d = document.createElement('div'); d.className = 'msg'+(j?' j':'');
+  var c = document.getElementById('chat'); var d = document.createElement('div'); d.className = 'msg'+(j?' j':'');
   d.innerHTML = '<div style="font-size:7px; opacity:0.4; margin-bottom:2px;">'+s+' //</div>'+t;
   c.appendChild(d); c.scrollTop = c.scrollHeight;
 }
@@ -217,7 +212,7 @@ function send(){
 
 document.getElementById('inp').addEventListener('keydown', function(e){ if(e.key==='Enter') send(); });
 function openCam(){ if(window.AppInventor) window.AppInventor.setWebViewString('CAMERA_ON'); }
-addMsg('JARVIS', 'Satellite Online. Controlli tattici abilitati.', true);
+addMsg('JARVIS', 'Unità Torino attiva. Satellite calibrato.', true);
 </script>
 </body>
 </html>
