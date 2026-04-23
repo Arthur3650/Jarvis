@@ -3,72 +3,78 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>JARVIS - v3.3 SHIFT CALCULATOR</title>
+<title>JARVIS - SUPREME v5.5</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600&display=swap');
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; height: 100vh; overflow: hidden; position: relative; }
 
-.bg { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 35%, #001020 0%, #000810 60%, #000 100%); z-index: 1; }
-.grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(0,212,255,0.02) 1px,transparent 1px), linear-gradient(90deg,rgba(0,212,255,0.02) 1px,transparent 1px); background-size: 30px 30px; z-index: 2; }
+.bg { position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, #001020 0%, #000 85%); z-index: 1; }
+.grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(0,212,255,0.03) 1px,transparent 1px), linear-gradient(90deg,rgba(0,212,255,0.03) 1px,transparent 1px); background-size: 40px 40px; z-index: 2; }
 .scan { position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,212,255,0.01) 2px, rgba(0,212,255,0.01) 4px); pointer-events: none; z-index: 99; }
 
-.wrap { position: relative; z-index: 10; display: flex; flex-direction: column; height: 100vh; padding: 10px; gap: 5px; }
+.wrap { position: relative; z-index: 10; display: flex; flex-direction: column; height: 100vh; padding: 15px; gap: 10px; }
 
 /* HEADER */
-.hdr { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,212,255,0.2); padding-bottom: 5px; }
-.title { font-family: 'Orbitron', sans-serif; font-size: 15px; font-weight: 900; letter-spacing: 5px; text-shadow: 0 0 10px rgba(0,212,255,0.5); }
+.hdr { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid rgba(0,212,255,0.3); padding-bottom: 10px; }
+.title { font-family: 'Orbitron', sans-serif; font-size: 20px; font-weight: 900; letter-spacing: 8px; text-shadow: 0 0 15px #00d4ff; }
 
-.main { display: flex; gap: 10px; flex: 1; min-height: 0; margin-top: 5px; }
-.col-left { width: 150px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
-.col-right { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+.main { display: flex; gap: 15px; flex: 1; min-height: 0; }
+.col-left { width: 180px; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+.col-right { flex: 1; display: flex; flex-direction: column; gap: 10px; }
 
-/* REATTORE ARK */
-.arc-wrap { width: 110px; height: 110px; position: relative; display: flex; align-items: center; justify-content: center; }
-.ring { position: absolute; border-radius: 50%; border: 1.5px solid transparent; }
-.r1 { width: 105px; height: 105px; border-top-color: #00d4ff; animation: rot 15s linear infinite; }
-.r2 { width: 85px; height: 85px; border-left-color: #ff6b00; animation: rot 10s linear infinite reverse; }
-.r3 { width: 70px; height: 70px; border-right-color: #00d4ff; animation: rot 12s linear infinite; opacity: 0.5; }
-.r4 { width: 55px; height: 55px; border-bottom-color: #fff; animation: rot 8s linear infinite reverse; opacity: 0.3; }
-.core { width: 22px; height: 22px; background: radial-gradient(circle, #fff 0%, #00d4ff 50%, transparent 100%); border-radius: 50%; box-shadow: 0 0 15px #00d4ff; animation: pulse 3s infinite; }
+/* REATTORE ARK POTENZIATO (MARK II) */
+.arc-wrap { width: 140px; height: 140px; position: relative; display: flex; align-items: center; justify-content: center; margin-top: 20px; }
+.ring { position: absolute; border-radius: 50%; border: 2px solid transparent; }
+.r1 { width: 135px; height: 135px; border-top-color: #00d4ff; animation: rot 20s linear infinite; }
+.r2 { width: 115px; height: 115px; border-left-color: #ff6b00; animation: rot 15s linear infinite reverse; }
+.r3 { width: 95px; height: 95px; border-right-color: #00d4ff; animation: rot 25s linear infinite; opacity: 0.6; }
+.r4 { width: 75px; height: 75px; border-bottom-color: #fff; animation: rot 10s linear infinite reverse; opacity: 0.4; }
+.r5 { width: 55px; height: 55px; border-top-color: #00d4ff; animation: rot 5s linear infinite; }
+.core { width: 30px; height: 30px; background: radial-gradient(circle, #fff 0%, #00d4ff 60%, transparent 100%); border-radius: 50%; box-shadow: 0 0 20px #00d4ff; animation: pulse 2.5s infinite; }
 
 @keyframes rot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-@keyframes pulse { 0%, 100% { opacity: 0.4; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1.1); } }
+@keyframes pulse { 0%, 100% { opacity: 0.5; transform: scale(0.85); } 50% { opacity: 1; transform: scale(1.15); } }
 
-/* MONDO (IMAGE 2) */
-.world-container { width: 130px; height: 130px; position: relative; border-radius: 50%; border: 1px solid rgba(0,212,255,0.2); overflow: hidden; background: #000; }
-.world-img { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.6; filter: hue-rotate(150deg) brightness(1.2); animation: slowRot 40s linear infinite; }
-@keyframes slowRot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-#world-radar { position: absolute; inset: 0; }
+/* MONDO GRID HD */
+#globe-canvas { display: block; filter: drop-shadow(0 0 10px rgba(0,212,255,0.4)); }
 
 /* TAG TRACKER */
-.tag-tracker { width: 100%; font-family: 'Orbitron'; margin-top: 5px; }
-.tag-label { font-size: 7px; color: #ff6b00; letter-spacing: 1px; margin-bottom: 5px; }
-.tag-item { display: flex; align-items: center; gap: 8px; font-size: 9px; color: #00d4ff; margin-bottom: 4px; }
-.dot { width: 4px; height: 4px; border-radius: 50%; background: #00ff88; box-shadow: 0 0 5px #00ff88; }
+.tag-tracker { width: 100%; font-family: 'Orbitron'; }
+.tag-label { font-size: 8px; color: #ff6b00; letter-spacing: 2px; margin-bottom: 8px; border-bottom: 1px solid rgba(255,107,0,0.3); }
+.tag-item { display: flex; align-items: center; gap: 10px; font-size: 11px; color: #fff; margin-bottom: 6px; }
+.dot { width: 6px; height: 6px; border-radius: 50%; background: #00ff88; box-shadow: 0 0 8px #00ff88; }
 
-/* 3 FINESTRE UGUALI */
-.box { background: rgba(0,15,30,0.8); border: 1px solid rgba(0,212,255,0.2); padding: 8px; position: relative; flex: 1; display: flex; flex-direction: column; min-height: 0; }
-.box::before { content:''; position:absolute; top:0; left:0; width:5px; height:5px; border-top:1px solid #00d4ff; border-left:1px solid #00d4ff; }
-.bt-title { font-size: 7px; color: #ff6b00; letter-spacing: 1px; margin-bottom: 5px; font-family: 'Orbitron'; }
-.box-content { flex: 1; overflow-y: auto; font-size: 10px; scrollbar-width: none; }
-.box-content::-webkit-scrollbar { display: none; }
+/* FINESTRE TATTICHE */
+.box { background: rgba(0,20,40,0.8); border: 1px solid rgba(0,212,255,0.3); padding: 12px; position: relative; flex: 1; display: flex; flex-direction: column; min-height: 0; }
+.box::before { content:''; position:absolute; top:0; left:0; width:10px; height:10px; border-top:2px solid #00d4ff; border-left:2px solid #00d4ff; }
+.bt-title { font-size: 9px; color: #ff6b00; letter-spacing: 2px; margin-bottom: 10px; font-family: 'Orbitron'; font-weight: bold; }
+.box-content { flex: 1; overflow-y: auto; font-size: 14px; scrollbar-width: thin; scrollbar-color: #00d4ff transparent; }
+.box-content::-webkit-scrollbar { width: 4px; }
+.box-content::-webkit-scrollbar-thumb { background: #00d4ff; border-radius: 2px; }
+
+/* CALENDARIO COLORATO */
+.shift-row { display: flex; justify-content: space-between; margin-bottom: 5px; padding: 2px 5px; border-radius: 3px; }
+.work { color: #00ff88; background: rgba(0,255,136,0.1); }
+.rest { color: #00d4ff; background: rgba(0,212,255,0.1); }
+.ferie { color: #ff4444; background: rgba(255,68,68,0.1); }
+.injury { color: #ffff00; background: rgba(255,255,0,0.1); }
 
 /* CHAT */
-.chat { height: 150px; display: flex; flex-direction: column; background: rgba(0,5,10,0.9); border: 1px solid rgba(0,212,255,0.3); }
-.msgs { flex: 1; overflow-y: auto; padding: 10px; }
-.msg { margin-bottom: 8px; font-size: 13px; line-height: 1.4; border-left: 2px solid #00d4ff; padding-left: 8px; color: #fff; }
+.chat { height: 180px; display: flex; flex-direction: column; background: rgba(0,10,20,0.95); border: 1px solid rgba(0,212,255,0.4); backdrop-filter: blur(10px); }
+.msgs { flex: 1; overflow-y: auto; padding: 15px; }
+.msg { margin-bottom: 10px; font-size: 14px; line-height: 1.5; border-left: 3px solid #00d4ff; padding-left: 12px; color: #fff; }
 .msg.j { border-left-color: #ff6b00; color: #ffcc88; }
 
-/* TASTO CONTROLLO */
-.btn-control { background: transparent; border: 1px solid #00d4ff; color: #00d4ff; padding: 12px; font-family: 'Orbitron'; font-size: 10px; letter-spacing: 3px; cursor: pointer; text-align: center; }
+/* TASTO CONTROLLO (CICCIO) */
+.btn-control { background: rgba(0,212,255,0.1); border: 1px solid #00d4ff; color: #00d4ff; padding: 18px; font-family: 'Orbitron'; font-size: 12px; letter-spacing: 4px; cursor: pointer; text-align: center; margin-top: 10px; }
 
 /* INPUT */
-.inp-row { display: flex; padding: 5px; gap: 5px; background: #000; border-top: 1px solid rgba(0,212,255,0.2); }
-.inp { flex: 1; background: rgba(0,30,60,0.3); border: 1px solid #00d4ff; color: #fff; padding: 10px; font-size: 15px; outline: none; }
-.hbtn { background: transparent; border: 1px solid #ff6b00; color: #ff6b00; padding: 0 15px; font-family: 'Orbitron'; font-size: 10px; }
+.inp-row { display: flex; padding: 10px; gap: 10px; background: #000; border-top: 1px solid rgba(0,212,255,0.3); }
+.inp { flex: 1; background: rgba(0,40,80,0.3); border: 1px solid #00d4ff; color: #fff; padding: 12px; font-size: 16px; outline: none; font-family: inherit; }
+.hbtn { background: transparent; border: 1px solid #ff6b00; color: #ff6b00; padding: 0 25px; font-family: 'Orbitron'; font-size: 12px; cursor: pointer; }
 
-#dummy-focus { position: fixed; top: -100px; opacity: 0; }
+#dummy { position: fixed; top: -100px; opacity: 0; }
 </style>
 </head>
 <body>
@@ -76,70 +82,66 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
 
 <div class="wrap">
   <div class="hdr">
-    <div style="font-size:7px; opacity:0.6;">SYSTEM_ONLINE</div>
+    <div style="font-size:8px; opacity:0.7; letter-spacing:1px;">CORE_V5.5_ACTIVE</div>
     <div class="title">J.A.R.V.I.S.</div>
-    <div style="font-size:7px; opacity:0.6;">STARK INDUSTRIES</div>
+    <div style="font-size:8px; opacity:0.7; letter-spacing:1px;">STARK INDUSTRIES // 2026</div>
   </div>
   
   <div class="main">
     <div class="col-left">
       <div class="arc-wrap">
-        <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div><div class="ring r4"></div>
+        <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div><div class="ring r4"></div><div class="ring r5"></div>
         <div class="core"></div>
       </div>
       
-      <div class="world-container">
-        <img src="Immagini/Mondo.png" class="world-img" alt="World">
-        <canvas id="world-radar" width="130" height="130"></canvas>
-      </div>
+      <canvas id="globe-canvas" width="130" height="130"></canvas>
       
       <div class="tag-tracker">
-        <div class="tag-label">▶ TAG TRACKER</div>
+        <div class="tag-label">▶ TAG_TRACKER</div>
         <div class="tag-item"><div class="dot"></div> CHIAVI ILENIA</div>
-        <div class="tag-item"><div class="dot"></div> TAG-02</div>
-        <div class="tag-item"><div class="dot"></div> TAG-03</div>
+        <div class="tag-item"><div class="dot"></div> TAG_02</div>
+        <div class="tag-item"><div class="dot"></div> TAG_03</div>
       </div>
     </div>
     
     <div class="col-right">
       <div class="box">
-        <div class="bt-title">▶ PROTOCOLLI</div>
+        <div class="bt-title">▶ PROTOCOLLI_SICUREZZA</div>
         <div class="box-content">
-          <div>HOUSE_GUARD: <span style="color:#00ff88">ON</span></div>
-          <div>BT_MESH: <span style="color:#00ff88">ON</span></div>
+          <div style="margin-bottom:8px;">● HOUSE_GUARD_V4: <span style="color:#00ff88">ACTIVE</span></div>
+          <div style="margin-bottom:8px;">● BT_MESH_NETWORK: <span style="color:#00ff88">STABLE</span></div>
+          <div style="margin-bottom:8px;">● ENCRYPTION_LEVEL: <span style="color:#00ff88">AES-256</span></div>
         </div>
       </div>
       
       <div class="box">
-        <div class="bt-title">▶ DISPOSITIVI</div>
+        <div class="bt-title">▶ DISPOSITIVI_RETE</div>
         <div class="box-content">
-          <div>MotoBruss: <span style="color:#00ff88">OK</span></div>
-          <div>OppoBruss: <span style="color:#00ff88">OK</span></div>
-          <div>PcBruss: <span style="color:#00ff88">OK</span></div>
+          <div style="margin-bottom:8px;">● MotoBruss_Mobile: <span style="color:#00ff88">CONNECTED</span></div>
+          <div style="margin-bottom:8px;">● PcBruss_Mainframe: <span style="color:#00ff88">CONNECTED</span></div>
+          <div style="margin-bottom:8px;">● OppoBruss_Remote: <span style="color:#00ff88">CONNECTED</span></div>
         </div>
       </div>
       
       <div class="box">
-        <div class="bt-title">▶ CALENDARIO TURNI</div>
-        <div class="box-content" id="shift-content">
-          <!-- CALCOLATO DINAMICAMENTE -->
-        </div>
+        <div class="bt-title">▶ CALENDARIO_OPERATIVO</div>
+        <div class="box-content" id="cal"></div>
       </div>
       
-      <div class="btn-control" onclick="openCam()">📷 CONTROLLO</div>
+      <div class="btn-control" onclick="openCam()">📷 FEED_CAMERA_TOTALE</div>
     </div>
   </div>
   
   <div class="chat">
     <div class="msgs" id="chat"></div>
     <div class="inp-row">
-      <input class="inp" id="inp" placeholder="COMANDO..." type="text" autocomplete="off">
+      <input class="inp" id="inp" type="text" autocomplete="off">
       <button class="hbtn" onclick="send()">INVIA ►</button>
     </div>
   </div>
 </div>
 
-<input type="text" id="dummy-focus">
+<input type="text" id="dummy">
 
 <script>
 var _K1 = 'gsk_dETVcTjKuuOYEGkdit5h';
@@ -147,85 +149,79 @@ var _K2 = 'WGdyb3FYlnxwRdUSnehnzu4mZTPscrFS';
 var KEY = _K1 + _K2;
 var chatHistory = [];
 
-// CALCOLO TURNI (ES5)
-function updateShifts() {
-  var now = new Date();
-  var todayStr = now.toISOString().split('T')[0];
-  var content = document.getElementById('shift-content');
-  var html = '';
-
-  // ECCEZIONE FERIE (23, 24, 25 Aprile)
-  if (todayStr === '2026-04-23' || todayStr === '2026-04-24' || todayStr === '2026-04-25') {
-    html += '<div style="color:#ff6b00; font-weight:bold; margin-bottom:5px;">● STATO ATTUALE: FERIE</div>';
-    html += '<div style="font-size:8px; opacity:0.7;">RIENTRO PREVISTO:</div>';
-    html += '<div style="color:#00ff88;">LUN 27 APR - POMERIGGIO (14-22)</div>';
-  } else {
-    // LOGICA ROTAZIONE (Base: 27 Apr 2026 = Giorno 0 Ciclo 16gg)
-    var baseDate = new Date('2026-04-27T00:00:00');
-    var diffDays = Math.floor((now - baseDate) / (1000 * 60 * 60 * 24));
-    var dayInCycle = diffDays % 16;
-    if (dayInCycle < 0) dayInCycle += 16;
-
-    var currentShift = '';
-    if (dayInCycle >= 0 && dayInCycle <= 3) currentShift = 'POMERIGGIO (14-22)';
-    else if (dayInCycle === 4) currentShift = 'RIPOSO';
-    else if (dayInCycle >= 5 && dayInCycle <= 8) currentShift = 'MATTINO (06-14)';
-    else if (dayInCycle === 9) currentShift = 'RIPOSO';
-    else if (dayInCycle >= 10 && dayInCycle <= 13) currentShift = 'NOTTE (22-06)';
-    else currentShift = 'RIPOSO';
-
-    html += '<div style="color:#00d4ff; margin-bottom:5px;">● TURNO DI OGGI:</div>';
-    html += '<div style="font-size:11px; font-weight:bold; color:#fff;">' + currentShift + '</div>';
-    html += '<div style="font-size:8px; margin-top:10px; opacity:0.6;">SEQUENZA: 4N-2R-4P-1R-4M-1R</div>';
+// MONDO GRID HD
+var g_can = document.getElementById('globe-canvas');
+var g_ctx = g_can.getContext('2d');
+var r_ang = 0;
+function drawGlobe() {
+  g_ctx.clearRect(0,0,130,130); r_ang += 0.01;
+  g_ctx.strokeStyle = 'rgba(0, 212, 255, 0.3)';
+  for(var i=0; i<6; i++) {
+    var width = 60 * Math.cos(r_ang + i*Math.PI/6);
+    g_ctx.beginPath(); g_ctx.ellipse ? g_ctx.ellipse(65,65,Math.abs(width),60,0,0,Math.PI*2) : g_ctx.arc(65,65,60,0,Math.PI*2); g_ctx.stroke();
+    var height = 60 * Math.sin(r_ang + i*Math.PI/6);
+    g_ctx.beginPath(); g_ctx.ellipse ? g_ctx.ellipse(65,65,60,Math.abs(height),0,0,Math.PI*2) : g_ctx.arc(65,65,60,0,Math.PI*2); g_ctx.stroke();
   }
-  content.innerHTML = html;
+  requestAnimationFrame(drawGlobe);
 }
-updateShifts();
+drawGlobe();
 
-// RADAR
-var canvas = document.getElementById('world-radar');
-var ctx = canvas.getContext('2d');
-var angle = 0;
-function drawRadar() {
-  ctx.clearRect(0, 0, 130, 130);
-  angle += 0.02;
-  ctx.beginPath(); ctx.moveTo(65, 65); ctx.lineTo(65 + Math.cos(angle) * 65, 65 + Math.sin(angle) * 65);
-  ctx.strokeStyle = 'rgba(0, 255, 180, 0.4)'; ctx.stroke();
-  requestAnimationFrame(drawRadar);
+// CALENDARIO TURNI
+function buildCal() {
+  var now = new Date();
+  var days = ['DOM','LUN','MAR','MER','GIO','VEN','SAB'];
+  var html = '';
+  for(var i=0; i<7; i++) {
+    var d = new Date(); d.setDate(now.getDate() + i);
+    var dStr = d.toISOString().split('T')[0];
+    var type = 'work'; var label = 'TURNO';
+    
+    // LOGICA FERIE (23-25 APR)
+    if(dStr >= '2026-04-23' && dStr <= '2026-04-25') { type='ferie'; label='FERIE'; }
+    // LOGICA ROTAZIONE (Base 27 Apr = Pomeriggio)
+    else {
+      var base = new Date('2026-04-27T00:00:00');
+      var diff = Math.floor((d - base)/(1000*60*60*24));
+      var cycle = diff % 16; if(cycle<0) cycle+=16;
+      if(cycle==4 || cycle==9 || cycle>=14) { type='rest'; label='RIPOSO'; }
+      else if(cycle>=0 && cycle<=3) label='POMERIGGIO';
+      else if(cycle>=5 && cycle<=8) label='MATTINO';
+      else label='NOTTE';
+    }
+    html += '<div class="shift-row '+type+'"><span>'+days[d.getDay()]+' '+d.getDate()+'</span><span>'+label+'</span></div>';
+  }
+  document.getElementById('cal').innerHTML = html;
 }
-drawRadar();
+buildCal();
 
-function addMsg(s, t, j) {
-  var box = document.getElementById('chat');
-  var d = document.createElement('div');
-  d.className = 'msg' + (j ? ' j' : '');
-  d.innerHTML = '<div style="font-size:7px; opacity:0.4; margin-bottom:2px;">' + s + ' //</div>' + t;
-  box.appendChild(d);
-  box.scrollTop = box.scrollHeight;
+function addMsg(s,t,j){
+  var c = document.getElementById('chat');
+  var d = document.createElement('div'); d.className = 'msg'+(j?' j':'');
+  d.innerHTML = '<div style="font-size:8px; opacity:0.4; margin-bottom:3px;">'+s+' //</div>'+t;
+  c.appendChild(d); c.scrollTop = c.scrollHeight;
 }
 
-function send() {
-  var inp = document.getElementById('inp'); var txt = inp.value.trim(); if (!txt) return;
-  addMsg('USER', txt, false); chatHistory.push({role: 'user', content: txt}); inp.value = '';
-  document.getElementById('dummy-focus').focus(); setTimeout(function() { document.getElementById('dummy-focus').blur(); }, 50);
+function send(){
+  var inp = document.getElementById('inp'); var txt = inp.value.trim(); if(!txt) return;
+  addMsg('USER', txt, false); chatHistory.push({role:'user', content:txt}); inp.value = '';
+  document.getElementById('dummy').focus(); setTimeout(function(){document.getElementById('dummy').blur();}, 50);
   var xhr = new XMLHttpRequest();
   xhr.open('POST', 'https://api.groq.com/openai/v1/chat/completions', true);
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.setRequestHeader('Authorization', 'Bearer ' + KEY);
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState === 4 && xhr.status === 200) {
+  xhr.onreadystatechange = function(){
+    if(xhr.readyState===4 && xhr.status===200){
       var r = JSON.parse(xhr.responseText).choices[0].message.content;
-      addMsg('JARVIS', r.replace(/\[.*?\]/g, '').trim(), true);
-      chatHistory.push({role: 'assistant', content: r});
+      addMsg('JARVIS', r.replace(/\[.*?\]/g,'').trim(), true);
+      chatHistory.push({role:'assistant', content:r});
     }
   };
-  xhr.send(JSON.stringify({model: 'llama-3.3-70b-versatile', messages: [{role: 'system', content: 'Sei Jarvis.'}].concat(chatHistory.slice(-6))}));
+  xhr.send(JSON.stringify({model:'llama-3.3-70b-versatile', messages:[{role:'system', content:'Sei Jarvis.'}].concat(chatHistory.slice(-6))}));
 }
 
-document.getElementById('inp').addEventListener('keydown', function(e) { if (e.key === 'Enter') send(); });
-function openCam() { if (window.AppInventor) window.AppInventor.setWebViewString('CAMERA_ON'); }
-
-addMsg('JARVIS', 'Turni ricalcolati. Oggi sei in ferie, rientro Lunedì 27. Buona pausa, Signore.', true);
+document.getElementById('inp').addEventListener('keydown', function(e){ if(e.key==='Enter') send(); });
+function openCam(){ if(window.AppInventor) window.AppInventor.setWebViewString('CAMERA_ON'); }
+addMsg('JARVIS', 'SUPREME v5.5 Online. Sistemi ricalibrati.', true);
 </script>
 </body>
 </html>
