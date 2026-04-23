@@ -1,57 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<title>JARVIS v4.1 RESTORED</title>
+<title>JARVIS v4.2 TRUE GEM</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:#000;color:#00d4ff;font-family:'Rajdhani',sans-serif;height:100vh;overflow:hidden;position:relative;}
 .bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 35%,#001020 0%,#000810 60%,#000 100%);}
-.grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,212,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.025) 1px,transparent 1px);background-size:28px 28px;}
-.scan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,212,255,0.012) 2px,rgba(0,212,255,0.012) 4px);pointer-events:none;z-index:99;}
+.grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,212,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.02) 1px,transparent 1px);background-size:28px 28px;}
+.scan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,212,255,0.01) 2px,rgba(0,212,255,0.01) 4px);pointer-events:none;z-index:99;}
 
 .wrap{position:relative;z-index:10;display:flex;flex-direction:column;height:100vh;padding:10px;gap:8px;}
 .hdr{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(0,212,255,0.3);padding-bottom:5px;}
-.title{font-family:'Orbitron',sans-serif;font-size:16px;font-weight:900;letter-spacing:5px;text-shadow:0 0 10px rgba(0,212,255,0.5);}
+.title{font-family:'Orbitron',sans-serif;font-size:16px;font-weight:900;letter-spacing:5px;text-shadow:0 0 10px rgba(0,212,255,0.8); color:#fff;}
 .st{font-size:8px;opacity:0.6;letter-spacing:2px;}
 
 .row{display:flex;gap:10px;flex:1;min-height:0;}
 .col-l{width:160px;display:flex;flex-direction:column;gap:10px;}
 .col-r{flex:1;display:flex;flex-direction:column;gap:10px;}
 
-.box{background:rgba(0,20,40,0.6);border:1px solid rgba(0,212,255,0.2);padding:8px;position:relative;overflow:hidden;}
+.box{background:rgba(0,20,40,0.7);border:1px solid rgba(0,212,255,0.2);padding:8px;position:relative;overflow:hidden;}
 .box::before{content:'';position:absolute;top:0;left:0;width:5px;height:5px;border-top:1px solid #00d4ff;border-left:1px solid #00d4ff;}
 .bt{font-size:7px;color:#ff6b00;letter-spacing:1px;margin-bottom:5px;font-family:'Orbitron';}
 
+/* ARC REACTOR PRO */
 .arc-c{width:140px;height:140px;margin:0 auto;position:relative;display:flex;align-items:center;justify-content:center;}
-#tsvg{position:absolute;inset:0;transform:rotate(-90deg);filter:drop-shadow(0 0 5px rgba(0,212,255,0.5));}
-#arc-core{position:relative;z-index:2;border-radius:50%;}
+#tsvg{position:absolute;inset:0;transform:rotate(-90deg);filter:drop-shadow(0 0 8px rgba(0,212,255,0.6));}
+#arc-core{position:relative;z-index:2;border-radius:50%; box-shadow: 0 0 25px rgba(0,212,255,0.8);}
 
 .stat-g{display:grid;grid-template-columns:1fr 1fr;gap:5px;}
 .stat-i{text-align:center;padding:5px;background:rgba(0,0,0,0.3);border:1px solid rgba(0,212,255,0.1);}
 .sv{font-size:12px;font-weight:bold;color:#fff;}
 .sl{font-size:6px;opacity:0.5;}
 
-.chat{flex:1;display:flex;flex-direction:column;background:rgba(0,10,20,0.8);border:1px solid rgba(0,212,255,0.3);min-height:0;}
+.chat{flex:1;display:flex;flex-direction:column;background:rgba(0,5,15,0.9);border:1px solid rgba(0,212,255,0.3);min-height:0; position:relative;}
 .msgs{flex:1;overflow-y:auto;padding:10px;scrollbar-width:none;}
-.msgs::-webkit-scrollbar{display:none;}
-.msg{margin-bottom:10px;font-size:13px;line-height:1.4;border-left:2px solid #00d4ff;padding-left:8px;}
-.msg.j{border-left-color:#ff6b00;color:#ffcc88;background:rgba(255,107,0,0.03);}
+.msg{margin-bottom:10px;font-size:14px;line-height:1.4;border-left:2px solid #00d4ff;padding-left:8px; color:#fff;}
+.msg.j{border-left-color:#ff6b00;color:#ffcc88;background:rgba(255,107,0,0.05);}
 .ms{font-size:7px;opacity:0.4;letter-spacing:1px;margin-bottom:2px;}
 
 .inprow{display:flex;padding:5px;gap:5px;background:rgba(0,0,0,0.5);border-top:1px solid rgba(0,212,255,0.2);}
-.hin{flex:1;background:rgba(0,30,60,0.3);border:1px solid #00d4ff;color:#00d4ff;padding:8px;font-family:inherit;font-size:14px;outline:none;}
+.hin{flex:1;background:rgba(0,20,40,0.5);border:1px solid #00d4ff;color:#fff;padding:10px;font-family:inherit;font-size:16px;outline:none;}
 .hbtn{background:transparent;border:1px solid #ff6b00;color:#ff6b00;padding:0 15px;font-size:9px;font-family:'Orbitron';cursor:pointer;}
 
 .ftr{display:flex;justify-content:space-between;font-size:7px;opacity:0.4;padding:2px 0;}
 
-@keyframes bk{0%,100%{opacity:0.4;}50%{opacity:1;}}
-.radar-sweep{position:absolute;width:100%;height:100%;background:conic-gradient(from 0deg,transparent,rgba(0,212,255,0.2));border-radius:50%;animation:rot 4s linear infinite;}
 @keyframes rot{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
-
 #dummy-focus{position:absolute;opacity:0;pointer-events:none;top:-100px;}
 </style>
 </head>
@@ -79,17 +76,17 @@ body{background:#000;color:#00d4ff;font-family:'Rajdhani',sans-serif;height:100v
       
       <div class="box" style="flex:1">
         <div class="bt">TAG TRACKER</div>
-        <div style="font-size:10px; color:#ff2a2a; margin-bottom:5px;">● CHIAVI ILENIA</div>
+        <div style="font-size:10px; color:#ff2a2a; margin-bottom:5px; animation:blink 1s infinite;">● CHIAVI ILENIA</div>
         <div style="font-size:10px; opacity:0.5;">● TAG-02 ---</div>
         <div style="font-size:10px; opacity:0.5;">● TAG-03 ---</div>
-        <canvas id="globe" width="130" height="130" style="display:block; margin:10px auto 0;"></canvas>
+        <canvas id="globe" width="130" height="130" style="display:block; margin:5px auto 0;"></canvas>
       </div>
     </div>
     
     <div class="col-r">
       <div class="stat-g">
-        <div class="box"><div class="bt">METEO</div><div id="m-t" style="font-size:18px; font-weight:bold;">12°C</div><div id="m-d" style="font-size:8px;">SERENO</div></div>
-        <div class="box"><div class="bt">PROTOCOLLO</div><div style="font-size:12px; font-weight:bold; color:#ff6b00;">ATTIVO</div></div>
+        <div class="box"><div class="bt">METEO</div><div id="m-t" style="font-size:18px; font-weight:bold; color:#fff;">--°C</div><div id="m-d" style="font-size:8px;">CARICAMENTO...</div></div>
+        <div class="box"><div class="bt">PROTOCOLLO</div><div style="font-size:12px; font-weight:bold; color:#ff6b00; animation:pulse 2s infinite;">ATTIVO</div></div>
       </div>
       
       <div class="box" style="flex:1">
@@ -99,13 +96,13 @@ body{background:#000;color:#00d4ff;font-family:'Rajdhani',sans-serif;height:100v
         </div>
       </div>
       
-      <button onclick="openControllo()" style="background:transparent; border:1px solid #00d4ff; color:#00d4ff; padding:10px; font-family:'Orbitron'; font-size:10px; letter-spacing:3px;">📷 CONTROLLO</button>
+      <button onclick="openControllo()" style="background:transparent; border:1px solid #00d4ff; color:#00d4ff; padding:10px; font-family:'Orbitron'; font-size:10px; letter-spacing:3px;">📷 CONTROLLO CAM</button>
     </div>
   </div>
   
   <div class="chat">
-    <div class="msgs" id="chat"></div>
-    <div class="typ" id="typ" style="display:none">●●●</div>
+    <div class="msgs" id="chat-msgs"></div>
+    <div id="typ" style="font-size:10px; padding-left:10px; color:#ff6b00; display:none;">ELABORAZIONE...</div>
     <div class="inprow">
       <input class="hin" id="inp" placeholder="COMANDO..." type="text" autocomplete="off" inputmode="text" enterkeyhint="send">
       <button class="hbtn" onclick="send()">INVIA ►</button>
@@ -113,7 +110,7 @@ body{background:#000;color:#00d4ff;font-family:'Rajdhani',sans-serif;height:100v
   </div>
   
   <div class="ftr">
-    <span>JARVIS v4.1 [RESTORED]</span><span id="upt">UPTIME: 0m</span><span>LLAMA 3.3 70B</span>
+    <span>JARVIS v4.2 [TRUE GEM]</span><span id="upt">UPTIME: 0m</span><span>LLAMA 3.3 70B</span>
   </div>
 </div>
 
@@ -122,44 +119,45 @@ body{background:#000;color:#00d4ff;font-family:'Rajdhani',sans-serif;height:100v
 <script>
 var _K1 = 'gsk_dETVcTjKuuOYEGkdit5h';
 var _K2 = 'WGdyb3FYlnxwRdUSnehnzu4mZTPscrFS';
-var GROQ_KEY = _K1 + _K2;
-var chatHistory = [];
+var KEY = _K1 + _K2;
+var history = [];
 
-// GFX: ARC REACTOR
+// ARC REACTOR GFX
 var tsvg = document.getElementById('tsvg');
 for(var i=0; i<72; i++){
-  var a = (i/72)*Math.PI*2; var r = 74; var len = i%6===0 ? 9 : i%2===0 ? 5 : 3;
+  var a = (i/72)*Math.PI*2; var r = 74; var len = i%6===0 ? 10 : i%2===0 ? 6 : 4;
   var l = document.createElementNS('http://www.w3.org/2000/svg','line');
   l.setAttribute('x1', 78 + Math.sin(a)*r); l.setAttribute('y1', 78 - Math.cos(a)*r);
   l.setAttribute('x2', 78 + Math.sin(a)*(r-len)); l.setAttribute('y2', 78 - Math.cos(a)*(r-len));
-  l.setAttribute('stroke', i%6===0 ? 'rgba(0,212,255,0.9)' : i%2===0 ? 'rgba(0,212,255,0.4)' : 'rgba(0,212,255,0.15)');
-  l.setAttribute('stroke-width', i%6===0 ? '1.8' : '0.8');
+  l.setAttribute('stroke', i%6===0 ? '#00d4ff' : 'rgba(0,212,255,0.3)');
+  l.setAttribute('stroke-width', i%6===0 ? '2' : '1');
   tsvg.appendChild(l);
 }
+
 var arcCanvas = document.getElementById('arc-core');
 var arcCtx = arcCanvas.getContext('2d');
 var arcPulse = 0;
 function drawArc(){
-  arcCtx.clearRect(0,0,42,42); var pulse = 0.7 + Math.sin(arcPulse)*0.3; arcPulse += 0.04; var cx=21,cy=21;
-  var g = arcCtx.createRadialGradient(cx,cy,4,cx,cy,20);
-  g.addColorStop(0, 'rgba(0,212,255,'+(0.15*pulse)+')'); g.addColorStop(1, 'transparent');
-  arcCtx.beginPath(); arcCtx.arc(cx,cy,20,0,Math.PI*2); arcCtx.fillStyle=g; arcCtx.fill();
-  g = arcCtx.createRadialGradient(cx-2,cy-2,1,cx,cy,10);
-  g.addColorStop(0, 'rgba(255,255,255,'+(0.95*pulse)+')'); g.addColorStop(1, 'rgba(0,40,120,0.3)');
-  arcCtx.beginPath(); arcCtx.arc(cx,cy,10,0,Math.PI*2); arcCtx.fillStyle=g; arcCtx.fill();
+  arcCtx.clearRect(0,0,42,42); var pulse = 0.8 + Math.sin(arcPulse)*0.2; arcPulse += 0.05;
+  var g = arcCtx.createRadialGradient(21,21,2,21,21,20);
+  g.addColorStop(0, 'rgba(255,255,255,0.9)');
+  g.addColorStop(0.3, 'rgba(0,212,255,0.8)');
+  g.addColorStop(1, 'transparent');
+  arcCtx.beginPath(); arcCtx.arc(21,21,20,0,Math.PI*2); arcCtx.fillStyle=g; arcCtx.fill();
   requestAnimationFrame(drawArc);
 }
 drawArc();
 
-// GFX: GLOBE
-var gc = document.getElementById('globe'); var gctx = gc.getContext('2d'); var GS=130, GR=62, GCX=65, GCY=65, rot=0;
+// GLOBE GFX
+var gc = document.getElementById('globe'); var gctx = gc.getContext('2d');
+var rot = 0;
 function drawGlobe(){
-  gctx.clearRect(0,0,GS,GS);
-  gctx.beginPath(); gctx.arc(GCX,GCY,GR,0,Math.PI*2); gctx.strokeStyle='rgba(0,212,255,0.2)'; gctx.stroke();
-  for(var i=0; i<8; i++){
-    var a = (rot + i*45) * Math.PI/180;
-    var x = GCX + Math.cos(a)*GR; var y = GCY + Math.sin(a)*GR*0.3;
-    gctx.beginPath(); gctx.arc(x,y,2,0,Math.PI*2); gctx.fillStyle='rgba(0,212,255,0.5)'; gctx.fill();
+  gctx.clearRect(0,0,130,130);
+  gctx.beginPath(); gctx.arc(65,65,62,0,Math.PI*2); gctx.strokeStyle='rgba(0,212,255,0.15)'; gctx.stroke();
+  for(var i=0; i<12; i++){
+    var a = (rot + i*30) * Math.PI/180;
+    var x = 65 + Math.cos(a)*62; var y = 65 + Math.sin(a)*15;
+    gctx.beginPath(); gctx.arc(x,y,2,0,Math.PI*2); gctx.fillStyle='rgba(0,212,255,0.6)'; gctx.fill();
   }
   rot += 1; requestAnimationFrame(drawGlobe);
 }
@@ -168,19 +166,13 @@ drawGlobe();
 function addMsg(s,t,j){
   var d = document.createElement('div'); d.className = 'msg' + (j ? ' j' : '');
   d.innerHTML = '<div class="ms">'+s+' //</div>'+t;
-  var c = document.getElementById('chat'); c.appendChild(d); c.scrollTop = c.scrollHeight;
-}
-
-function openControllo(){ 
-  addMsg('JARVIS','Avvio feed camera...',true);
-  if(window.AppInventor) window.AppInventor.setWebViewString('CAMERA_ON');
+  var c = document.getElementById('chat-msgs'); c.appendChild(d); c.scrollTop = c.scrollHeight;
 }
 
 function send(){
-  var inp = document.getElementById('inp'); var text = inp.value.trim(); if(!text) return;
-  addMsg('USER', text, false); chatHistory.push({role:'user', content:text}); inp.value = '';
+  var inp = document.getElementById('inp'); var txt = inp.value.trim(); if(!txt) return;
+  addMsg('USER', txt, false); history.push({role:'user', content:txt}); inp.value = '';
   
-  // Fix Tastiera Motorola
   var dummy = document.getElementById('dummy-focus');
   dummy.focus(); setTimeout(function(){ dummy.blur(); }, 50);
 
@@ -188,26 +180,27 @@ function send(){
   var xhr = new XMLHttpRequest();
   xhr.open('POST','https://api.groq.com/openai/v1/chat/completions',true);
   xhr.setRequestHeader('Content-Type','application/json');
-  xhr.setRequestHeader('Authorization','Bearer '+GROQ_KEY);
+  xhr.setRequestHeader('Authorization','Bearer '+KEY);
   
   xhr.onreadystatechange = function(){
     if(xhr.readyState === 4){
+      document.getElementById('typ').style.display = 'none';
       if(xhr.status === 200){
-        var d = JSON.parse(xhr.responseText); var reply = d.choices[0].message.content;
-        var cleanR = reply.replace(/\[.*?\]/g,'').trim();
+        var d = JSON.parse(xhr.responseText); var r = d.choices[0].message.content;
+        var cleanR = r.replace(/\[.*?\]/g,'').trim();
         addMsg('JARVIS', cleanR, true);
-        chatHistory.push({role:'assistant', content:reply});
-        if(window.AppInventor) window.AppInventor.setWebViewString(reply);
+        history.push({role:'assistant', content:r});
+        if(window.AppInventor) window.AppInventor.setWebViewString(r);
         document.getElementById('lat').textContent = (Date.now()-t0)+'ms';
       } else {
         addMsg('JARVIS', 'ERRORE API ('+xhr.status+')', true);
       }
     }
   };
-  
+  document.getElementById('typ').style.display = 'block';
   xhr.send(JSON.stringify({
     model: 'llama3-8b-8192',
-    messages: [{role:'system', content:'Sei Jarvis. Rispondi in italiano, sintetico.'}].concat(chatHistory.slice(-8))
+    messages: [{role:'system', content:'Sei Jarvis. Rispondi in italiano, sintetico.'}].concat(history.slice(-8))
   }));
 }
 
@@ -217,7 +210,9 @@ setInterval(function(){
   document.getElementById('upt').textContent = 'UPTIME: '+Math.floor((Date.now()-window.performance.timing.navigationStart)/60000)+'m';
 }, 60000);
 
-addMsg('JARVIS', 'Sistema v4.1 Ripristinato. Pronto ai comandi.', true);
+function openControllo(){ addMsg('JARVIS','Avvio feed camera...',true); if(window.AppInventor) window.AppInventor.setWebViewString('CAMERA_ON'); }
+
+addMsg('JARVIS', 'Sistema v4.2 Online. In attesa di input.', true);
 </script>
 </body>
 </html>
