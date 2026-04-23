@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>JARVIS - v6.1</title>
+<title>JARVIS - v6.2</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600&display=swap');
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -11,119 +11,105 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
 
 .bg { position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, #001020 0%, #000 85%); z-index: 1; }
 .grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(0,212,255,0.03) 1px,transparent 1px), linear-gradient(90deg,rgba(0,212,255,0.03) 1px,transparent 1px); background-size: 40px 40px; z-index: 2; }
-.scan { position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,212,255,0.01) 2px, rgba(0,212,255,0.01) 4px); pointer-events: none; z-index: 99; }
 
-.wrap { position: relative; z-index: 10; display: flex; flex-direction: column; height: 100vh; padding: 10px; gap: 5px; }
+.wrap { position: relative; z-index: 10; display: flex; flex-direction: column; height: 100vh; padding: 10px; gap: 10px; }
 
-/* HEADER */
-.hdr { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,212,255,0.3); padding-bottom: 5px; }
-.title { font-family: 'Orbitron', sans-serif; font-size: 16px; font-weight: 900; letter-spacing: 5px; text-shadow: 0 0 10px #00d4ff; }
+/* HEADER + PROTOCOLLI ORIZZONTALI (FILL PARENT) */
+.top-bar { display: flex; align-items: center; gap: 15px; border-bottom: 2px solid rgba(0,212,255,0.3); padding-bottom: 8px; background: rgba(0,20,40,0.5); padding: 10px; }
+.title { font-family: 'Orbitron', sans-serif; font-size: 18px; font-weight: 900; letter-spacing: 5px; color: #fff; }
+.proto-list { flex: 1; display: flex; gap: 20px; font-family: 'Orbitron'; font-size: 14px; color: #00ff88; overflow-x: auto; scrollbar-width: none; }
+.proto-list::-webkit-scrollbar { display: none; }
+.proto-item { white-space: nowrap; border-bottom: 1px solid rgba(0,255,136,0.3); }
 
-.main { display: flex; gap: 10px; flex: 1; min-height: 0; }
-
-/* COLONNA SINISTRA: REATTORE + MAPPA */
-.col-left { flex: 1; display: flex; flex-direction: column; gap: 5px; }
-
-/* ARK REACTOR (ALTO SINISTRA) */
-.arc-wrap { width: 120px; height: 120px; position: relative; display: flex; align-items: center; justify-content: center; }
-.neon-breath { position: absolute; width: 100px; height: 100px; border-radius: 50%; background: radial-gradient(circle, rgba(0,212,255,0.2) 0%, transparent 70%); animation: breath 4s infinite ease-in-out; }
-@keyframes breath { 0%, 100% { transform: scale(0.85); opacity: 0.2; } 50% { transform: scale(1.15); opacity: 0.6; } }
-.ring { position: absolute; border-radius: 50%; border: 1.5px solid transparent; }
-.r1 { width: 110px; height: 110px; border-top-color: #00d4ff; animation: rot 15s linear infinite; }
-.r2 { width: 90px; height: 90px; border-left-color: #ff6b00; animation: rot 10s linear infinite reverse; }
-.core { width: 20px; height: 20px; background: radial-gradient(circle, #fff 0%, #00d4ff 50%, transparent 100%); border-radius: 50%; box-shadow: 0 0 15px #00d4ff; }
+/* REATTORE (SPOSTATO IN ALTO A DESTRA) */
+.arc-mini { width: 50px; height: 50px; position: relative; display: flex; align-items: center; justify-content: center; }
+.ring-m { position: absolute; border-radius: 50%; border: 1px solid #00d4ff; width: 100%; height: 100%; animation: rot 10s linear infinite; }
+.core-m { width: 12px; height: 12px; background: #fff; border-radius: 50%; box-shadow: 0 0 10px #00d4ff; animation: pulse 2s infinite; }
 @keyframes rot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
 
-/* MAPPA TATTICA TORINO (INTERATTIVA) */
-.world-wrap { width: 100%; flex: 1; position: relative; border: 1px solid rgba(0,212,255,0.4); overflow: hidden; background: #000; box-shadow: 0 0 15px rgba(0,212,255,0.2); }
+.main { display: flex; gap: 15px; flex: 1; min-height: 0; }
+
+/* MAPPA LARGE */
+.map-wrap { flex: 1.5; position: relative; border: 1px solid rgba(0,212,255,0.4); overflow: hidden; background: #000; box-shadow: 0 0 20px rgba(0,212,255,0.2); }
 .world-iframe { 
-  width: 100%; height: 120%; /* PIU ALTA PER NASCONDERE LOGO */
-  margin-top: -30px;
-  border: none; 
+  width: 100%; height: 130%; margin-top: -40px; border: none; 
   filter: invert(90%) hue-rotate(150deg) contrast(120%) brightness(110%); 
 }
 
-/* COLONNA DESTRA: LISTE STRETTE */
-.col-right { width: 140px; display: flex; flex-direction: column; gap: 8px; }
+/* COLONNA DESTRA (PIU LARGA) */
+.col-right { flex: 1; display: flex; flex-direction: column; gap: 12px; min-width: 180px; }
 
-/* FINESTRE */
-.box { background: rgba(0,20,40,0.7); border: 1px solid rgba(0,212,255,0.2); padding: 8px; position: relative; flex: 1; display: flex; flex-direction: column; min-height: 0; }
-.box::before { content:''; position:absolute; top:0; left:0; width:5px; height:5px; border-top:1px solid #00d4ff; border-left:1px solid #00d4ff; }
-.bt-title { font-size: 7px; color: #ff6b00; letter-spacing: 2px; margin-bottom: 5px; font-family: 'Orbitron'; }
-.box-content { flex: 1; overflow-y: auto; font-size: 11px; scrollbar-width: none; }
-.box-content::-webkit-scrollbar { display: none; }
+/* FINESTRE (TESTO PIU GRANDE) */
+.box { background: rgba(0,20,40,0.8); border: 1px solid rgba(0,212,255,0.2); padding: 12px; position: relative; flex: 1; display: flex; flex-direction: column; min-height: 0; }
+.box::before { content:''; position:absolute; top:0; left:0; width:10px; height:10px; border-top:2px solid #ff6b00; border-left:2px solid #ff6b00; }
+.bt-title { font-size: 10px; color: #ff6b00; letter-spacing: 2px; margin-bottom: 8px; font-family: 'Orbitron'; border-bottom: 1px solid rgba(255,107,0,0.3); }
+.box-content { flex: 1; overflow-y: auto; font-size: 15px; font-weight: 600; scrollbar-width: none; }
+.box-content div { margin-bottom: 6px; }
 
 /* CALENDARIO */
-.cal-container { position: relative; display: flex; align-items: center; gap: 2px; }
-.cal-row { display: flex; gap: 4px; overflow-x: hidden; padding: 2px 0; scroll-behavior: smooth; flex: 1; }
-.cal-btn { background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.3); color: #00d4ff; padding: 4px; cursor: pointer; font-size: 8px; }
-.day-card { flex: 0 0 50px; text-align: center; padding: 4px 2px; border: 1px solid rgba(0,212,255,0.1); background: rgba(0,0,0,0.4); border-radius: 2px; font-size: 7px; }
-.day-card.today { border-color: #00ff88; background: rgba(0,255,136,0.15); }
+.cal-container { display: flex; align-items: center; gap: 5px; }
+.cal-row { display: flex; gap: 8px; overflow-x: hidden; scroll-behavior: smooth; flex: 1; }
+.cal-btn { background: #ff6b00; border: none; color: #000; font-weight: bold; padding: 10px 8px; cursor: pointer; border-radius: 2px; }
+.day-card { flex: 0 0 75px; text-align: center; padding: 10px 5px; border: 1px solid rgba(0,212,255,0.2); background: rgba(0,0,0,0.5); font-size: 10px; }
+.day-card.today { border-color: #00ff88; background: rgba(0,255,136,0.1); }
 
-/* BARRA INFERIORE: TAGS + CONTROLLO */
-.footer-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 5px; border-top: 1px solid rgba(0,212,255,0.2); padding-top: 5px; }
-.tag-tracker { flex: 1; display: flex; gap: 15px; font-family: 'Orbitron'; }
-.tag-item { display: flex; align-items: center; gap: 6px; font-size: 9px; color: #fff; }
-.dot { width: 5px; height: 5px; border-radius: 50%; background: #00ff88; box-shadow: 0 0 5px #00ff88; }
-.btn-control { width: 140px; background: transparent; border: 1px solid #00d4ff; color: #00d4ff; padding: 12px; font-family: 'Orbitron'; font-size: 10px; letter-spacing: 2px; cursor: pointer; text-align: center; }
+/* BARRA INFERIORE TAGS */
+.footer-row { display: flex; align-items: center; justify-content: space-between; gap: 20px; border-top: 2px solid rgba(0,212,255,0.3); padding-top: 10px; }
+.tag-tracker { flex: 1; display: flex; gap: 25px; font-family: 'Orbitron'; }
+.tag-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #fff; }
+.dot { width: 6px; height: 6px; border-radius: 50%; background: #00ff88; box-shadow: 0 0 8px #00ff88; }
+.btn-control { flex: 0 0 200px; background: rgba(0,212,255,0.1); border: 1px solid #00d4ff; color: #00d4ff; padding: 15px; font-family: 'Orbitron'; font-size: 12px; letter-spacing: 3px; cursor: pointer; }
 
 /* CHAT */
-.chat { height: 140px; display: flex; flex-direction: column; background: rgba(0,5,10,0.9); border: 1px solid rgba(0,212,255,0.3); }
-.msgs { flex: 1; overflow-y: auto; padding: 10px; }
-.msg { margin-bottom: 5px; font-size: 12px; border-left: 2px solid #00d4ff; padding-left: 8px; color: #fff; }
-.msg.j { border-left-color: #ff6b00; color: #ffcc88; }
+.chat { height: 160px; display: flex; flex-direction: column; background: rgba(0,5,10,0.95); border: 1px solid rgba(0,212,255,0.4); }
+.msgs { flex: 1; overflow-y: auto; padding: 12px; }
+.msg { margin-bottom: 8px; font-size: 14px; border-left: 3px solid #00d4ff; padding-left: 10px; color: #fff; }
 
 /* INPUT */
-.inp-row { display: flex; padding: 5px; gap: 5px; background: #000; border-top: 1px solid rgba(0,212,255,0.2); }
-.inp { flex: 1; background: rgba(0,30,60,0.3); border: 1px solid #00d4ff; color: #fff; padding: 8px; font-size: 14px; outline: none; }
-.hbtn { background: transparent; border: 1px solid #ff6b00; color: #ff6b00; padding: 0 10px; font-family: 'Orbitron'; font-size: 9px; }
+.inp-row { display: flex; padding: 8px; gap: 8px; background: #000; border-top: 1px solid rgba(0,212,255,0.3); }
+.inp { flex: 1; background: rgba(0,40,80,0.3); border: 1px solid #00d4ff; color: #fff; padding: 12px; font-size: 16px; outline: none; }
+.hbtn { background: #ff6b00; border: none; color: #000; padding: 0 20px; font-family: 'Orbitron'; font-weight: bold; cursor: pointer; }
 
 #dummy { position: fixed; top: -100px; opacity: 0; }
 </style>
 </head>
 <body>
-<div class="bg"></div><div class="grid"></div><div class="scan"></div>
+<div class="bg"></div><div class="grid"></div>
 
 <div class="wrap">
-  <div class="hdr">
-    <div style="font-size:7px; opacity:0.6;">STARK_OS_V6.1</div>
+  <div class="top-bar">
     <div class="title">J.A.R.V.I.S.</div>
-    <div style="font-size:7px; opacity:0.6;">TORINO_TACTICAL_VIEW</div>
+    <div class="proto-list">
+      <div class="proto-item">● HOUSE_GUARD: ON</div>
+      <div class="proto-item">● BT_MESH: STABLE</div>
+      <div class="proto-item">● ENCRYPTION: ACTIVE</div>
+      <div class="proto-item">● SATELLITE: LOCKED</div>
+    </div>
+    <div class="arc-mini">
+      <div class="ring-m"></div>
+      <div class="core-m"></div>
+    </div>
   </div>
   
   <div class="main">
-    <div class="col-left">
-      <div class="arc-wrap">
-        <div class="neon-breath"></div>
-        <div class="ring r1"></div><div class="ring r2"></div>
-        <div class="core"></div>
-      </div>
-      
-      <div class="world-wrap">
-        <!-- TORINO INTERACTIVE MAP -->
-        <iframe class="world-iframe" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d30000!2d7.6869!3d45.0703!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sit!2sit!4v1700000000000!5m2!1sit!2sit"></iframe>
-      </div>
+    <div class="map-wrap">
+      <!-- FORCE TORINO MAP -->
+      <iframe class="world-iframe" src="https://maps.google.com/maps?q=Torino&t=m&z=13&output=embed&iwloc=near"></iframe>
     </div>
     
     <div class="col-right">
       <div class="box">
-        <div class="bt-title">▶ PROTOCOLLI</div>
+        <div class="bt-title">▶ DISPOSITIVI_RETE</div>
         <div class="box-content">
-          <div>● HOUSE_GUARD: <span style="color:#00ff88">ON</span></div>
-          <div>● BT_MESH: <span style="color:#00ff88">STABLE</span></div>
+          <div>MotoBruss: <span style="color:#00ff88">ONLINE</span></div>
+          <div>PcBruss: <span style="color:#00ff88">STABLE</span></div>
+          <div>OppoBruss: <span style="color:#00ff88">ONLINE</span></div>
         </div>
       </div>
       
-      <div class="box">
-        <div class="bt-title">▶ DISPOSITIVI</div>
-        <div class="box-content">
-          <div>● MotoBruss: <span style="color:#00ff88">ON</span></div>
-          <div>● PcBruss: <span style="color:#00ff88">ON</span></div>
-        </div>
-      </div>
-      
-      <div class="box" style="flex: 0 0 85px;">
-        <div class="bt-title">▶ TURNI</div>
+      <div class="box" style="flex: 0 0 110px;">
+        <div class="bt-title">▶ CALENDARIO_TURNI</div>
         <div class="cal-container">
           <button class="cal-btn" onclick="scrollCal(-1)">◄</button>
           <div class="cal-row" id="cal"></div>
@@ -146,7 +132,7 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
     <div class="msgs" id="chat"></div>
     <div class="inp-row">
       <input class="inp" id="inp" type="text" autocomplete="off">
-      <button class="hbtn" onclick="send()">INVIA ►</button>
+      <button class="hbtn" onclick="send()">INVIA</button>
     </div>
   </div>
 </div>
@@ -177,15 +163,15 @@ function buildCal() {
     html += '<div class="day-card '+type+isToday+'"><span class="date">'+days[d.getDay()]+' '+d.getDate()+'</span>'+label+'</div>';
   }
   var cal = document.getElementById('cal'); cal.innerHTML = html;
-  setTimeout(function(){ cal.scrollLeft = (54 * 5) - (cal.clientWidth / 2) + 27; }, 100);
+  setTimeout(function(){ cal.scrollLeft = (83 * 5) - (cal.clientWidth / 2) + 41; }, 100);
 }
 buildCal();
 
-function scrollCal(dir) { document.getElementById('cal').scrollBy({ left: dir * 108, behavior: 'smooth' }); }
+function scrollCal(dir) { document.getElementById('cal').scrollBy({ left: dir * 160, behavior: 'smooth' }); }
 
 function addMsg(s,t,j){
-  var c = document.getElementById('chat'); var d = document.createElement('div'); d.className = 'msg'+(j?' j':'');
-  d.innerHTML = '<div style="font-size:7px; opacity:0.4; margin-bottom:2px;">'+s+' //</div>'+t;
+  var c = document.getElementById('chat'); var d = document.createElement('div'); d.className = 'msg';
+  d.innerHTML = '<div style="font-size:8px; opacity:0.4; margin-bottom:2px;">'+s+' //</div>'+t;
   c.appendChild(d); c.scrollTop = c.scrollHeight;
 }
 
@@ -209,7 +195,7 @@ function send(){
 
 document.getElementById('inp').addEventListener('keydown', function(e){ if(e.key==='Enter') send(); });
 function openCam(){ if(window.AppInventor) window.AppInventor.setWebViewString('CAMERA_ON'); }
-addMsg('JARVIS', 'Layout ricalibrato. Mappa Torino interattiva.', true);
+addMsg('JARVIS', 'Configurazione Torino v6.2 Online.', true);
 </script>
 </body>
 </html>
