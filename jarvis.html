@@ -568,6 +568,7 @@ function send(){
   var text = inp.value.trim();
   if(!text) return;
   inp.value = '';
+  inp.blur(); // Nasconde la tastiera su Motorola/Oppo dopo l'invio
   addMsg('USER', text, false);
   chatHistory.push({role:'user', content:text});
   document.getElementById('typ').className = 'typ on';
@@ -612,13 +613,17 @@ function send(){
           chatHistory.push({role:'assistant', content:reply});
           if(chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
           addMsg('JARVIS', reply, true);
-          speak(reply); // Fai parlare Jarvis ad alta voce
+          speak(reply); 
           saveState();
         }catch(e){
-          addMsg('JARVIS', 'Errore parsing risposta.', true);
+          console.error("Errore Parsing:", e);
+          addMsg('JARVIS', 'ERRORE SISTEMA: Problema nel processare la risposta.', true);
+          saveState();
         }
-      }else{
-        addMsg('JARVIS', 'Errore HTTP: ' + xhr.status, true);
+      } else if (xhr.readyState === 4) {
+        document.getElementById('typ').className = 'typ';
+        console.error("Errore API:", xhr.status, xhr.responseText);
+        addMsg('JARVIS', 'ERRORE CONNESSIONE: Impossibile contattare il nucleo Groq. (Status: '+xhr.status+')', true);
       }
     }
   };
