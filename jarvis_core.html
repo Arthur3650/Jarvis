@@ -630,8 +630,12 @@ function send(){
             addMsg('JARVIS', 'ERRORE SISTEMA: Risposta non valida.', true);
           }
         } else {
-          console.error("API error:", xhr.status);
-          addMsg('JARVIS', 'ERRORE CONNESSIONE (Status: '+xhr.status+')', true);
+          var errHint = "";
+          try { 
+            var errObj = JSON.parse(xhr.responseText);
+            errHint = errObj.error ? ": " + errObj.error.message : "";
+          } catch(e) {}
+          addMsg('JARVIS', 'ERRORE API ('+xhr.status+')' + errHint, true);
         }
       }
     };
@@ -643,7 +647,7 @@ function send(){
     
     var payloadMessages = [
       {role:'system', content: SYSTEM + "\n\n" + getSystemState()}
-    ].concat(chatHistory.filter(function(m){ return m && m.content; }));
+    ].concat(chatHistory);
     
     xhr.send(JSON.stringify({
       model: 'llama-3.3-70b-versatile',
