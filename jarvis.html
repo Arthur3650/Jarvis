@@ -107,7 +107,7 @@ body{background:#000;color:#00d4ff;font-family:'Rajdhani',sans-serif;height:100v
   </div>
   
   <div class="ftr">
-    <span>JARVIS v4.3 [FINAL GEM]</span><span id="upt">UPTIME: 0m</span><span>LLAMA 3.3 70B</span>
+    <span>JARVIS v4.4 [FINAL GEM]</span><span id="upt">UPTIME: 0m</span><span id="clk">00:00:00</span>
   </div>
 </div>
 
@@ -199,7 +199,27 @@ function send(){
 
 document.getElementById('inp').addEventListener('keydown',function(e){ if(e.key==='Enter') send(); });
 
-addMsg('JARVIS', 'Sistema v4.3 Online. Mappamondo 3D ripristinato.', true);
+setInterval(function(){
+  document.getElementById('clk').textContent = new Date().toLocaleTimeString('it-IT');
+  document.getElementById('upt').textContent = 'UPTIME: '+Math.floor((Date.now()-window.performance.timing.navigationStart)/60000)+'m';
+}, 1000);
+
+// METEO
+function fetchMeteo(){
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://api.open-meteo.com/v1/forecast?latitude=45.07&longitude=7.68&current=temperature_2m,weathercode', true);
+  xhr.onreadystatechange = function(){
+    if(xhr.readyState===4 && xhr.status===200){
+      var d = JSON.parse(xhr.responseText);
+      document.getElementById('m-t').textContent = Math.round(d.current.temperature_2m)+'°C';
+      document.getElementById('m-d').textContent = 'SERENO';
+    }
+  };
+  xhr.send();
+}
+fetchMeteo();
+
+addMsg('JARVIS', 'Sistema v4.4 Online. Tutto ripristinato.', true);
 </script>
 </body>
 </html>
