@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>JARVIS - v6.4</title>
+<title>JARVIS - v6.5</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600&display=swap');
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -12,23 +12,22 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
 .bg { position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, #001020 0%, #000 85%); z-index: 1; }
 .grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(0,212,255,0.03) 1px,transparent 1px), linear-gradient(90deg,rgba(0,212,255,0.03) 1px,transparent 1px); background-size: 40px 40px; z-index: 2; }
 
-.wrap { position: relative; z-index: 10; display: flex; flex-direction: column; height: 100vh; padding: 10px; gap: 10px; }
+.wrap { position: relative; z-index: 10; display: flex; flex-direction: column; height: 100vh; padding: 10px; gap: 8px; }
 
 /* HEADER CENTRALE */
-.hdr-wrap { text-align: center; border-bottom: 1px solid rgba(0,212,255,0.2); padding-bottom: 10px; }
-.title { font-family: 'Orbitron', sans-serif; font-size: 24px; font-weight: 900; letter-spacing: 12px; margin-bottom: 10px; animation: glowBreath 5s infinite ease-in-out; }
+.hdr-wrap { text-align: center; }
+.title { font-family: 'Orbitron', sans-serif; font-size: 24px; font-weight: 900; letter-spacing: 12px; animation: glowBreath 5s infinite ease-in-out; }
 
 @keyframes glowBreath {
   0%, 100% { color: #00d4ff; text-shadow: 0 0 10px #00d4ff; }
-  33% { color: #0088ff; text-shadow: 0 0 20px #0088ff; }
-  66% { color: #00ffff; text-shadow: 0 0 15px #00ffff; }
+  50% { color: #0088ff; text-shadow: 0 0 20px #0088ff; }
 }
 
-/* LISTA PROTOCOLLI TRA TITOLO E MAPPA */
-.proto-list { display: flex; justify-content: center; gap: 20px; font-family: 'Orbitron'; font-size: 11px; color: #00ff88; padding: 5px 0; background: rgba(0,20,40,0.3); }
-.proto-item { white-space: nowrap; border-bottom: 1px solid rgba(0,255,136,0.3); }
+/* LISTA PROTOCOLLI (BOX ORIZZONTALE) */
+.proto-box { background: rgba(0,20,40,0.6); border: 1px solid rgba(0,212,255,0.3); padding: 8px; display: flex; justify-content: center; gap: 15px; font-family: 'Orbitron'; font-size: 10px; color: #00ff88; }
+.proto-item { border-bottom: 1px solid rgba(0,255,136,0.3); }
 
-.main { display: flex; gap: 12px; flex: 1; min-height: 0; }
+.main { display: flex; gap: 10px; flex: 1; min-height: 0; }
 
 /* MAPPA */
 .map-wrap { flex: 1.8; position: relative; border: 1px solid rgba(0,212,255,0.3); overflow: hidden; background: #000; }
@@ -38,31 +37,33 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
 }
 
 /* COLONNA DESTRA */
-.col-right { flex: 1; display: flex; flex-direction: column; gap: 10px; min-width: 200px; }
+.col-right { width: 180px; display: flex; flex-direction: column; gap: 8px; }
 
 /* BOX */
 .box { background: rgba(0,20,40,0.8); border: 1px solid rgba(0,212,255,0.2); padding: 10px; position: relative; flex: 1; display: flex; flex-direction: column; min-height: 0; }
 .box::before { content:''; position:absolute; top:0; left:0; width:10px; height:10px; border-top:2px solid #ff6b00; border-left:2px solid #ff6b00; }
-.bt-title { font-size: 9px; color: #ff6b00; letter-spacing: 2px; margin-bottom: 8px; font-family: 'Orbitron'; border-bottom: 1px solid rgba(255,107,0,0.3); }
-.box-content { flex: 1; overflow-y: auto; font-size: 14px; font-weight: 600; }
+.bt-title { font-size: 8px; color: #ff6b00; letter-spacing: 2px; margin-bottom: 6px; font-family: 'Orbitron'; border-bottom: 1px solid rgba(255,107,0,0.3); }
+.box-content { flex: 1; overflow-y: auto; font-size: 13px; font-weight: 600; }
 
-/* CALENDARIO SETTIMANALE FISSO (MON-SUN) */
-.cal-grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 4px; overflow-y: auto; flex: 1; }
-.day-card { display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; border: 1px solid rgba(0,212,255,0.1); background: rgba(0,0,0,0.4); border-radius: 2px; font-size: 10px; }
-.day-card.today { border-color: #00ff88; background: rgba(0,255,136,0.1); }
+/* CALENDARIO INFINITO */
+.cal-container { position: relative; display: flex; align-items: center; gap: 4px; }
+.cal-row { display: flex; gap: 6px; overflow-x: hidden; padding: 4px 0; scroll-behavior: smooth; flex: 1; }
+.cal-btn { background: #ff6b00; border: none; color: #000; padding: 10px 5px; cursor: pointer; font-size: 12px; font-family: 'Orbitron'; font-weight: bold; }
+.day-card { flex: 0 0 70px; text-align: center; padding: 8px 5px; border: 1px solid rgba(0,212,255,0.1); background: rgba(0,0,0,0.4); border-radius: 4px; font-size: 9px; }
+.day-card.today { border-color: #00ff88; background: rgba(0,255,136,0.15); }
 .day-card.work { color: #00ff88; }
 .day-card.rest { color: #00d4ff; }
 .day-card.ferie { color: #ff4444; }
 
-/* BARRA INFERIORE TAGS */
-.footer-row { display: flex; align-items: center; justify-content: space-between; gap: 15px; border-top: 1px solid rgba(0,212,255,0.2); padding-top: 10px; }
+/* BARRA INFERIORE */
+.footer-row { display: flex; align-items: center; justify-content: space-between; gap: 15px; border-top: 1px solid rgba(0,212,255,0.2); padding-top: 8px; }
 .tag-tracker { flex: 1; display: flex; gap: 20px; font-family: 'Orbitron'; }
-.tag-item { display: flex; align-items: center; gap: 6px; font-size: 10px; color: #fff; }
+.tag-item { display: flex; align-items: center; gap: 8px; font-size: 10px; color: #fff; }
 .dot { width: 6px; height: 6px; border-radius: 50%; background: #00ff88; box-shadow: 0 0 5px #00ff88; }
-.btn-control { flex: 0 0 160px; background: transparent; border: 1px solid #00d4ff; color: #00d4ff; padding: 14px; font-family: 'Orbitron'; font-size: 11px; letter-spacing: 3px; cursor: pointer; text-align: center; }
+.btn-control { flex: 0 0 160px; background: transparent; border: 1px solid #00d4ff; color: #00d4ff; padding: 12px; font-family: 'Orbitron'; font-size: 11px; letter-spacing: 3px; cursor: pointer; }
 
 /* CHAT */
-.chat { height: 160px; display: flex; flex-direction: column; background: rgba(0,5,10,0.95); border: 1px solid rgba(0,212,255,0.3); }
+.chat { height: 160px; display: flex; flex-direction: column; background: rgba(0,5,10,0.9); border: 1px solid rgba(0,212,255,0.3); }
 .msgs { flex: 1; overflow-y: auto; padding: 10px; }
 .msg { margin-bottom: 6px; font-size: 13px; border-left: 2px solid #00d4ff; padding-left: 10px; color: #fff; }
 
@@ -80,12 +81,13 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
 <div class="wrap">
   <div class="hdr-wrap">
     <div class="title">J.A.R.V.I.S.</div>
-    <div class="proto-list">
-      <div class="proto-item">● HOUSE_GUARD: ON</div>
-      <div class="proto-item">● BT_MESH: STABLE</div>
-      <div class="proto-item">● ENCRYPTION: ACTIVE</div>
-      <div class="proto-item">● SATELLITE: LOCKED</div>
-    </div>
+  </div>
+
+  <div class="proto-box">
+    <div class="proto-item">● HOUSE_GUARD: ON</div>
+    <div class="proto-item">● BT_MESH: STABLE</div>
+    <div class="proto-item">● ENCRYPTION: ACTIVE</div>
+    <div class="proto-item">● TORINO_SAT: LOCKED</div>
   </div>
   
   <div class="main">
@@ -104,8 +106,12 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
       </div>
       
       <div class="box" style="flex: 1.5;">
-        <div class="bt-title">▶ CALENDARIO SETTIMANALE (LUN-DOM)</div>
-        <div class="cal-grid" id="cal"></div>
+        <div class="bt-title">▶ TURNI (CALCOLATI)</div>
+        <div class="cal-container">
+          <button class="cal-btn" onclick="scrollCal(-1)">◄</button>
+          <div class="cal-row" id="cal"></div>
+          <button class="cal-btn" onclick="scrollCal(1)">►</button>
+        </div>
       </div>
     </div>
   </div>
@@ -136,43 +142,37 @@ var _K2 = 'WGdyb3FYlnxwRdUSnehnzu4mZTPscrFS';
 var KEY = _K1 + _K2;
 var chatHistory = [];
 
-// CALENDARIO SETTIMANALE (LUN-DOM)
-function buildWeekCal() {
-  var now = new Date();
-  var currentDay = now.getDay(); // 0=Dom, 1=Lun...
-  var diffToMonday = (currentDay === 0 ? -6 : 1) - currentDay;
-  
-  var monday = new Date(now);
-  monday.setDate(now.getDate() + diffToMonday);
-  
-  var daysLabels = ['LUN','MAR','MER','GIO','VEN','SAB','DOM'];
-  var html = '';
-  
-  for(var i=0; i<7; i++) {
-    var d = new Date(monday);
-    d.setDate(monday.getDate() + i);
+// CALENDARIO INFINITO (FIX ALGORITMO)
+function buildCal() {
+  var now = new Date(); var days = ['DOM','LUN','MAR','MER','GIO','VEN','SAB']; var html = '';
+  for(var i=-10; i<40; i++) {
+    var d = new Date(); d.setDate(now.getDate() + i);
     var dStr = d.toISOString().split('T')[0];
-    var todayStr = now.toISOString().split('T')[0];
-    
     var type = 'work'; var label = 'TURNO';
     
     if(dStr >= '2026-04-23' && dStr <= '2026-04-25') { type='ferie'; label='FERIE'; }
     else {
-      var base = new Date('2026-04-27T00:00:00');
+      // CICLO: 4 Notti, 1 Riposo, 4 Pomeriggi, 1 Riposo, 4 Mattine, 2 Riposi (16gg)
+      var base = new Date('2026-04-22T00:00:00'); // 22 APR = 1a NOTTE (Giorno 0)
       var diff = Math.floor((d - base)/(1000*60*60*24));
       var cycle = diff % 16; if(cycle<0) cycle+=16;
-      if(cycle==4 || cycle==9 || cycle>=14) { type='rest'; label='RIPOSO'; }
-      else if(cycle>=0 && cycle<=3) label='POMERIGGIO';
-      else if(cycle>=5 && cycle<=8) label='MATTINO';
-      else label='NOTTE';
+      
+      if(cycle >= 0 && cycle <= 3) label = 'NOTTE';
+      else if(cycle === 4) { type='rest'; label = 'RIPOSO'; }
+      else if(cycle >= 5 && cycle <= 8) label = 'POMERIGGIO';
+      else if(cycle === 9) { type='rest'; label = 'RIPOSO'; }
+      else if(cycle >= 10 && cycle <= 13) label = 'MATTINO';
+      else { type='rest'; label = 'RIPOSO'; }
     }
-    
-    var isToday = dStr === todayStr ? ' today' : '';
-    html += '<div class="day-card '+type+isToday+'"><span>'+daysLabels[i]+' '+d.getDate()+'</span><span>'+label+'</span></div>';
+    var isToday = i === 0 ? ' today' : '';
+    html += '<div class="day-card '+type+isToday+'"><span class="date">'+days[d.getDay()]+' '+d.getDate()+'</span>'+label+'</div>';
   }
-  document.getElementById('cal').innerHTML = html;
+  var cal = document.getElementById('cal'); cal.innerHTML = html;
+  setTimeout(function(){ cal.scrollLeft = (76 * 10) - (cal.clientWidth / 2) + 38; }, 100);
 }
-buildWeekCal();
+buildCal();
+
+function scrollCal(dir) { document.getElementById('cal').scrollBy({ left: dir * 150, behavior: 'smooth' }); }
 
 function addMsg(s,t,j){
   var c = document.getElementById('chat'); var d = document.createElement('div'); d.className = 'msg';
@@ -200,7 +200,7 @@ function send(){
 
 document.getElementById('inp').addEventListener('keydown', function(e){ if(e.key==='Enter') send(); });
 function openCam(){ if(window.AppInventor) window.AppInventor.setWebViewString('CAMERA_ON'); }
-addMsg('JARVIS', 'Configurazione Simmetrica v6.4 Online.', true);
+addMsg('JARVIS', 'Algoritmo ricalibrato. Turnazione corretta.', true);
 </script>
 </body>
 </html>
