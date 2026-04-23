@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>JARVIS - v5.6</title>
+<title>JARVIS - v5.8</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600&display=swap');
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -23,19 +23,23 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
 .col-left { width: 160px; display: flex; flex-direction: column; align-items: center; gap: 15px; }
 .col-right { flex: 1; display: flex; flex-direction: column; gap: 10px; }
 
-/* ARK REACTOR + NEON BREATH */
-.arc-wrap { width: 140px; height: 140px; position: relative; display: flex; align-items: center; justify-content: center; margin-top: 10px; }
-.neon-breath { position: absolute; width: 110px; height: 110px; border-radius: 50%; background: radial-gradient(circle, rgba(0,212,255,0.2) 0%, transparent 70%); animation: breath 3s infinite ease-in-out; }
-@keyframes breath { 0%, 100% { transform: scale(0.8); opacity: 0.3; } 50% { transform: scale(1.2); opacity: 0.7; } }
+/* ARK REACTOR MARK III */
+.arc-wrap { width: 150px; height: 150px; position: relative; display: flex; align-items: center; justify-content: center; margin-top: 10px; }
+.neon-breath { position: absolute; width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, rgba(0,212,255,0.2) 0%, transparent 70%); animation: breath 4s infinite ease-in-out; }
+@keyframes breath { 0%, 100% { transform: scale(0.85); opacity: 0.2; } 50% { transform: scale(1.15); opacity: 0.6; } }
+.ark-outer-line { position: absolute; width: 145px; height: 145px; border: 0.5px solid rgba(0,212,255,0.5); border-radius: 50%; animation: pulseLine 2s infinite ease-in-out; }
+@keyframes pulseLine { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 1; transform: scale(1.02); } }
 .ring { position: absolute; border-radius: 50%; border: 1.5px solid transparent; }
 .r1 { width: 130px; height: 130px; border-top-color: #00d4ff; animation: rot 15s linear infinite; }
 .r2 { width: 110px; height: 110px; border-left-color: #ff6b00; animation: rot 10s linear infinite reverse; }
 .r3 { width: 90px; height: 90px; border-right-color: #00d4ff; animation: rot 20s linear infinite; opacity: 0.5; }
-.core { width: 25px; height: 25px; background: radial-gradient(circle, #fff 0%, #00d4ff 50%, transparent 100%); border-radius: 50%; box-shadow: 0 0 15px #00d4ff; }
+.core { width: 28px; height: 28px; background: radial-gradient(circle, #fff 0%, #00d4ff 50%, transparent 100%); border-radius: 50%; box-shadow: 0 0 15px #00d4ff; }
 @keyframes rot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-/* MONDO GRID */
-#globe-canvas { display: block; filter: drop-shadow(0 0 5px rgba(0,212,255,0.3)); }
+/* MONDO REALE (IL VERO MONDO DA MONDO.PNG) */
+.world-wrap { width: 130px; height: 130px; position: relative; border-radius: 50%; border: 1px solid rgba(0,212,255,0.3); overflow: hidden; background: #000; box-shadow: 0 0 10px rgba(0,212,255,0.2); }
+.world-img { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.7; filter: hue-rotate(150deg) brightness(1.3); animation: slowRot 60s linear infinite; }
+@keyframes slowRot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
 /* TAGS */
 .tag-tracker { width: 100%; font-family: 'Orbitron'; }
@@ -49,13 +53,14 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
 .box-content { flex: 1; overflow-y: auto; font-size: 13px; scrollbar-width: none; }
 .box-content::-webkit-scrollbar { display: none; }
 
-/* CALENDARIO ORIZZONTALE */
-.cal-row { display: flex; gap: 5px; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; }
-.day-card { flex: 0 0 60px; text-align: center; padding: 5px; border: 1px solid rgba(0,212,255,0.1); background: rgba(0,0,0,0.3); border-radius: 4px; font-size: 9px; }
-.day-card.today { border-color: #00ff88; background: rgba(0,255,136,0.1); box-shadow: 0 0 10px rgba(0,255,136,0.2); }
-.day-card .date { font-weight: bold; display: block; margin-bottom: 2px; }
+/* CALENDARIO ORIZZONTALE INFINITO */
+.cal-row { display: flex; gap: 6px; overflow-x: auto; padding: 5px 0; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
+.cal-row::-webkit-scrollbar { display: none; }
+.day-card { flex: 0 0 70px; text-align: center; padding: 8px 5px; border: 1px solid rgba(0,212,255,0.1); background: rgba(0,0,0,0.4); border-radius: 4px; font-size: 9px; }
+.day-card.today { border-color: #00ff88; background: rgba(0,255,136,0.15); box-shadow: 0 0 15px rgba(0,255,136,0.2); }
+.day-card .date { font-weight: bold; display: block; margin-bottom: 4px; font-size: 10px; }
 .day-card.work { color: #00ff88; }
-.day-card.rest { color: #00d4ff; }
+.day-card.rest { color: #00d4ff; opacity: 0.8; }
 .day-card.ferie { color: #ff4444; }
 
 /* CHAT */
@@ -80,7 +85,7 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
 
 <div class="wrap">
   <div class="hdr">
-    <div style="font-size:7px; opacity:0.6;">STARK_OS_ACTIVE</div>
+    <div style="font-size:7px; opacity:0.6;">STARK_OS_V5.8</div>
     <div class="title">J.A.R.V.I.S.</div>
     <div style="font-size:7px; opacity:0.6;">STARK INDUSTRIES</div>
   </div>
@@ -89,14 +94,17 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
     <div class="col-left">
       <div class="arc-wrap">
         <div class="neon-breath"></div>
+        <div class="ark-outer-line"></div>
         <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div>
         <div class="core"></div>
       </div>
       
-      <canvas id="globe-canvas" width="130" height="130"></canvas>
+      <div class="world-wrap">
+        <img src="Immagini/Mondo.png" class="world-img" alt="World Map">
+      </div>
       
       <div class="tag-tracker">
-        <div class="tag-item"><div class="dot"></div> TAG 1</div>
+        <div class="tag-item"><div class="dot"></div> TAG 01</div>
         <div class="tag-item"><div class="dot"></div> TAG 02</div>
         <div class="tag-item"><div class="dot"></div> TAG 03</div>
       </div>
@@ -119,8 +127,8 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
         </div>
       </div>
       
-      <div class="box" style="flex: 0 0 100px;">
-        <div class="bt-title">▶ CALENDARIO TURNI</div>
+      <div class="box" style="flex: 0 0 105px;">
+        <div class="bt-title">▶ CALENDARIO TURNI (SCORRI ►)</div>
         <div class="cal-row" id="cal"></div>
       </div>
       
@@ -145,34 +153,15 @@ var _K2 = 'WGdyb3FYlnxwRdUSnehnzu4mZTPscrFS';
 var KEY = _K1 + _K2;
 var chatHistory = [];
 
-// MONDO GRID
-var g_can = document.getElementById('globe-canvas');
-var g_ctx = g_can.getContext('2d');
-var r_ang = 0;
-function drawGlobe() {
-  g_ctx.clearRect(0,0,130,130); r_ang += 0.01;
-  g_ctx.strokeStyle = 'rgba(0, 212, 255, 0.2)';
-  for(var i=0; i<4; i++) {
-    var width = 60 * Math.cos(r_ang + i*Math.PI/4);
-    g_ctx.beginPath(); g_ctx.ellipse ? g_ctx.ellipse(65,65,Math.abs(width),60,0,0,Math.PI*2) : g_ctx.arc(65,65,60,0,Math.PI*2); g_ctx.stroke();
-    var height = 60 * Math.sin(r_ang + i*Math.PI/4);
-    g_ctx.beginPath(); g_ctx.ellipse ? g_ctx.ellipse(65,65,60,Math.abs(height),0,0,Math.PI*2) : g_ctx.arc(65,65,60,0,Math.PI*2); g_ctx.stroke();
-  }
-  requestAnimationFrame(drawGlobe);
-}
-drawGlobe();
-
-// CALENDARIO ORIZZONTALE
+// CALENDARIO SCORREVOLE
 function buildCal() {
   var now = new Date();
   var days = ['DOM','LUN','MAR','MER','GIO','VEN','SAB'];
   var html = '';
-  // Mostra 2 giorni prima e 5 giorni dopo (Totale 8 giorni per avere oggi quasi al centro)
-  for(var i=-2; i<6; i++) {
+  for(var i=-5; i<25; i++) {
     var d = new Date(); d.setDate(now.getDate() + i);
     var dStr = d.toISOString().split('T')[0];
     var type = 'work'; var label = 'TURNO';
-    
     if(dStr >= '2026-04-23' && dStr <= '2026-04-25') { type='ferie'; label='FERIE'; }
     else {
       var base = new Date('2026-04-27T00:00:00');
@@ -186,7 +175,9 @@ function buildCal() {
     var isToday = i === 0 ? ' today' : '';
     html += '<div class="day-card '+type+isToday+'"><span class="date">'+days[d.getDay()]+' '+d.getDate()+'</span>'+label+'</div>';
   }
-  document.getElementById('cal').innerHTML = html;
+  var cal = document.getElementById('cal');
+  cal.innerHTML = html;
+  setTimeout(function(){ cal.scrollLeft = (76 * 5) - (cal.clientWidth / 2) + 38; }, 100);
 }
 buildCal();
 
@@ -194,7 +185,8 @@ function addMsg(s,t,j){
   var c = document.getElementById('chat');
   var d = document.createElement('div'); d.className = 'msg'+(j?' j':'');
   d.innerHTML = '<div style="font-size:7px; opacity:0.4; margin-bottom:2px;">'+s+' //</div>'+t;
-  c.appendChild(d); c.scrollTop = c.scrollHeight;
+  box = document.getElementById('chat');
+  box.appendChild(d); box.scrollTop = box.scrollHeight;
 }
 
 function send(){
