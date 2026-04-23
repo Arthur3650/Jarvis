@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>JARVIS - v6.3</title>
+<title>JARVIS - v6.4</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600&display=swap');
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -12,11 +12,11 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
 .bg { position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, #001020 0%, #000 85%); z-index: 1; }
 .grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(0,212,255,0.03) 1px,transparent 1px), linear-gradient(90deg,rgba(0,212,255,0.03) 1px,transparent 1px); background-size: 40px 40px; z-index: 2; }
 
-.wrap { position: relative; z-index: 10; display: flex; flex-direction: column; height: 100vh; padding: 10px; gap: 8px; }
+.wrap { position: relative; z-index: 10; display: flex; flex-direction: column; height: 100vh; padding: 10px; gap: 10px; }
 
-/* HEADER (TITOLO + PROTOCOLLI SOTTO) */
-.hdr-wrap { display: flex; flex-direction: column; gap: 5px; border-bottom: 1px solid rgba(0,212,255,0.2); padding-bottom: 10px; }
-.title { font-family: 'Orbitron', sans-serif; font-size: 22px; font-weight: 900; letter-spacing: 10px; animation: glowBreath 5s infinite ease-in-out; }
+/* HEADER CENTRALE */
+.hdr-wrap { text-align: center; border-bottom: 1px solid rgba(0,212,255,0.2); padding-bottom: 10px; }
+.title { font-family: 'Orbitron', sans-serif; font-size: 24px; font-weight: 900; letter-spacing: 12px; margin-bottom: 10px; animation: glowBreath 5s infinite ease-in-out; }
 
 @keyframes glowBreath {
   0%, 100% { color: #00d4ff; text-shadow: 0 0 10px #00d4ff; }
@@ -24,54 +24,52 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
   66% { color: #00ffff; text-shadow: 0 0 15px #00ffff; }
 }
 
-.proto-list { display: flex; gap: 15px; font-family: 'Orbitron'; font-size: 11px; color: #00ff88; overflow-x: auto; scrollbar-width: none; opacity: 0.8; }
-.proto-list::-webkit-scrollbar { display: none; }
-.proto-item { white-space: nowrap; }
+/* LISTA PROTOCOLLI TRA TITOLO E MAPPA */
+.proto-list { display: flex; justify-content: center; gap: 20px; font-family: 'Orbitron'; font-size: 11px; color: #00ff88; padding: 5px 0; background: rgba(0,20,40,0.3); }
+.proto-item { white-space: nowrap; border-bottom: 1px solid rgba(0,255,136,0.3); }
 
-/* REATTORE (CODICE PRESERVATO MA OCCULTATO) */
-.arc-hidden { display: none; }
-
-.main { display: flex; gap: 10px; flex: 1; min-height: 0; margin-top: 5px; }
+.main { display: flex; gap: 12px; flex: 1; min-height: 0; }
 
 /* MAPPA */
-.map-wrap { flex: 1.5; position: relative; border: 1px solid rgba(0,212,255,0.3); overflow: hidden; background: #000; }
+.map-wrap { flex: 1.8; position: relative; border: 1px solid rgba(0,212,255,0.3); overflow: hidden; background: #000; }
 .world-iframe { 
   width: 100%; height: 130%; margin-top: -40px; border: none; 
   filter: invert(90%) hue-rotate(150deg) contrast(120%) brightness(110%); 
 }
 
 /* COLONNA DESTRA */
-.col-right { flex: 1; display: flex; flex-direction: column; gap: 10px; min-width: 180px; }
+.col-right { flex: 1; display: flex; flex-direction: column; gap: 10px; min-width: 200px; }
 
-/* BOX (TESTO LARGE) */
+/* BOX */
 .box { background: rgba(0,20,40,0.8); border: 1px solid rgba(0,212,255,0.2); padding: 10px; position: relative; flex: 1; display: flex; flex-direction: column; min-height: 0; }
-.box::before { content:''; position:absolute; top:0; left:0; width:8px; height:8px; border-top:2px solid #ff6b00; border-left:2px solid #ff6b00; }
-.bt-title { font-size: 9px; color: #ff6b00; letter-spacing: 2px; margin-bottom: 5px; font-family: 'Orbitron'; }
-.box-content { flex: 1; overflow-y: auto; font-size: 14px; font-weight: 600; scrollbar-width: none; }
+.box::before { content:''; position:absolute; top:0; left:0; width:10px; height:10px; border-top:2px solid #ff6b00; border-left:2px solid #ff6b00; }
+.bt-title { font-size: 9px; color: #ff6b00; letter-spacing: 2px; margin-bottom: 8px; font-family: 'Orbitron'; border-bottom: 1px solid rgba(255,107,0,0.3); }
+.box-content { flex: 1; overflow-y: auto; font-size: 14px; font-weight: 600; }
 
-/* CALENDARIO */
-.cal-container { display: flex; align-items: center; gap: 4px; }
-.cal-row { display: flex; gap: 6px; overflow-x: hidden; scroll-behavior: smooth; flex: 1; }
-.cal-btn { background: #ff6b00; border: none; color: #000; padding: 8px 5px; cursor: pointer; font-size: 10px; font-family: 'Orbitron'; }
-.day-card { flex: 0 0 65px; text-align: center; padding: 6px 3px; border: 1px solid rgba(0,212,255,0.2); background: rgba(0,0,0,0.4); font-size: 9px; }
+/* CALENDARIO SETTIMANALE FISSO (MON-SUN) */
+.cal-grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 4px; overflow-y: auto; flex: 1; }
+.day-card { display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; border: 1px solid rgba(0,212,255,0.1); background: rgba(0,0,0,0.4); border-radius: 2px; font-size: 10px; }
 .day-card.today { border-color: #00ff88; background: rgba(0,255,136,0.1); }
+.day-card.work { color: #00ff88; }
+.day-card.rest { color: #00d4ff; }
+.day-card.ferie { color: #ff4444; }
 
 /* BARRA INFERIORE TAGS */
-.footer-row { display: flex; align-items: center; justify-content: space-between; gap: 15px; border-top: 1px solid rgba(0,212,255,0.2); padding-top: 8px; }
+.footer-row { display: flex; align-items: center; justify-content: space-between; gap: 15px; border-top: 1px solid rgba(0,212,255,0.2); padding-top: 10px; }
 .tag-tracker { flex: 1; display: flex; gap: 20px; font-family: 'Orbitron'; }
 .tag-item { display: flex; align-items: center; gap: 6px; font-size: 10px; color: #fff; }
-.dot { width: 5px; height: 5px; border-radius: 50%; background: #00ff88; box-shadow: 0 0 5px #00ff88; }
-.btn-control { flex: 0 0 160px; background: transparent; border: 1px solid #00d4ff; color: #00d4ff; padding: 12px; font-family: 'Orbitron'; font-size: 10px; letter-spacing: 2px; cursor: pointer; }
+.dot { width: 6px; height: 6px; border-radius: 50%; background: #00ff88; box-shadow: 0 0 5px #00ff88; }
+.btn-control { flex: 0 0 160px; background: transparent; border: 1px solid #00d4ff; color: #00d4ff; padding: 14px; font-family: 'Orbitron'; font-size: 11px; letter-spacing: 3px; cursor: pointer; text-align: center; }
 
 /* CHAT */
-.chat { height: 150px; display: flex; flex-direction: column; background: rgba(0,5,10,0.9); border: 1px solid rgba(0,212,255,0.3); }
+.chat { height: 160px; display: flex; flex-direction: column; background: rgba(0,5,10,0.95); border: 1px solid rgba(0,212,255,0.3); }
 .msgs { flex: 1; overflow-y: auto; padding: 10px; }
 .msg { margin-bottom: 6px; font-size: 13px; border-left: 2px solid #00d4ff; padding-left: 10px; color: #fff; }
 
 /* INPUT */
-.inp-row { display: flex; padding: 5px; gap: 5px; background: #000; border-top: 1px solid rgba(0,212,255,0.2); }
-.inp { flex: 1; background: rgba(0,30,60,0.3); border: 1px solid #00d4ff; color: #fff; padding: 10px; font-size: 15px; outline: none; }
-.hbtn { background: #ff6b00; border: none; color: #000; padding: 0 15px; font-family: 'Orbitron'; font-size: 10px; cursor: pointer; }
+.inp-row { display: flex; padding: 6px; gap: 6px; background: #000; border-top: 1px solid rgba(0,212,255,0.2); }
+.inp { flex: 1; background: rgba(0,30,60,0.3); border: 1px solid #00d4ff; color: #fff; padding: 12px; font-size: 15px; outline: none; }
+.hbtn { background: #ff6b00; border: none; color: #000; padding: 0 20px; font-family: 'Orbitron'; font-size: 10px; font-weight: bold; cursor: pointer; }
 
 #dummy { position: fixed; top: -100px; opacity: 0; }
 </style>
@@ -86,14 +84,8 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
       <div class="proto-item">● HOUSE_GUARD: ON</div>
       <div class="proto-item">● BT_MESH: STABLE</div>
       <div class="proto-item">● ENCRYPTION: ACTIVE</div>
-      <div class="proto-item">● TORINO_SAT: LOCKED</div>
+      <div class="proto-item">● SATELLITE: LOCKED</div>
     </div>
-  </div>
-
-  <!-- CODICE REATTORE PRESERVATO (OCCULTATO) -->
-  <div class="arc-hidden">
-    <div class="neon-breath"></div><div class="ark-outer-line"></div>
-    <div class="ring r1"></div><div class="ring r2"></div><div class="core"></div>
   </div>
   
   <div class="main">
@@ -111,13 +103,9 @@ body { background: #000; color: #00d4ff; font-family: 'Rajdhani', sans-serif; he
         </div>
       </div>
       
-      <div class="box" style="flex: 0 0 95px;">
-        <div class="bt-title">▶ CALENDARIO_TURNI</div>
-        <div class="cal-container">
-          <button class="cal-btn" onclick="scrollCal(-1)">◄</button>
-          <div class="cal-row" id="cal"></div>
-          <button class="cal-btn" onclick="scrollCal(1)">►</button>
-        </div>
+      <div class="box" style="flex: 1.5;">
+        <div class="bt-title">▶ CALENDARIO SETTIMANALE (LUN-DOM)</div>
+        <div class="cal-grid" id="cal"></div>
       </div>
     </div>
   </div>
@@ -148,29 +136,43 @@ var _K2 = 'WGdyb3FYlnxwRdUSnehnzu4mZTPscrFS';
 var KEY = _K1 + _K2;
 var chatHistory = [];
 
-function buildCal() {
-  var now = new Date(); var days = ['DOM','LUN','MAR','MER','GIO','VEN','SAB']; var html = '';
-  for(var i=-5; i<30; i++) {
-    var d = new Date(); d.setDate(now.getDate() + i); var dStr = d.toISOString().split('T')[0];
+// CALENDARIO SETTIMANALE (LUN-DOM)
+function buildWeekCal() {
+  var now = new Date();
+  var currentDay = now.getDay(); // 0=Dom, 1=Lun...
+  var diffToMonday = (currentDay === 0 ? -6 : 1) - currentDay;
+  
+  var monday = new Date(now);
+  monday.setDate(now.getDate() + diffToMonday);
+  
+  var daysLabels = ['LUN','MAR','MER','GIO','VEN','SAB','DOM'];
+  var html = '';
+  
+  for(var i=0; i<7; i++) {
+    var d = new Date(monday);
+    d.setDate(monday.getDate() + i);
+    var dStr = d.toISOString().split('T')[0];
+    var todayStr = now.toISOString().split('T')[0];
+    
     var type = 'work'; var label = 'TURNO';
+    
     if(dStr >= '2026-04-23' && dStr <= '2026-04-25') { type='ferie'; label='FERIE'; }
     else {
-      var base = new Date('2026-04-27T00:00:00'); var diff = Math.floor((d - base)/(1000*60*60*24));
+      var base = new Date('2026-04-27T00:00:00');
+      var diff = Math.floor((d - base)/(1000*60*60*24));
       var cycle = diff % 16; if(cycle<0) cycle+=16;
       if(cycle==4 || cycle==9 || cycle>=14) { type='rest'; label='RIPOSO'; }
       else if(cycle>=0 && cycle<=3) label='POMERIGGIO';
       else if(cycle>=5 && cycle<=8) label='MATTINO';
       else label='NOTTE';
     }
-    var isToday = i === 0 ? ' today' : '';
-    html += '<div class="day-card '+type+isToday+'"><span class="date">'+days[d.getDay()]+' '+d.getDate()+'</span>'+label+'</div>';
+    
+    var isToday = dStr === todayStr ? ' today' : '';
+    html += '<div class="day-card '+type+isToday+'"><span>'+daysLabels[i]+' '+d.getDate()+'</span><span>'+label+'</span></div>';
   }
-  var cal = document.getElementById('cal'); cal.innerHTML = html;
-  setTimeout(function(){ cal.scrollLeft = (71 * 5) - (cal.clientWidth / 2) + 35; }, 100);
+  document.getElementById('cal').innerHTML = html;
 }
-buildCal();
-
-function scrollCal(dir) { document.getElementById('cal').scrollBy({ left: dir * 140, behavior: 'smooth' }); }
+buildWeekCal();
 
 function addMsg(s,t,j){
   var c = document.getElementById('chat'); var d = document.createElement('div'); d.className = 'msg';
@@ -198,7 +200,7 @@ function send(){
 
 document.getElementById('inp').addEventListener('keydown', function(e){ if(e.key==='Enter') send(); });
 function openCam(){ if(window.AppInventor) window.AppInventor.setWebViewString('CAMERA_ON'); }
-addMsg('JARVIS', 'Interfaccia v6.3 Attiva.', true);
+addMsg('JARVIS', 'Configurazione Simmetrica v6.4 Online.', true);
 </script>
 </body>
 </html>
