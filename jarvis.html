@@ -1,198 +1,463 @@
 <!DOCTYPE html>
-<html lang="it">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>JARVIS - v7.7</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { background: #000; color: #00d4ff; font-family: 'Orbitron', sans-serif; height: 100vh; overflow: hidden; position: relative; }
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#000;color:#00d4ff;font-family:'Rajdhani',sans-serif;height:100vh;overflow:hidden;position:relative;}
+.bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 35%,#001020 0%,#000810 60%,#000 100%);}
+.grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,212,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.025) 1px,transparent 1px);background-size:28px 28px;}
+.scan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,212,255,0.012) 2px,rgba(0,212,255,0.012) 4px);pointer-events:none;z-index:99;}
+.cx{position:absolute;width:20px;height:20px;}
+.cx.tl{top:5px;left:5px;border-top:1.5px solid #00d4ff;border-left:1.5px solid #00d4ff;}
+.cx.tr{top:5px;right:5px;border-top:1.5px solid #00d4ff;border-right:1.5px solid #00d4ff;}
+.cx.bl{bottom:5px;left:5px;border-bottom:1.5px solid #ff6b00;border-left:1.5px solid #ff6b00;}
+.cx.br{bottom:5px;right:5px;border-bottom:1.5px solid #ff6b00;border-right:1.5px solid #ff6b00;}
+.wrap{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;height:100vh;padding:6px 8px;gap:3px;}
+.hline{width:100%;height:1px;background:linear-gradient(90deg,transparent,#00d4ff,#ff6b00,#00d4ff,transparent);animation:hl 3s ease-in-out infinite;}
+@keyframes hl{0%,100%{opacity:.35;}50%{opacity:1;}}
+.title{font-family:'Orbitron',monospace;font-size:16px;font-weight:900;letter-spacing:8px;color:#00d4ff;padding:2px 0;animation:tb 3s ease-in-out infinite;}
+@keyframes tb{0%,100%{text-shadow:0 0 8px rgba(0,212,255,.7);}50%{text-shadow:0 0 22px #00d4ff,0 0 44px rgba(0,212,255,.5);}}
+.srow{display:flex;justify-content:space-between;width:100%;font-size:8px;letter-spacing:1px;color:rgba(0,212,255,.5);}
+.sd{display:inline-block;width:5px;height:5px;border-radius:50%;background:#00ff88;box-shadow:0 0 5px #00ff88;animation:bk 1.5s infinite;margin-right:3px;}
+@keyframes bk{0%,100%{opacity:1;}50%{opacity:.2;}}
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:4px;width:100%;}
+.sb{background:rgba(0,12,25,.85);border:1px solid rgba(0,212,255,.18);padding:3px 5px;position:relative;}
+.sb::before{content:'';position:absolute;top:0;left:0;width:5px;height:5px;border-top:1px solid #00d4ff;border-left:1px solid #00d4ff;}
+.sb::after{content:'';position:absolute;bottom:0;right:0;width:5px;height:5px;border-bottom:1px solid #ff6b00;border-right:1px solid #ff6b00;}
+.sl{font-size:6px;letter-spacing:1px;color:rgba(0,212,255,.4);}
+.sv{font-family:'Orbitron',monospace;font-size:9px;color:#00d4ff;}
+.sv.g{color:#00ff88;}.sv.o{color:#ff6b00;}
+.sbar{height:2px;background:rgba(0,212,255,.08);margin-top:2px;}
+.sfill{height:100%;background:linear-gradient(90deg,#00d4ff,#00ff88);transition:width 1s;}
+.main{display:flex;gap:8px;width:100%;flex:1;min-height:0;}
 
-.bg { position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, #001020 0%, #000 85%); z-index: 1; }
-.grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(0,212,255,0.03) 1px,transparent 1px), linear-gradient(90deg,rgba(0,212,255,0.03) 1px,transparent 1px); background-size: 30px 30px; z-index: 2; }
+/* SINISTRA */
+.left-col{display:flex;flex-direction:column;align-items:center;gap:0;flex-shrink:0;width:166px;}
+.arc{position:relative;width:150px;height:150px;flex-shrink:0;margin-top:4px;}
+.aglow{position:absolute;inset:-12px;border-radius:50%;background:radial-gradient(circle,transparent 45%,rgba(0,180,255,.07) 70%,transparent 100%);animation:gp 2s ease-in-out infinite;}
+@keyframes gp{0%,100%{opacity:.5;}50%{opacity:1;}}
+.rg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border-radius:50%;}
+.rglow{width:148px;height:148px;border:1.5px solid rgba(0,212,255,.2);box-shadow:0 0 14px rgba(0,212,255,.25),inset 0 0 14px rgba(0,212,255,.08);}
+.r1{width:134px;height:134px;border:2px solid transparent;border-top-color:rgba(0,212,255,.85);border-right-color:rgba(0,212,255,.3);animation:rot1 22s linear infinite;}
+.r2{width:120px;height:120px;border:1.5px solid transparent;border-left-color:#00d4ff;border-bottom-color:rgba(0,212,255,.35);animation:rot2 17s linear infinite;}
+.r3{width:106px;height:106px;border:2px solid transparent;border-top-color:rgba(0,212,255,.65);border-right-color:rgba(255,107,0,.25);animation:rot1 13s linear infinite reverse;}
+.r4{width:90px;height:90px;border:1.5px solid transparent;border-right-color:#00d4ff;border-bottom-color:rgba(0,212,255,.3);animation:rot2 10s linear infinite;}
+.r5{width:74px;height:74px;border:2px solid transparent;border-top-color:rgba(0,212,255,.75);border-left-color:rgba(0,212,255,.3);animation:rot1 8s linear infinite reverse;}
+.r6{width:58px;height:58px;border:1.5px solid transparent;border-bottom-color:#ff6b00;border-right-color:rgba(255,107,0,.35);animation:rot2 6s linear infinite;}
+.r7{width:42px;height:42px;border:2px solid transparent;border-top-color:#00d4ff;border-right-color:#00d4ff;animation:rot1 4.5s linear infinite;}
+@keyframes rot1{from{transform:translate(-50%,-50%) rotate(0deg);}to{transform:translate(-50%,-50%) rotate(360deg);}}
+@keyframes rot2{from{transform:translate(-50%,-50%) rotate(0deg);}to{transform:translate(-50%,-50%) rotate(-360deg);}}
+.core-canvas{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:40px;height:40px;}
+.tsvg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:148px;height:148px;pointer-events:none;}
 
-.wrap { position: relative; z-index: 10; display: flex; flex-direction: column; height: 100vh; padding: 10px; gap: 8px; }
+/* GLOBO — solo 2 tag, nessun pallino Italia */
+.globe-section{display:flex;flex-direction:column;align-items:center;gap:2px;margin-top:6px;}
+.globe-wrap{position:relative;width:104px;height:104px;flex-shrink:0;}
+canvas.globe{border-radius:50%;border:1px solid rgba(0,212,255,.3);box-shadow:0 0 12px rgba(0,212,255,.2);display:block;}
+.globe-tag{position:absolute;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;display:none;}
+.globe-tag.stop{width:9px;height:9px;background:#ff2200;box-shadow:0 0 6px #ff2200;}
+.globe-tag.move{width:9px;height:9px;background:#00ccff;box-shadow:0 0 6px #00ccff;animation:pmove 1s infinite;}
+@keyframes pmove{0%,100%{opacity:1;transform:translate(-50%,-50%) scale(1);}50%{opacity:.3;transform:translate(-50%,-50%) scale(1.5);}}
+.globe-label{font-size:7px;letter-spacing:2px;color:rgba(0,212,255,.4);text-align:center;margin-top:2px;}
 
-/* PROTOCOLLO ATTIVO */
-.active-proto { 
-    background: rgba(0,15,30,0.9); border: 1px solid #00d4ff; padding: 12px;
-    text-align: center; font-size: 16px; font-weight: 900; letter-spacing: 5px; color: #00d4ff;
-}
+/* TAG ROW — pallini allineati orizzontalmente */
+.tag-row{display:flex;gap:4px;width:100%;margin-top:5px;}
+.tag-box{flex:1;background:rgba(0,12,25,.85);border:1px solid rgba(0,212,255,.22);padding:5px 3px;display:flex;flex-direction:row;align-items:center;justify-content:center;gap:5px;position:relative;}
+.tag-box::before{content:'';position:absolute;top:0;left:0;width:4px;height:4px;border-top:1px solid #00d4ff;border-left:1px solid #00d4ff;}
+.tag-box::after{content:'';position:absolute;bottom:0;right:0;width:4px;height:4px;border-bottom:1px solid #ff6b00;border-right:1px solid #ff6b00;}
+.tag-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.tag-dot.stop{background:#ff2200;box-shadow:0 0 5px #ff2200;}
+.tag-dot.move{background:#00ccff;box-shadow:0 0 5px #00ccff;animation:pmove 1s infinite;}
+.tag-dot.off{background:#ff2200;box-shadow:0 0 3px rgba(255,34,0,.5);}
+.tag-lbl{font-family:'Orbitron',monospace;font-size:5.5px;letter-spacing:1px;color:rgba(0,212,255,.7);}
 
-.main { display: flex; gap: 8px; flex: 1; min-height: 0; }
+/* CONTROLLO — tra tag e chat */
+.ctrl-btn{width:100%;margin-top:4px;background:transparent;border:1px solid rgba(0,212,255,.35);color:#00d4ff;font-family:'Orbitron',monospace;font-size:9px;font-weight:700;padding:7px;cursor:pointer;letter-spacing:3px;position:relative;text-align:center;flex-shrink:0;}
+.ctrl-btn::before{content:'';position:absolute;top:0;left:0;width:6px;height:6px;border-top:1px solid #00d4ff;border-left:1px solid #00d4ff;}
+.ctrl-btn::after{content:'';position:absolute;bottom:0;right:0;width:6px;height:6px;border-bottom:1px solid #ff6b00;border-right:1px solid #ff6b00;}
+.ctrl-btn:active{background:rgba(0,212,255,.08);}
 
-/* MAPPA TORINO */
-.map-box { flex: 1.5; border: 1px solid rgba(0,212,255,0.4); overflow: hidden; background: #000; }
-.map-iframe { width: 100%; height: 100%; border: none; filter: contrast(110%) brightness(90%); }
+/* DESTRA */
+.right-col{display:flex;flex-direction:column;gap:5px;flex:1;min-width:0;}
+.panel-box{background:rgba(0,12,25,.85);border:1px solid rgba(0,212,255,.18);padding:5px 8px;position:relative;flex-shrink:0;}
+.panel-title{font-size:7px;letter-spacing:2px;color:#ff6b00;margin-bottom:4px;}
+.meteo-row{display:flex;align-items:center;justify-content:space-between;}
+.meteo-temp{font-family:'Orbitron',monospace;font-size:15px;color:#00d4ff;text-shadow:0 0 8px rgba(0,212,255,.6);}
+.meteo-desc{font-size:8px;color:rgba(0,212,255,.6);letter-spacing:1px;margin-top:1px;}
+.meteo-city{font-size:7px;color:#ff6b00;margin-top:1px;}
+.meteo-detail{font-size:8px;color:rgba(0,212,255,.4);margin-top:1px;}
 
-/* COLONNA DESTRA (3 BLOCCHI) */
-.col-right { width: 200px; display: flex; flex-direction: column; gap: 8px; }
+/* GRIGLIA 2x2 */
+.grid2x2{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:5px;flex:1;min-height:0;}
+.inner-box{background:rgba(0,12,25,.85);border:1px solid rgba(0,212,255,.18);padding:5px 8px;position:relative;display:flex;flex-direction:column;overflow:hidden;}
+.inner-box::before{content:'';position:absolute;top:0;left:0;width:5px;height:5px;border-top:1px solid #00d4ff;border-left:1px solid #00d4ff;}
+.inner-box::after{content:'';position:absolute;bottom:0;right:0;width:5px;height:5px;border-bottom:1px solid #ff6b00;border-right:1px solid #ff6b00;}
+.inner-title{font-size:7px;letter-spacing:2px;color:#ff6b00;margin-bottom:4px;font-family:'Orbitron',monospace;}
 
-.box { background: rgba(0,5,10,0.9); padding: 10px; display: flex; flex-direction: column; }
-.box-title { font-size: 8px; color: #ff6b00; margin-bottom: 8px; font-weight: bold; font-family: 'Orbitron'; }
+/* PROTOCOLLI — off = rosso */
+.proto-list{display:flex;flex-direction:column;gap:2px;overflow-y:auto;flex:1;scrollbar-width:thin;}
+.proto-item{display:flex;align-items:center;gap:5px;font-size:8px;letter-spacing:1px;color:rgba(0,212,255,.85);}
+.pdot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.pdot.on{background:#00ff88;box-shadow:0 0 4px #00ff88;}
+.pdot.off{background:#ff2200;box-shadow:0 0 4px rgba(255,34,0,.7);}
 
-/* DISPOSITIVI (GIALLO) */
-.box-dev { border: 2px solid #ffcc00; flex: 1; }
-.dev-list { flex: 1; overflow-y: auto; scrollbar-width: none; font-family: 'Share Tech Mono'; font-size: 12px; }
-.dev-list::-webkit-scrollbar { display: none; }
-.dev-item { color: #888; margin-bottom: 4px; display: flex; align-items: center; gap: 5px; }
-.dev-item.on { color: #00d4ff; }
+/* DISPOSITIVI */
+.dev-list{display:flex;flex-direction:column;gap:2px;overflow-y:auto;flex:1;scrollbar-width:thin;}
+.dev-item{display:flex;align-items:center;gap:5px;font-size:8px;letter-spacing:1px;color:rgba(0,212,255,.85);}
+.ddot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.ddot.on{background:#00ff88;box-shadow:0 0 5px #00ff88;animation:bk 2s infinite;}
+.ddot.off{background:#ff2200;box-shadow:0 0 4px #ff2200;}
 
-/* TURNI (ARANCIO) */
-.box-cal { border: 2px solid #ff6600; flex: 1.2; }
-.cal-grid-header { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 8px; color: #ff6600; margin-bottom: 4px; border-bottom: 1px solid #333; }
-.cal-grid-body { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; flex: 1; }
-.cal-day { font-size: 9px; text-align: center; padding: 3px 0; color: #444; border: 1px solid #111; }
-.cal-day.today { border-color: #ff6600; color: #ff6600; background: rgba(255,102,0,0.1); }
-.cal-day.work { color: #00d4ff; } /* LAVORO CIANO */
-.cal-day.ferie { color: #ff4444; background: rgba(255,0,0,0.1); }
+/* MAPPA — scritta coperta sopra e sotto */
+.map-outer{position:relative;overflow:hidden;flex:1;min-height:0;}
+.map-iframe{width:100%;height:calc(100% + 30px);margin-top:-15px;border:none;filter:invert(92%) hue-rotate(180deg) saturate(180%) brightness(0.6);display:block;}
+.map-cover{position:absolute;left:0;right:0;height:20px;background:#000c1a;z-index:10;}
+.map-cover.top{top:0;}
+.map-cover.bot{bottom:0;}
 
-/* CONTROLLO (GRIGIO) */
-.box-control { 
-    border: 2px solid #444; background: rgba(30,30,30,1); flex: 0.5;
-    display: flex; align-items: center; justify-content: center; cursor: pointer;
-    font-size: 16px; letter-spacing: 4px; color: #00d4ff; font-weight: bold;
-}
-
-/* TAGS */
-.tag-row { display: flex; gap: 6px; }
-.tag-box { flex: 1; background: rgba(0,10,20,0.9); border: 2px solid #444; padding: 12px; text-align: center; font-size: 11px; color: #00d4ff; }
+/* TURNI */
+.cal-header{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;font-size:6px;color:#ff6b00;margin-bottom:2px;font-family:'Orbitron',monospace;}
+.cal-body{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;flex:1;overflow:hidden;align-content:start;}
+.cal-day{font-size:7px;text-align:center;padding:2px 0;color:rgba(255,255,255,.12);font-family:'Orbitron',monospace;}
+.cal-day.work{color:#00d4ff;}
+.cal-day.rest{color:rgba(255,255,255,.1);}
+.cal-day.ferie{color:#ff4444;background:rgba(255,0,0,.1);}
+.cal-day.today{outline:1px solid #ff6b00;color:#ff6b00;background:rgba(255,107,0,.1);}
 
 /* CHAT */
-.chat-box { height: 130px; background: rgba(0,5,10,0.95); border: 1px solid #333; display: flex; flex-direction: column; }
-.chat-msgs { flex: 1; overflow-y: auto; padding: 8px; font-size: 12px; }
-.msg-j { color: #ffcc88; margin-bottom: 4px; border-left: 2px solid #ff6600; padding-left: 8px; }
-.msg-u { color: #fff; margin-bottom: 4px; border-left: 2px solid #00d4ff; padding-left: 8px; }
-
-.inp-row { display: flex; padding: 4px; gap: 4px; background: #000; }
-.inp { flex: 1; background: #080808; border: 1px solid #00d4ff; color: #fff; padding: 8px; font-size: 14px; outline: none; }
-.send-btn { background: #ff6600; border: none; color: #000; padding: 0 20px; font-weight: bold; cursor: pointer; }
-
-#dummy { position: fixed; top: -100px; opacity: 0; }
+.chat{width:100%;display:flex;flex-direction:column;background:rgba(0,6,16,.88);border:1px solid rgba(0,212,255,.15);position:relative;height:115px;flex-shrink:0;}
+.chat::before{content:'▶ JARVIS';position:absolute;top:-1px;left:8px;font-size:7px;letter-spacing:3px;color:#ff6b00;background:#000;padding:0 4px;z-index:1;}
+.msgs{flex:1;overflow-y:auto;padding:10px 8px 4px;scrollbar-width:thin;}
+.msg{margin:2px 0;padding:3px 7px;font-size:11px;line-height:1.4;border-left:2px solid rgba(0,212,255,.3);color:rgba(0,212,255,.9);}
+.msg.j{border-left-color:#ff6b00;color:rgba(255,200,100,.95);background:rgba(255,107,0,.03);}
+.ms{font-size:7px;letter-spacing:2px;opacity:.4;margin-bottom:1px;}
+.typ{display:none;gap:3px;padding:3px 8px;align-items:center;}
+.typ.on{display:flex;}
+.td{width:4px;height:4px;border-radius:50%;background:#ff6b00;animation:tda 1.2s infinite;}
+.td:nth-child(2){animation-delay:.2s;}.td:nth-child(3){animation-delay:.4s;}
+@keyframes tda{0%,60%,100%{transform:translateY(0);opacity:.3;}30%{transform:translateY(-4px);opacity:1;}}
+.inprow{display:flex;gap:5px;padding:5px;}
+.hin{flex:1;background:rgba(0,18,36,.9);border:1px solid rgba(0,212,255,.25);color:#00d4ff;font-family:'Rajdhani',sans-serif;font-size:13px;padding:6px 10px;outline:none;}
+.hin::placeholder{color:rgba(0,212,255,.2);font-size:10px;letter-spacing:3px;}
+.hbtn{background:transparent;border:1px solid #ff6b00;color:#ff6b00;font-family:'Orbitron',monospace;font-size:9px;font-weight:700;padding:6px 10px;cursor:pointer;letter-spacing:1px;}
+.hbtn:active{background:rgba(255,107,0,.2);}
+.ftr{display:flex;justify-content:space-between;width:100%;font-size:7px;letter-spacing:1px;color:rgba(0,212,255,.22);border-top:1px solid rgba(0,212,255,.08);padding-top:2px;flex-shrink:0;}
 </style>
 </head>
 <body>
-<div class="bg"></div><div class="grid"></div>
+<div class="bg"></div><div class="grid"></div><div class="scan"></div>
+<div class="cx tl"></div><div class="cx tr"></div><div class="cx bl"></div><div class="cx br"></div>
 
 <div class="wrap">
-  <div class="active-proto">
-    PROTOCOLLO ATTIVO
+  <div class="hline"></div>
+  <div class="title">J.A.R.V.I.S</div>
+  <div class="hline"></div>
+  <div class="srow">
+    <span><span class="sd"></span>ONLINE</span>
+    <span id="clk">--:--:--</span>
+    <span>STARK INDUSTRIES</span>
   </div>
-  
+  <div class="stats">
+    <div class="sb"><div class="sl">STATO AI</div><div class="sv g">ON</div><div class="sbar"><div class="sfill" style="width:100%"></div></div></div>
+    <div class="sb"><div class="sl">PROTOCOLLO</div><div class="sv o" style="font-size:8px;">ATTIVO</div><div class="sbar"><div class="sfill" style="width:80%;background:linear-gradient(90deg,#ff6b00,#ffaa00)"></div></div></div>
+    <div class="sb"><div class="sl">DATI MOBILE</div><div class="sv" style="font-size:8px;">4G+</div><div class="sbar"><div class="sfill" style="width:90%"></div></div></div>
+    <div class="sb"><div class="sl">LATENZA</div><div class="sv" id="lat">---ms</div><div class="sbar"><div class="sfill" id="latb" style="width:40%"></div></div></div>
+  </div>
+
   <div class="main">
-    <div class="map-box">
-      <iframe class="map-iframe" src="https://www.openstreetmap.org/export/embed.html?bbox=7.60,45.02,7.76,45.12&layer=mapnik"></iframe>
-    </div>
-    
-    <div class="col-right">
-      <div class="box box-dev">
-        <div class="box-title">▶ DISPOSITIVI WI-FI</div>
-        <div class="dev-list">
-          <div class="dev-item on">● Dispositivo 1</div>
-          <div class="dev-item on">● Dispositivo 2</div>
-          <div class="dev-item on">● Dispositivo 3</div>
-          <div class="dev-item on">● Dispositivo 4</div>
-          <div class="dev-item on">● Dispositivo 5</div>
-          <div class="dev-item on">● Dispositivo 6</div>
-          <div class="dev-item on">● Dispositivo 7</div>
-          <div class="dev-item on">● Dispositivo 8</div>
-          <div class="dev-item on">● Dispositivo 9</div>
-          <div class="dev-item on">● Dispositivo 10</div>
-        </div>
+    <!-- SINISTRA -->
+    <div class="left-col">
+      <div class="arc">
+        <div class="aglow"></div>
+        <div class="rg rglow"></div>
+        <div class="rg r1"></div><div class="rg r2"></div><div class="rg r3"></div>
+        <div class="rg r4"></div><div class="rg r5"></div><div class="rg r6"></div><div class="rg r7"></div>
+        <svg class="tsvg" id="tsvg" viewBox="0 0 148 148"></svg>
+        <canvas class="core-canvas" id="arc-core" width="40" height="40"></canvas>
       </div>
-      
-      <div class="box box-cal">
-        <div class="box-title">▶ TURNI</div>
-        <div class="cal-grid-header">
-          <div>S</div><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div>
+      <div class="globe-section">
+        <div class="globe-wrap">
+          <canvas id="globe" class="globe" width="104" height="104"></canvas>
+          <div class="globe-tag stop" id="gtag1"></div>
+          <div class="globe-tag move" id="gtag2"></div>
         </div>
-        <div class="cal-grid-body" id="cal-body"></div>
+        <div class="globe-label">▶ TAG TRACKER</div>
+      </div>
+      <div class="tag-row">
+        <div class="tag-box"><div class="tag-dot stop"></div><div class="tag-lbl">CHIAVI</div></div>
+        <div class="tag-box"><div class="tag-dot off"></div><div class="tag-lbl">TAG-02</div></div>
+        <div class="tag-box"><div class="tag-dot off"></div><div class="tag-lbl">TAG-03</div></div>
+      </div>
+      <button class="ctrl-btn" onclick="openControllo()">📷 CONTROLLO</button>
+    </div>
+
+    <!-- DESTRA -->
+    <div class="right-col">
+      <div class="panel-box">
+        <div class="panel-title">▶ METEO</div>
+        <div class="meteo-row">
+          <div>
+            <div class="meteo-temp" id="meteo-temp">--°C</div>
+            <div class="meteo-desc" id="meteo-desc">CARICAMENTO</div>
+            <div class="meteo-city">TORINO</div>
+          </div>
+          <div style="text-align:right;">
+            <div class="meteo-detail" id="meteo-wind">VENTO: --</div>
+            <div class="meteo-detail" id="meteo-hum">UMID: --</div>
+          </div>
+        </div>
       </div>
 
-      <div class="box-control" onclick="openCam()">
-        CONTROLLO
+      <div class="grid2x2">
+        <!-- PROTOCOLLI 01-10 — off=rosso -->
+        <div class="inner-box">
+          <div class="inner-title">▶ PROTOCOLLI</div>
+          <div class="proto-list">
+            <div class="proto-item"><div class="pdot on"></div>01</div>
+            <div class="proto-item"><div class="pdot on"></div>02</div>
+            <div class="proto-item"><div class="pdot off"></div>03</div>
+            <div class="proto-item"><div class="pdot off"></div>04</div>
+            <div class="proto-item"><div class="pdot off"></div>05</div>
+            <div class="proto-item"><div class="pdot off"></div>06</div>
+            <div class="proto-item"><div class="pdot off"></div>07</div>
+            <div class="proto-item"><div class="pdot off"></div>08</div>
+            <div class="proto-item"><div class="pdot off"></div>09</div>
+            <div class="proto-item"><div class="pdot off"></div>10</div>
+          </div>
+        </div>
+
+        <!-- MAPPA stile Stark — scritte coperte -->
+        <div class="inner-box" style="padding:0;overflow:hidden;">
+          <div class="map-outer">
+            <div class="map-cover top"></div>
+            <iframe class="map-iframe" src="https://www.openstreetmap.org/export/embed.html?bbox=7.62,45.03,7.75,45.11&layer=mapnik" scrolling="no"></iframe>
+            <div class="map-cover bot"></div>
+          </div>
+        </div>
+
+        <!-- DISPOSITIVI -->
+        <div class="inner-box">
+          <div class="inner-title">▶ DISPOSITIVI</div>
+          <div class="dev-list">
+            <div class="dev-item"><div class="ddot on"></div>RouterBruss</div>
+            <div class="dev-item"><div class="ddot on"></div>MotoBruss</div>
+            <div class="dev-item"><div class="ddot on"></div>OppoBruss</div>
+            <div class="dev-item"><div class="ddot off"></div>PcBruss</div>
+            <div class="dev-item"><div class="ddot off"></div>HuaweiBruss</div>
+            <div class="dev-item"><div class="ddot off"></div>ProiettoreBruss</div>
+            <div class="dev-item"><div class="ddot off"></div>ChromecastBruss</div>
+            <div class="dev-item"><div class="ddot off"></div>RedmIlenia</div>
+          </div>
+        </div>
+
+        <!-- TURNI -->
+        <div class="inner-box">
+          <div class="inner-title">▶ TURNI</div>
+          <div class="cal-header">
+            <div>D</div><div>L</div><div>M</div><div>M</div><div>G</div><div>V</div><div>S</div>
+          </div>
+          <div class="cal-body" id="cal-body"></div>
+        </div>
       </div>
     </div>
   </div>
-  
-  <div class="tag-row">
-    <div class="tag-box">TAG 01</div>
-    <div class="tag-box">TAG 02</div>
-    <div class="tag-box">TAG 03</div>
-  </div>
-  
-  <div class="chat-box">
-    <div class="chat-msgs" id="chat"></div>
-    <div class="inp-row">
-      <input class="inp" id="inp" type="text" autocomplete="off" placeholder="Comando...">
-      <button class="send-btn" onclick="send()">INVIA</button>
+
+  <div class="chat">
+    <div class="msgs" id="chat"></div>
+    <div class="typ" id="typ"><div class="td"></div><div class="td"></div><div class="td"></div></div>
+    <div class="inprow">
+      <input class="hin" id="inp" placeholder="COMANDO..." type="text"/>
+      <button class="hbtn" onclick="send()">INVIA ►</button>
     </div>
+  </div>
+
+  <div class="ftr">
+    <span>JARVIS v3.0</span><span id="upt">UPTIME: 0m</span><span>LLAMA 3.3 70B</span>
   </div>
 </div>
 
-<input type="text" id="dummy">
-
 <script>
-var _K1 = 'gsk_dETVcTjKuuOYEGkdit5h';
-var _K2 = 'WGdyb3FYlnxwRdUSnehnzu4mZTPscrFS';
-var KEY = _K1 + _K2;
-var chatHistory = [];
-
-function buildGridCal() {
-  var now = new Date(); var month = now.getMonth(); var year = now.getFullYear();
-  var firstDay = new Date(year, month, 1).getDay();
-  var daysInMonth = new Date(year, month + 1, 0).getDate();
-  var html = '';
-  for(var p=0; p<firstDay; p++) { html += '<div class="cal-day" style="opacity:0"></div>'; }
-  for(var d=1; d<=daysInMonth; d++) {
-    var dateObj = new Date(year, month, d); var dStr = dateObj.toISOString().split('T')[0];
-    var type = 'work';
-    if(dStr >= '2026-04-23' && dStr <= '2026-04-25') { type='ferie'; }
-    else {
-      var base = new Date('2026-04-22T00:00:00'); var diff = Math.floor((dateObj - base)/(1000*60*60*24));
-      var cycle = diff % 16; if(cycle<0) cycle+=16;
-      if(cycle>=0 && cycle<=3) type='work'; else if(cycle===4) type='rest';
-      else if(cycle>=5 && cycle<=8) type='work'; else if(cycle>=9 && cycle<=10) type='rest';
-      else if(cycle>=11 && cycle<=14) type='work'; else type='rest';
-    }
-    var isToday = dStr === now.toISOString().split('T')[0] ? ' today' : '';
-    html += '<div class="cal-day '+type+isToday+'">'+d+'</div>';
+const tsvg=document.getElementById('tsvg');
+for(let i=0;i<72;i++){
+  const a=(i/72)*Math.PI*2,r=70,len=i%6===0?9:i%2===0?5:3;
+  const l=document.createElementNS('http://www.w3.org/2000/svg','line');
+  l.setAttribute('x1',74+Math.sin(a)*r);l.setAttribute('y1',74-Math.cos(a)*r);
+  l.setAttribute('x2',74+Math.sin(a)*(r-len));l.setAttribute('y2',74-Math.cos(a)*(r-len));
+  l.setAttribute('stroke',i%6===0?'rgba(0,212,255,0.9)':i%2===0?'rgba(0,212,255,0.4)':'rgba(0,212,255,0.15)');
+  l.setAttribute('stroke-width',i%6===0?'1.8':'0.8');
+  tsvg.appendChild(l);
+}
+const arcCanvas=document.getElementById('arc-core');
+const arcCtx=arcCanvas.getContext('2d');
+let arcPulse=0;
+function drawArcCore(){
+  arcCtx.clearRect(0,0,40,40);
+  const pulse=0.7+Math.sin(arcPulse)*0.3;arcPulse+=0.04;
+  const cx=20,cy=20;
+  for(let i=0;i<16;i++){
+    const a=(i/16)*Math.PI*2,len=8+Math.sin(arcPulse*2+i)*3;
+    arcCtx.beginPath();arcCtx.moveTo(cx+Math.cos(a)*6,cy+Math.sin(a)*6);
+    arcCtx.lineTo(cx+Math.cos(a)*(6+len),cy+Math.sin(a)*(6+len));
+    arcCtx.strokeStyle='rgba(0,212,255,'+(0.15+Math.sin(arcPulse+i)*0.1)+')';
+    arcCtx.lineWidth=1;arcCtx.stroke();
   }
-  document.getElementById('cal-body').innerHTML = html;
+  let g=arcCtx.createRadialGradient(cx,cy,4,cx,cy,19);
+  g.addColorStop(0,'rgba(0,212,255,'+(0.15*pulse)+')');g.addColorStop(1,'transparent');
+  arcCtx.beginPath();arcCtx.arc(cx,cy,19,0,Math.PI*2);arcCtx.fillStyle=g;arcCtx.fill();
+  g=arcCtx.createRadialGradient(cx-2,cy-2,1,cx,cy,9);
+  g.addColorStop(0,'rgba(255,255,255,'+(0.95*pulse)+')');
+  g.addColorStop(0.2,'rgba(160,240,255,'+(0.9*pulse)+')');
+  g.addColorStop(0.5,'rgba(0,200,255,'+(0.8*pulse)+')');
+  g.addColorStop(0.8,'rgba(0,100,200,'+(0.6*pulse)+')');
+  g.addColorStop(1,'rgba(0,40,120,'+(0.3*pulse)+')');
+  arcCtx.beginPath();arcCtx.arc(cx,cy,9,0,Math.PI*2);arcCtx.fillStyle=g;arcCtx.fill();
+  g=arcCtx.createRadialGradient(cx-1,cy-1,0,cx,cy,4);
+  g.addColorStop(0,'rgba(255,255,255,1)');g.addColorStop(1,'rgba(180,240,255,0)');
+  arcCtx.beginPath();arcCtx.arc(cx,cy,4,0,Math.PI*2);arcCtx.fillStyle=g;arcCtx.fill();
+  requestAnimationFrame(drawArcCore);
 }
-buildGridCal();
-
-function addMsg(s,t,u){
-  var c = document.getElementById('chat'); var d = document.createElement('div');
-  d.className = u ? 'msg-u' : 'msg-j';
-  d.innerHTML = '<span style="font-size:7px; opacity:0.4;">'+s+' //</span><br>'+t;
-  c.appendChild(d); c.scrollTop = c.scrollHeight;
+drawArcCore();
+const gc=document.getElementById('globe');
+const gctx=gc.getContext('2d');
+const GS=104,GR=49,GCX=52,GCY=52;
+let rot=0;const tilt=15*Math.PI/180;
+const tagPositions=[{lat:45.07,lon:7.68},{lat:45.12,lon:7.58}];
+const continents=[
+  [[0,50],[10,50],[20,45],[20,35],[15,25],[10,10],[5,0],[0,-10],[5,-20],[15,-30],[20,-35],[10,-35],[0,-30],[-5,-20],[-10,-10],[-5,0],[0,10]],
+  [[-60,50],[-50,55],[-70,60],[-80,50],[-75,40],[-70,30],[-65,20],[-75,10],[-80,-5],[-75,-15],[-65,-20],[-55,-30],[-50,-40],[-55,-50],[-65,-55],[-60,-40],[-55,-30],[-60,-20],[-70,-10],[-75,0],[-80,10],[-85,20],[-90,30],[-85,40],[-80,50]],
+  [[60,60],[80,60],[100,55],[120,50],[130,45],[140,40],[130,30],[120,25],[100,20],[80,25],[60,30],[40,40],[50,50],[60,60]],
+  [[130,-20],[140,-20],[150,-25],[145,-35],[135,-35],[125,-30],[130,-20]]
+];
+function proj(lat,lon,r){
+  const la=lat*Math.PI/180,lo=(lon+r)*Math.PI/180;
+  const x=Math.cos(la)*Math.sin(lo);
+  const y=Math.sin(la)*Math.cos(tilt)-Math.cos(la)*Math.cos(lo)*Math.sin(tilt);
+  const z=Math.sin(la)*Math.sin(tilt)+Math.cos(la)*Math.cos(lo)*Math.cos(tilt);
+  return{x:GCX+x*GR,y:GCY-y*GR,z};
 }
-
+const tagEls=[document.getElementById('gtag1'),document.getElementById('gtag2')];
+function drawGlobe(){
+  gctx.clearRect(0,0,GS,GS);
+  const g=gctx.createRadialGradient(GCX-10,GCY-10,2,GCX,GCY,GR);
+  g.addColorStop(0,'rgba(0,40,80,0.9)');g.addColorStop(0.6,'rgba(0,20,50,0.95)');g.addColorStop(1,'rgba(0,5,20,1)');
+  gctx.beginPath();gctx.arc(GCX,GCY,GR,0,Math.PI*2);gctx.fillStyle=g;gctx.fill();
+  gctx.strokeStyle='rgba(0,212,255,0.1)';gctx.lineWidth=0.5;
+  for(let lat=-60;lat<=60;lat+=30){
+    gctx.beginPath();let f=true;
+    for(let lon=0;lon<=360;lon+=5){const p=proj(lat,lon,rot);if(p.z>0){f?gctx.moveTo(p.x,p.y):gctx.lineTo(p.x,p.y);f=false;}else f=true;}
+    gctx.stroke();
+  }
+  for(let lon=0;lon<360;lon+=30){
+    gctx.beginPath();let f=true;
+    for(let lat=-90;lat<=90;lat+=5){const p=proj(lat,lon,rot);if(p.z>0){f?gctx.moveTo(p.x,p.y):gctx.lineTo(p.x,p.y);f=false;}else f=true;}
+    gctx.stroke();
+  }
+  continents.forEach(function(c){c.forEach(function(pt){const p=proj(pt[1],pt[0],rot);if(p.z>0.1){gctx.beginPath();gctx.arc(p.x,p.y,1.3,0,Math.PI*2);gctx.fillStyle='rgba(0,212,255,'+(0.3+p.z*0.5)+')';gctx.fill();}});});
+  gctx.beginPath();gctx.arc(GCX,GCY,GR,0,Math.PI*2);gctx.strokeStyle='rgba(0,212,255,0.45)';gctx.lineWidth=1.2;gctx.stroke();
+  tagPositions.forEach(function(tag,i){
+    const p=proj(tag.lat,tag.lon,rot);
+    const el=tagEls[i];
+    if(p.z>0.05){el.style.display='block';el.style.left=p.x+'px';el.style.top=p.y+'px';}
+    else{el.style.display='none';}
+  });
+  rot+=0.3;requestAnimationFrame(drawGlobe);
+}
+drawGlobe();
+const start=Date.now();
+function tick(){
+  document.getElementById('clk').textContent=new Date().toLocaleTimeString('it-IT');
+  document.getElementById('upt').textContent='UPTIME: '+Math.floor((Date.now()-start)/60000)+'m';
+}
+setInterval(tick,1000);tick();
+fetch('https://api.open-meteo.com/v1/forecast?latitude=45.07&longitude=7.68&current=temperature_2m,weathercode,windspeed_10m,relativehumidity_2m')
+  .then(function(r){return r.json();})
+  .then(function(d){
+    const c=d.current;
+    document.getElementById('meteo-temp').textContent=Math.round(c.temperature_2m)+'°C';
+    document.getElementById('meteo-wind').textContent='VENTO: '+Math.round(c.windspeed_10m)+' km/h';
+    document.getElementById('meteo-hum').textContent='UMID: '+c.relativehumidity_2m+'%';
+    const wc=c.weathercode;
+    const desc=wc===0?'SERENO':wc<=2?'POCO NUVOLOSO':wc<=3?'NUVOLOSO':wc<=48?'NEBBIA':wc<=67?'PIOGGIA':wc<=77?'NEVE':wc<=82?'ROVESCI':'TEMPORALE';
+    document.getElementById('meteo-desc').textContent=desc;
+  }).catch(function(){document.getElementById('meteo-desc').textContent='N/D';});
+function buildCal(){
+  var now=new Date();var month=now.getMonth();var year=now.getFullYear();
+  var firstDay=new Date(year,month,1).getDay();
+  var daysInMonth=new Date(year,month+1,0).getDate();
+  var html='';
+  for(var p=0;p<firstDay;p++){html+='<div class="cal-day"></div>';}
+  for(var d=1;d<=daysInMonth;d++){
+    var dateObj=new Date(year,month,d);
+    var dStr=dateObj.toISOString().split('T')[0];
+    var type='rest';
+    if(dStr>='2026-04-23'&&dStr<='2026-04-25'){type='ferie';}
+    else{
+      var base=new Date('2026-04-22T00:00:00');
+      var diff=Math.floor((dateObj-base)/(1000*60*60*24));
+      var cycle=diff%16;if(cycle<0)cycle+=16;
+      if(cycle>=0&&cycle<=3)type='work';
+      else if(cycle===4)type='rest';
+      else if(cycle>=5&&cycle<=8)type='work';
+      else if(cycle>=9&&cycle<=10)type='rest';
+      else if(cycle>=11&&cycle<=14)type='work';
+      else type='rest';
+    }
+    var isToday=dStr===now.toISOString().split('T')[0]?' today':'';
+    html+='<div class="cal-day '+type+isToday+'">'+d+'</div>';
+  }
+  document.getElementById('cal-body').innerHTML=html;
+}
+buildCal();
+function openControllo(){addMsg('JARVIS','Modulo telecamera non ancora attivo.',true);}
+function addMsg(s,t,j){
+  const d=document.createElement('div');
+  d.className='msg'+(j?' j':'');
+  d.innerHTML='<div class="ms">'+s+' //</div>'+t;
+  const c=document.getElementById('chat');
+  c.appendChild(d);c.scrollTop=c.scrollHeight;
+}
+var _K1='gsk_dETVcTjKuuOYEGkdit5h';
+var _K2='WGdyb3FYlnxwRdUSnehnzu4mZTPscrFS';
+var KEY=_K1+_K2;
+var chatHistory=[];
 function send(){
-  var inp = document.getElementById('inp'); var txt = inp.value.trim(); if(!txt) return;
-  addMsg('USER', txt, true); chatHistory.push({role:'user', content:txt}); inp.value = '';
-  var xhr = new XMLHttpRequest();
-  xhr.open('POST', 'https://api.groq.com/openai/v1/chat/completions', true);
-  xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.setRequestHeader('Authorization', 'Bearer ' + KEY);
-  xhr.onreadystatechange = function(){
-    if(xhr.readyState===4 && xhr.status===200){
-      var r = JSON.parse(xhr.responseText).choices[0].message.content;
-      addMsg('JARVIS', r.replace(/\[.*?\]/g,'').trim(), false);
-      chatHistory.push({role:'assistant', content:r});
+  const inp=document.getElementById('inp');
+  const text=inp.value.trim();if(!text)return;
+  inp.value='';
+  addMsg('USER',text,false);
+  chatHistory.push({role:'user',content:text});
+  document.getElementById('typ').className='typ on';
+  const t0=Date.now();
+  var xhr=new XMLHttpRequest();
+  xhr.open('POST','https://api.groq.com/openai/v1/chat/completions',true);
+  xhr.setRequestHeader('Content-Type','application/json');
+  xhr.setRequestHeader('Authorization','Bearer '+KEY);
+  xhr.onreadystatechange=function(){
+    if(xhr.readyState===4){
+      document.getElementById('typ').className='typ';
+      const lat=Date.now()-t0;
+      document.getElementById('lat').textContent=lat+'ms';
+      document.getElementById('latb').style.width=Math.min(lat/10,100)+'%';
+      if(xhr.status===200){
+        try{
+          var r=JSON.parse(xhr.responseText).choices[0].message.content;
+          addMsg('JARVIS',r.replace(/\[.*?\]/g,'').trim(),true);
+          chatHistory.push({role:'assistant',content:r});
+          if(chatHistory.length>20)chatHistory=chatHistory.slice(-20);
+        }catch(e){addMsg('JARVIS','Errore parsing.',true);}
+      }else{addMsg('JARVIS','Errore HTTP: '+xhr.status,true);}
     }
   };
+  xhr.onerror=function(){document.getElementById('typ').className='typ';addMsg('JARVIS','Errore di rete.',true);};
   xhr.send(JSON.stringify({
-    model:'llama-3.3-70b-versatile', 
-    messages:[{role:'system', content:'Sei J.A.R.V.I.S., IA di Tony Stark. Ciclo 16gg: 4N,1R,4A,2R,4M,1R. Base 22 Apr N1. Rispondi in italiano in modo tecnico. No titoli cortesia.'}].concat(chatHistory.slice(-6))
+    model:'llama-3.3-70b-versatile',
+    messages:[{role:'system',content:'Sei J.A.R.V.I.S., IA di Tony Stark. Rispondi in italiano in modo tecnico e preciso. Zero chiacchiere. Massimo 3 frasi.'}].concat(chatHistory.slice(-6))
   }));
 }
-
-document.getElementById('inp').addEventListener('keydown', function(e){ if(e.key==='Enter') send(); });
-function openCam(){ if(window.AppInventor) window.AppInventor.setWebViewString('CAMERA_ON'); }
-addMsg('JARVIS', 'Layout ricalibrato v7.7 Online.', false);
+document.getElementById('inp').addEventListener('keypress',function(e){if(e.key==='Enter')send();});
 </script>
 </body>
 </html>
