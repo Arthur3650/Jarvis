@@ -242,9 +242,9 @@ canvas.globe{border-radius:50%;border:1px solid rgba(0,212,255,.3);box-shadow:0 
         <div class="inner-box">
           <div class="inner-title">▶ DISPOSITIVI</div>
           <div class="dev-list">
-            <div class="dev-item"><div class="ddot on"></div>RouterBruss</div>
-            <div class="dev-item"><div class="ddot on"></div>MotoBruss</div>
-            <div class="dev-item"><div class="ddot on"></div>OppoBruss</div>
+            <div class="dev-item"><div class="ddot off"></div>RouterBruss</div>
+            <div class="dev-item"><div class="ddot off"></div>MotoBruss</div>
+            <div class="dev-item"><div class="ddot off"></div>OppoBruss</div>
             <div class="dev-item"><div class="ddot off"></div>PcBruss</div>
             <div class="dev-item"><div class="ddot off"></div>HuaweiBruss</div>
             <div class="dev-item"><div class="ddot off"></div>ProiettoreBruss</div>
@@ -357,12 +357,7 @@ function drawGlobe(){
   }
   continents.forEach(function(c){c.forEach(function(pt){const p=proj(pt[1],pt[0],rot);if(p.z>0.1){gctx.beginPath();gctx.arc(p.x,p.y,1.3,0,Math.PI*2);gctx.fillStyle='rgba(0,212,255,'+(0.3+p.z*0.5)+')';gctx.fill();}});});
   gctx.beginPath();gctx.arc(GCX,GCY,GR,0,Math.PI*2);gctx.strokeStyle='rgba(0,212,255,0.45)';gctx.lineWidth=1.2;gctx.stroke();
-  tagPositions.forEach(function(tag,i){
-    const p=proj(tag.lat,tag.lon,rot);
-    const el=tagEls[i];
-    if(p.z>0.05){el.style.display='block';el.style.left=p.x+'px';el.style.top=p.y+'px';}
-    else{el.style.display='none';}
-  });
+  // tag dots sul globo disabilitati
   rot+=0.3;requestAnimationFrame(drawGlobe);
 }
 drawGlobe();
