@@ -425,8 +425,6 @@ function updateDevices(jsonStr){
       var el=document.getElementById('d-'+nome);
       if(el){el.className='ddot '+(stati[nome]==='ON'?'on':'off');}
     });
-    var online=Object.values(stati).filter(function(v){return v==='ON';}).length;
-    addMsg('JARVIS','Rete aggiornata — '+online+' dispositivi online.',true);
   }catch(e){console.log('updateDevices error: '+e);}
 }
 
