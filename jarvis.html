@@ -471,6 +471,19 @@ function send(){
   }));
 }
 document.getElementById('inp').addEventListener('keypress',function(e){if(e.key==='Enter')send();});
+var PC_IP = '192.168.43.208';
+function pollDispositivi(){
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET','http://'+PC_IP+':8080/stato.json',true);
+  xhr.onreadystatechange = function(){
+    if(xhr.readyState===4 && xhr.status===200){
+      updateDevices(xhr.responseText);
+    }
+  };
+  xhr.send();
+}
+pollDispositivi();
+setInterval(pollDispositivi, 30000);
 </script>
 </body>
 </html>
