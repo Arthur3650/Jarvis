@@ -36,7 +36,7 @@ body{background:#000;color:#00d4ff;font-family:'Rajdhani',sans-serif;height:100v
 
 /* SINISTRA */
 .left-col{display:flex;flex-direction:column;align-items:center;gap:0;flex-shrink:0;width:166px;}
-.arc{position:relative;width:150px;height:150px;flex-shrink:0;margin-top:4px;}
+.arc{position:relative;width:150px;height:150px;flex-shrink:0;margin-top:12px;}
 .aglow{position:absolute;inset:-12px;border-radius:50%;background:radial-gradient(circle,transparent 45%,rgba(0,180,255,.07) 70%,transparent 100%);animation:gp 2s ease-in-out infinite;}
 @keyframes gp{0%,100%{opacity:.5;}50%{opacity:1;}}
 .rg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border-radius:50%;}
@@ -54,7 +54,7 @@ body{background:#000;color:#00d4ff;font-family:'Rajdhani',sans-serif;height:100v
 .tsvg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:148px;height:148px;pointer-events:none;}
 
 /* GLOBO — solo 2 tag, nessun pallino Italia */
-.globe-section{display:flex;flex-direction:column;align-items:center;gap:2px;margin-top:6px;}
+.globe-section{display:flex;flex-direction:column;align-items:center;gap:2px;margin-top:12px;}
 .globe-wrap{position:relative;width:104px;height:104px;flex-shrink:0;}
 canvas.globe{border-radius:50%;border:1px solid rgba(0,212,255,.3);box-shadow:0 0 12px rgba(0,212,255,.2);display:block;}
 .globe-tag{position:absolute;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;display:none;}
@@ -187,7 +187,7 @@ canvas.globe{border-radius:50%;border:1px solid rgba(0,212,255,.3);box-shadow:0 
         <div class="globe-label">▶ TAG TRACKER</div>
       </div>
       <div class="tag-row">
-        <div class="tag-box"><div class="tag-dot stop"></div><div class="tag-lbl">CHIAVI</div></div>
+        <div class="tag-box"><div class="tag-dot stop"></div><div class="tag-lbl">TAG-01</div></div>
         <div class="tag-box"><div class="tag-dot off"></div><div class="tag-lbl">TAG-02</div></div>
         <div class="tag-box"><div class="tag-dot off"></div><div class="tag-lbl">TAG-03</div></div>
       </div>
@@ -216,8 +216,8 @@ canvas.globe{border-radius:50%;border:1px solid rgba(0,212,255,.3);box-shadow:0 
         <div class="inner-box">
           <div class="inner-title">▶ PROTOCOLLI</div>
           <div class="proto-list">
-            <div class="proto-item"><div class="pdot on"></div>01</div>
-            <div class="proto-item"><div class="pdot on"></div>02</div>
+            <div class="proto-item"><div class="pdot off"></div>01</div>
+            <div class="proto-item"><div class="pdot off"></div>02</div>
             <div class="proto-item"><div class="pdot off"></div>03</div>
             <div class="proto-item"><div class="pdot off"></div>04</div>
             <div class="proto-item"><div class="pdot off"></div>05</div>
@@ -242,14 +242,15 @@ canvas.globe{border-radius:50%;border:1px solid rgba(0,212,255,.3);box-shadow:0 
         <div class="inner-box">
           <div class="inner-title">▶ DISPOSITIVI</div>
           <div class="dev-list">
-            <div class="dev-item"><div class="ddot off"></div>RouterBruss</div>
-            <div class="dev-item"><div class="ddot off"></div>MotoBruss</div>
-            <div class="dev-item"><div class="ddot off"></div>OppoBruss</div>
-            <div class="dev-item"><div class="ddot off"></div>PcBruss</div>
-            <div class="dev-item"><div class="ddot off"></div>HuaweiBruss</div>
-            <div class="dev-item"><div class="ddot off"></div>ProiettoreBruss</div>
-            <div class="dev-item"><div class="ddot off"></div>ChromecastBruss</div>
-            <div class="dev-item"><div class="ddot off"></div>RedmIlenia</div>
+            <div class="dev-item"><div class="ddot off" id="d-RouterBruss"></div>RouterBruss</div>
+            <div class="dev-item"><div class="ddot off" id="d-MotoBruss"></div>MotoBruss</div>
+            <div class="dev-item"><div class="ddot off" id="d-OppoBruss"></div>OppoBruss</div>
+            <div class="dev-item"><div class="ddot off" id="d-PcBruss"></div>PcBruss</div>
+            <div class="dev-item"><div class="ddot off" id="d-HuaweiBruss"></div>HuaweiBruss</div>
+            <div class="dev-item"><div class="ddot off" id="d-ProiettoreBruss"></div>ProiettoreBruss</div>
+            <div class="dev-item"><div class="ddot off" id="d-Ps4Bruss"></div>Ps4Bruss</div>
+            <div class="dev-item"><div class="ddot off" id="d-ChromecastBruss"></div>ChromecastBruss</div>
+            <div class="dev-item"><div class="ddot off" id="d-RedmIlenia"></div>RedmIlenia</div>
           </div>
         </div>
 
@@ -386,21 +387,22 @@ function buildCal(){
   for(var p=0;p<firstDay;p++){html+='<div class="cal-day"></div>';}
   for(var d=1;d<=daysInMonth;d++){
     var dateObj=new Date(year,month,d);
-    var dStr=dateObj.toISOString().split('T')[0];
+    var dStr=dateObj.getFullYear()+'-'+String(dateObj.getMonth()+1).padStart(2,'0')+'-'+String(dateObj.getDate()).padStart(2,'0');
     var type='rest';
-    if(dStr>='2026-04-23'&&dStr<='2026-04-25'){type='ferie';}
+    if(false){type='ferie';}
     else{
-      var base=new Date('2026-04-22T00:00:00');
+      var base=new Date('2026-04-28T00:00:00');
       var diff=Math.floor((dateObj-base)/(1000*60*60*24));
       var cycle=diff%16;if(cycle<0)cycle+=16;
       if(cycle>=0&&cycle<=3)type='work';
       else if(cycle===4)type='rest';
       else if(cycle>=5&&cycle<=8)type='work';
-      else if(cycle>=9&&cycle<=10)type='rest';
-      else if(cycle>=11&&cycle<=14)type='work';
+      else if(cycle===9)type='rest';
+      else if(cycle>=10&&cycle<=13)type='work';
       else type='rest';
     }
-    var isToday=dStr===now.toISOString().split('T')[0]?' today':'';
+    var td=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
+    var isToday=dStr===td?' today':'';
     html+='<div class="cal-day '+type+isToday+'">'+d+'</div>';
   }
   document.getElementById('cal-body').innerHTML=html;
@@ -413,6 +415,24 @@ function addMsg(s,t,j){
   d.innerHTML='<div class="ms">'+s+' //</div>'+t;
   const c=document.getElementById('chat');
   c.appendChild(d);c.scrollTop=c.scrollHeight;
+}
+
+// Riceve stato dispositivi da Kodular — JSON string
+function updateDevices(jsonStr){
+  try{
+    var stati=JSON.parse(jsonStr);
+    Object.keys(stati).forEach(function(nome){
+      var el=document.getElementById('d-'+nome);
+      if(el){el.className='ddot '+(stati[nome]==='ON'?'on':'off');}
+    });
+    var online=Object.values(stati).filter(function(v){return v==='ON';}).length;
+    addMsg('JARVIS','Rete aggiornata — '+online+' dispositivi online.',true);
+  }catch(e){console.log('updateDevices error: '+e);}
+}
+
+// Riceve messaggi generici da Kodular
+function receiveFromKodular(msg){
+  addMsg('JARVIS',msg,true);
 }
 var _K1='gsk_dETVcTjKuuOYEGkdit5h';
 var _K2='WGdyb3FYlnxwRdUSnehnzu4mZTPscrFS';
