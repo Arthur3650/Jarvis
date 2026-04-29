@@ -458,6 +458,20 @@ function gestisciAzioniJarvis(testo){
     }
   });
 }
+function comandoLocaleUtente(testo){
+  var t=testo.toLowerCase();
+  var parlaDiRete=t.includes('rete')||t.includes('dispositiv')||t.includes('pallin')||t.includes('wifi');
+  var chiedeScan=t.includes('scansion')||t.includes('aggiorna')||t.includes('controlla')||t.includes('scan');
+  if(parlaDiRete&&chiedeScan){
+    inviaAzionePC('ACTION:SCAN_NETWORK');
+    addMsg('JARVIS','Avvio la scansione della rete.',true);
+    chatHistory.push({role:'user',content:testo});
+    chatHistory.push({role:'assistant',content:'Avvio la scansione della rete. [ACTION:SCAN_NETWORK]'});
+    if(chatHistory.length>20)chatHistory=chatHistory.slice(-20);
+    return true;
+  }
+  return false;
+}
 function pulisciRispostaJarvis(testo){
   return testo.replace(/\[?ACTION:[A-Z0-9_]+\]?/g,'').replace(/\[.*?\]/g,'').trim();
 }
@@ -470,6 +484,7 @@ function send(){
   const text=inp.value.trim();if(!text)return;
   inp.value='';
   addMsg('USER',text,false);
+  if(comandoLocaleUtente(text))return;
   chatHistory.push({role:'user',content:text});
   document.getElementById('typ').className='typ on';
   const t0=Date.now();
